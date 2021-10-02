@@ -43,7 +43,20 @@
 ADC_HandleTypeDef hadc1;
 
 /* USER CODE BEGIN PV */
+// scheduler stuff
+extern uint8_t ten_mS_Flag;
+extern uint8_t twentyfive_mS_Flag;
+extern uint8_t hundred_mS_Flag;
+extern uint8_t one_S_Flag;
 
+// LED Stuff
+uint8_t ledSeq = 0;
+
+// Button Stuff
+uint8_t buttons = 0x07;
+
+// ADC Stuff
+uint16_t adcValue;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -96,6 +109,81 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    //---------------------------------
+    // 10mS Tasks 
+    if (ten_mS_Flag) {
+      ten_mS_Flag = false;
+
+    }  // end of 10mS Tasks
+    //---------------------------------
+
+    
+    //---------------------------------
+    // 25mS Tasks 
+    if (twentyfive_mS_Flag) {
+      twentyfive_mS_Flag = false;
+
+      buttons = (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8) << 2) | (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9) << 1) | (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) << 0) ;
+      
+    }  // end of 25mS Tasks
+    //---------------------------------
+
+    
+    //---------------------------------
+    // 100mS Tasks 
+    if (hundred_mS_Flag) {
+      hundred_mS_Flag = false;
+
+      HAL_ADC_Start_IT(&hadc1);
+      
+    }  // end of 100mS Tasks
+    //---------------------------------
+
+    
+    //---------------------------------
+    // 1 Sec Tasks 
+    if (one_S_Flag) {
+      one_S_Flag = false;
+      
+      switch (ledSeq++) {
+      case 0:
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
+        break;
+      case 1:
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_SET);
+        break;
+      case 2:
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
+        break;
+      case 3:
+        HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_SET);
+        break;
+      case 4:
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
+        break;
+      case 5:
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
+        break;
+      case 6:
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_RESET);
+        break;
+      case 7:
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
+        break;
+      case 8:
+        HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_RESET);
+        break;
+      case 9:
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
+        ledSeq = 0;
+        break;
+      default:
+        break;
+      }
+      
+    } // end of 1Sec Tasks
+    //---------------------------------
+    if(ledSeq >= 9) ledSeq = 0;
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

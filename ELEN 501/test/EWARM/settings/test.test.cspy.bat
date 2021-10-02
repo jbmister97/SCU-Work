@@ -25,7 +25,7 @@ if not "%~1" == "" goto debugFile
 
 @echo on 
 
-"C:\Program Files\IAR Systems\Embedded Workbench 9.0\common\bin\cspybat" -f "C:\Users\Justin\Documents\Test\test\EWARM\settings\test.test.general.xcl" --backend -f "C:\Users\Justin\Documents\Test\test\EWARM\settings\test.test.driver.xcl" 
+"C:\Program Files\IAR Systems\Embedded Workbench 9.0\common\bin\cspybat" -f "C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\test\EWARM\settings\test.test.general.xcl" --backend -f "C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\test\EWARM\settings\test.test.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"C:\Program Files\IAR Systems\Embedded Workbench 9.0\common\bin\cspybat" -f "C:\Users\Justin\Documents\Test\test\EWARM\settings\test.test.general.xcl" "--debug_file=%~1" --backend -f "C:\Users\Justin\Documents\Test\test\EWARM\settings\test.test.driver.xcl" 
+"C:\Program Files\IAR Systems\Embedded Workbench 9.0\common\bin\cspybat" -f "C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\test\EWARM\settings\test.test.general.xcl" "--debug_file=%~1" --backend -f "C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\test\EWARM\settings\test.test.driver.xcl" 
 
 @echo off 
 :end

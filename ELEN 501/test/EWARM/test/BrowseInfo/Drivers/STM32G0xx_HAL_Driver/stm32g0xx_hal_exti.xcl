@@ -1,25 +1,25 @@
-"C:\Users\Justin\Documents\Test\test\Drivers\STM32G0xx_HAL_Driver\Src\stm32g0xx_hal_exti.c"
+"C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\test\Drivers\STM32G0xx_HAL_Driver\Src\stm32g0xx_hal_exti.c"
 -std=c11
 -ferror-limit=0
 -fbracket-depth=512
 -funsigned-char
 -MD
 -MF
-C:\Users\Justin\Documents\Test\test\EWARM\test\BrowseInfo\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_exti.pbi.dep
+C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\test\EWARM\test\BrowseInfo\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_exti.pbi.dep
 -o
-C:\Users\Justin\Documents\Test\test\EWARM\test\BrowseInfo\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_exti.pbi
+C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\test\EWARM\test\BrowseInfo\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_exti.pbi
 -I
-C:\Users\Justin\Documents\Test\test\Drivers\STM32G0xx_HAL_Driver\Src
+C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\test\Drivers\STM32G0xx_HAL_Driver\Src
 -I
-C:\Users\Justin\Documents\Test\test\EWARM/../Core/Inc
+C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\test\EWARM/../Core/Inc\
 -I
-C:\Users\Justin\Documents\Test\test\EWARM/../Drivers/STM32G0xx_HAL_Driver/Inc
+C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\test\EWARM/../Drivers/STM32G0xx_HAL_Driver/Inc\
 -I
-C:\Users\Justin\Documents\Test\test\EWARM/../Drivers/STM32G0xx_HAL_Driver/Inc/Legacy
+C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\test\EWARM/../Drivers/STM32G0xx_HAL_Driver/Inc/Legacy\
 -I
-C:\Users\Justin\Documents\Test\test\EWARM/../Drivers/CMSIS/Device/ST/STM32G0xx/Include
+C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\test\EWARM/../Drivers/CMSIS/Device/ST/STM32G0xx/Include\
 -I
-C:\Users\Justin\Documents\Test\test\EWARM/../Drivers/CMSIS/Include
+C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\test\EWARM/../Drivers/CMSIS/Include\
 -I
 C:\Program Files\IAR Systems\Embedded Workbench 9.0\arm\inc\c\aarch32
 -I
@@ -27,15 +27,15 @@ C:\Program Files\IAR Systems\Embedded Workbench 9.0\arm\inc
 -I
 C:\Program Files\IAR Systems\Embedded Workbench 9.0\arm\inc\c
 -I
-C:\Users\Justin\Documents\Test\test\Core\Inc
+C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\test\Core\Inc
 -I
-C:\Users\Justin\Documents\Test\test\Drivers\STM32G0xx_HAL_Driver\Inc
+C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\test\Drivers\STM32G0xx_HAL_Driver\Inc
 -I
-C:\Users\Justin\Documents\Test\test\Drivers\STM32G0xx_HAL_Driver\Inc\Legacy
+C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\test\Drivers\STM32G0xx_HAL_Driver\Inc\Legacy
 -I
-C:\Users\Justin\Documents\Test\test\Drivers\CMSIS\Device\ST\STM32G0xx\Include
+C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\test\Drivers\CMSIS\Device\ST\STM32G0xx\Include
 -I
-C:\Users\Justin\Documents\Test\test\Drivers\CMSIS\Include
+C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\test\Drivers\CMSIS\Include
 -D__CHAR_BITS__=8
 -D__CHAR_MAX__=0xff
 -D__CHAR_MIN__=0

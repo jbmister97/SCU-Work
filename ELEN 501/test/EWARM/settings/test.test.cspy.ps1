@@ -23,9 +23,9 @@
 
 if ($debugfile -eq "")
 {
-& "C:\Program Files\IAR Systems\Embedded Workbench 9.0\common\bin\cspybat" -f "C:\Users\Justin\Documents\Test\test\EWARM\settings\test.test.general.xcl" --backend -f "C:\Users\Justin\Documents\Test\test\EWARM\settings\test.test.driver.xcl" 
+& "C:\Program Files\IAR Systems\Embedded Workbench 9.0\common\bin\cspybat" -f "C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\test\EWARM\settings\test.test.general.xcl" --backend -f "C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\test\EWARM\settings\test.test.driver.xcl" 
 }
 else
 {
-& "C:\Program Files\IAR Systems\Embedded Workbench 9.0\common\bin\cspybat" -f "C:\Users\Justin\Documents\Test\test\EWARM\settings\test.test.general.xcl" --debug_file=$debugfile --backend -f "C:\Users\Justin\Documents\Test\test\EWARM\settings\test.test.driver.xcl" 
+& "C:\Program Files\IAR Systems\Embedded Workbench 9.0\common\bin\cspybat" -f "C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\test\EWARM\settings\test.test.general.xcl" --debug_file=$debugfile --backend -f "C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\test\EWARM\settings\test.test.driver.xcl" 
 }
