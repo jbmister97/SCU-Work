@@ -29,6 +29,12 @@ Global/module variables
 ***********************************************************************************************************************/
 extern uint8_t processKeyCode;
 extern uint8_t keyCodeProcessed;
+extern uint8_t rampRed;
+extern uint8_t rampGreen;
+extern uint8_t rampBlue;
+extern uint8_t led_state;
+
+extern uint16_t ledValue;
 
 extern UART_HandleTypeDef huart1;
 
@@ -55,12 +61,43 @@ void ProcessKeyCode(uint8_t _kcode)
     //kbdTest++;
     HAL_UART_Transmit(&huart1,testChar, 1, 1000);
     if (++testChar[0] > '}') testChar[0] = '!';
+    if(++led_state > 3) {led_state = 0;}
+    switch(led_state){
+    case 0:     // All LEDs cycling
+      rampRed = true;
+      rampGreen = true;
+      rampBlue = true;
+      break;
+    case 1:     // All LEDs stop cycling
+      rampRed = false;
+      rampGreen = false;
+      rampBlue = false;
+      break;
+    case 2:     // All LEDs at 50% duty cycle
+      rampRed = true;
+      rampGreen = true;
+      rampBlue = true;
+      ledValue = 32767;
+      break;
+    case 3:     // All LEDs off
+      rampRed = true;
+      rampGreen = true;
+      rampBlue = true;
+      ledValue = 0;
+      break;
+    default:
+      break;
+    }
     break;
   case 0x05:  //                2
-    kbdTest = 2;
+    //kbdTest = 2;
+    if(rampBlue) {rampBlue = false;}
+    else rampBlue = true;
     break;
   case 0x03:  //                3
-    kbdTest = 37;
+    //kbdTest = 37;
+    if(rampGreen) {rampGreen = false;}
+    else rampGreen = true;
     break;
   case 0x02:  // 2-key chords:  1+3
     kbdTest = 4;

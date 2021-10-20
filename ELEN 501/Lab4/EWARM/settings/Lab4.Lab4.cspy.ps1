@@ -23,9 +23,9 @@
 
 if ($debugfile -eq "")
 {
-& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.4\common\bin\cspybat" -f "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN501L\Lab4\EWARM\settings\Lab4.Lab4.general.xcl" --backend -f "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN501L\Lab4\EWARM\settings\Lab4.Lab4.driver.xcl" 
+& "C:\Program Files\IAR Systems\Embedded Workbench 9.0\common\bin\cspybat" -f "C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab4\EWARM\settings\Lab4.Lab4.general.xcl" --backend -f "C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab4\EWARM\settings\Lab4.Lab4.driver.xcl" 
 }
 else
 {
-& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.4\common\bin\cspybat" -f "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN501L\Lab4\EWARM\settings\Lab4.Lab4.general.xcl" --debug_file=$debugfile --backend -f "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN501L\Lab4\EWARM\settings\Lab4.Lab4.driver.xcl" 
+& "C:\Program Files\IAR Systems\Embedded Workbench 9.0\common\bin\cspybat" -f "C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab4\EWARM\settings\Lab4.Lab4.general.xcl" --debug_file=$debugfile --backend -f "C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab4\EWARM\settings\Lab4.Lab4.driver.xcl" 
 }

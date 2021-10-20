@@ -34,6 +34,9 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define LED_STEP                4
+#define LED_OFF_STATE           3
+#define LED_HALF_DUTY_VALUE     32767
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -62,18 +65,21 @@ TIM_OC_InitTypeDef rConfigOC = {0}; // timer 1
 TIM_OC_InitTypeDef gConfigOC = {0}; // timer 3
 TIM_OC_InitTypeDef bConfigOC = {0}; // timer 15
 
-#define LED_RAMP_TABLE half_sine_table_16_256
+//#define LED_RAMP_TABLE half_sine_table_16_256
 //#define LED_RAMP_TABLE linear_ramp_table_16_256
-//#define LED_RAMP_TABLE triangle_wave_table_16_256
+#define LED_RAMP_TABLE triangle_wave_table_16_256
 #define R_INDEX_START 0
 #define G_INDEX_START 86
 #define B_INDEX_START 172
 uint8_t rIndex = R_INDEX_START;
 uint8_t gIndex = G_INDEX_START;
 uint8_t bIndex = B_INDEX_START;
-uint8_t rampRed = true;
-uint8_t rampGreen = true;
-uint8_t rampBlue = true;
+uint8_t rampRed = false;
+uint8_t rampGreen = false;
+uint8_t rampBlue = false;
+uint8_t led_state = LED_OFF_STATE;          // Set led_state variable to be in off state upon startup
+
+uint16_t ledValue = 0;
 
 // Keyboard
 uint8_t keyCode = NO_KEY_PRESSED;
@@ -142,12 +148,14 @@ int main(void)
   HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start_IT(&htim1, TIM_CHANNEL_2);
 
+  /*
   SetRedLedLevel(38000);
   SetGreenLedLevel(38000);
   SetBlueLedLevel(38000);
   
   
   while(1);
+*/
   
   /* USER CODE END 2 */
 
@@ -189,18 +197,27 @@ int main(void)
       HAL_ADC_Start_IT(&hadc1);
       
       if (rampRed == true) {
-        SetRedLedLevel(LED_RAMP_TABLE[rIndex]);
-        rIndex++;
+        if((led_state == 0) || (led_state == 1)) {    // Normal cycling
+          SetRedLedLevel(LED_RAMP_TABLE[rIndex]);       
+          rIndex += LED_STEP;
+        }
+        else {SetRedLedLevel(ledValue);}        // Off or half-duty state
       }
       
       if (rampGreen == true) {
-        SetGreenLedLevel(LED_RAMP_TABLE[gIndex]);
-        gIndex++;
+        if((led_state == 0) || (led_state == 1)) {    // Normal cycling
+          SetGreenLedLevel(LED_RAMP_TABLE[gIndex]);       
+          gIndex += LED_STEP;
+        }
+        else {SetGreenLedLevel(ledValue);}        // Off or half-duty state
       }
 
       if (rampBlue == true) {
-        SetBlueLedLevel(LED_RAMP_TABLE[bIndex]);
-        bIndex++;
+        if((led_state == 0) || (led_state == 1)) {    // Normal cycling
+          SetBlueLedLevel(LED_RAMP_TABLE[bIndex]);       
+          bIndex += LED_STEP;
+        }
+        else {SetBlueLedLevel(ledValue);}        // Off or half-duty state
       }
       
     }  // end of 100mS Tasks
@@ -678,7 +695,24 @@ void InitValuesPWM(void)
   
 }
 
-void SetRedLedLevel(uint16_t r_level)
+void SetRedLedLevel(uint16_t b_level)
+{
+  TIM_OC_InitTypeDef sConfigOC = {0};
+
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = b_level;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
+  sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
+
+  HAL_TIM_PWM_Stop(&htim15, TIM_CHANNEL_1);
+  HAL_TIM_PWM_ConfigChannel(&htim15, &sConfigOC, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_1);
+}
+
+void SetBlueLedLevel(uint16_t r_level)
 {
   TIM_OC_InitTypeDef sConfigOC = {0};
  
@@ -707,23 +741,6 @@ void SetGreenLedLevel(uint16_t g_level)
   HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
   HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
-}
-
-void SetBlueLedLevel(uint16_t b_level)
-{
-  TIM_OC_InitTypeDef sConfigOC = {0};
-
-  sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = b_level;
-  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
-  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-  sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
-  sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
-
-  HAL_TIM_PWM_Stop(&htim15, TIM_CHANNEL_1);
-  HAL_TIM_PWM_ConfigChannel(&htim15, &sConfigOC, TIM_CHANNEL_1);
-  HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_1);
 }
 
 /* USER CODE END 4 */
