@@ -24,6 +24,10 @@
 /* USER CODE BEGIN Includes */
 #include "KeyboardHoldRepeat.h"
 #include "waveform_16.h"
+#include "serial.h"
+#include "serial_user.h"
+#include "ASCII_numbers.h"
+#include "stm32g0xx_ll_usart.h"
     
 /* USER CODE END Includes */
 
@@ -60,6 +64,21 @@ extern uint8_t twentyfive_mS_Flag;
 extern uint8_t hundred_mS_Flag;
 extern uint8_t one_S_Flag;
 
+// Comm interface
+extern uint8_t processPacket;
+
+// system variables
+volatile uint16_t serialValue = 23;
+
+// UI
+uint8_t flashLED = false;
+uint8_t buttonPushed = false;
+uint16_t flashDelay = 1000;
+uint16_t flashDelaySeed = 1000;
+uint8_t flashAtSpeed = false;
+uint16_t number = 43;
+uint8_t errcode = 0;
+
 // LED Control
 TIM_OC_InitTypeDef rConfigOC = {0}; // timer 1
 TIM_OC_InitTypeDef gConfigOC = {0}; // timer 3
@@ -78,8 +97,14 @@ uint8_t rampRed = false;
 uint8_t rampGreen = false;
 uint8_t rampBlue = false;
 uint8_t led_state = LED_OFF_STATE;          // Set led_state variable to be in off state upon startup
+uint8_t greenPause_flag = false;
+uint8_t bluePause_flag = false;
+uint8_t customValue_flag = false;
 
 uint16_t ledValue = 0;
+uint16_t redValue = 0;
+uint16_t greenValue = 0;
+uint16_t blueValue = 0;
 
 // Keyboard
 uint8_t keyCode = NO_KEY_PRESSED;
@@ -141,21 +166,14 @@ int main(void)
   MX_TIM15_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  HAL_UART_Transmit(&huart1,"Mornin'!\r\n", 10, 1000);
+  LL_USART_EnableIT_RXNE_RXFNE(USART1);
+  SendString("\r\nBongiorno!\r\n", 14, StripZeros, AddCRLF);
+  //HAL_UART_Transmit(&huart1,"Mornin'!\r\n", 10, 1000);
   void InitValuesPWM(void);
   
   HAL_TIM_PWM_Start_IT(&htim15, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start_IT(&htim1, TIM_CHANNEL_2);
-
-  /*
-  SetRedLedLevel(38000);
-  SetGreenLedLevel(38000);
-  SetBlueLedLevel(38000);
-  
-  
-  while(1);
-*/
   
   /* USER CODE END 2 */
 
@@ -197,27 +215,29 @@ int main(void)
       HAL_ADC_Start_IT(&hadc1);
       
       if (rampRed == true) {
-        if((led_state == 0) || (led_state == 1)) {    // Normal cycling
+        if(customValue_flag) {SetRedLedLevel(ledValue);}
+        else if(led_state == 0) {    // Normal cycling
           SetRedLedLevel(LED_RAMP_TABLE[rIndex]);       
           rIndex += LED_STEP;
         }
-        else {SetRedLedLevel(ledValue);}        // Off or half-duty state
       }
       
       if (rampGreen == true) {
-        if((led_state == 0) || (led_state == 1)) {    // Normal cycling
+        if(greenPause_flag == true) {SetGreenLedLevel(LED_RAMP_TABLE[gIndex]);} // Hold value if pausing LED
+        else if(customValue_flag) {SetGreenLedLevel(ledValue);}
+        else if(led_state == 0) {    // Normal cycling
           SetGreenLedLevel(LED_RAMP_TABLE[gIndex]);       
           gIndex += LED_STEP;
         }
-        else {SetGreenLedLevel(ledValue);}        // Off or half-duty state
       }
 
       if (rampBlue == true) {
-        if((led_state == 0) || (led_state == 1)) {    // Normal cycling
+        if(bluePause_flag == true) {SetBlueLedLevel(LED_RAMP_TABLE[bIndex]);} // Hold value if pausing LED
+        else if(customValue_flag) {SetBlueLedLevel(ledValue);}
+        else if(led_state == 0) {    // Normal cycling
           SetBlueLedLevel(LED_RAMP_TABLE[bIndex]);       
           bIndex += LED_STEP;
         }
-        else {SetBlueLedLevel(ledValue);}        // Off or half-duty state
       }
       
     }  // end of 100mS Tasks
@@ -238,6 +258,46 @@ int main(void)
     //---------------------------------
     // Every time through the loop
     
+    switch(led_state){
+    case 0:     // All LEDs cycling
+      rampRed = true;
+      rampGreen = true;
+      rampBlue = true;
+      break;
+    case 1:     // All LEDs stop cycling
+      rampRed = false;
+      rampGreen = false;
+      rampBlue = false;
+      break;
+    case 2:     // All LEDs at 50% duty cycle
+      rampRed = false;
+      rampGreen = false;
+      rampBlue = false;
+      SetRedLedLevel(32767);
+      SetGreenLedLevel(32767);
+      SetBlueLedLevel(32767);
+      break;
+    case 3:     // All LEDs off
+      rampRed = false;
+      rampGreen = false;
+      rampBlue = false;
+      SetRedLedLevel(0);
+      SetGreenLedLevel(0);
+      SetBlueLedLevel(0);
+      break;
+    default:
+      break;
+    }
+    
+    if (nextSerialRxIn != nextSerialRx2Proc) {
+      ProcessReceiveBuffer();
+    }
+    
+    if (processPacket == true) {
+      processPacket = false;
+      
+      ProcessPacket();
+    }
     // end Every time through the loop
     //---------------------------------
         
@@ -695,12 +755,13 @@ void InitValuesPWM(void)
   
 }
 
-void SetRedLedLevel(uint16_t b_level)
+void SetRedLedLevel(uint16_t r_level)
 {
   TIM_OC_InitTypeDef sConfigOC = {0};
+  redValue = r_level;
 
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = b_level;
+  sConfigOC.Pulse = r_level;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
@@ -712,12 +773,13 @@ void SetRedLedLevel(uint16_t b_level)
   HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_1);
 }
 
-void SetBlueLedLevel(uint16_t r_level)
+void SetBlueLedLevel(uint16_t b_level)
 {
   TIM_OC_InitTypeDef sConfigOC = {0};
+  blueValue = b_level;
  
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = r_level;
+  sConfigOC.Pulse = b_level;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
@@ -732,6 +794,7 @@ void SetBlueLedLevel(uint16_t r_level)
 void SetGreenLedLevel(uint16_t g_level)
 {
   TIM_OC_InitTypeDef sConfigOC = {0};
+  greenValue = g_level;
  
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
   sConfigOC.Pulse = g_level;

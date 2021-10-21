@@ -16,6 +16,7 @@ Includes
 #include <stdio.h>
 #include <string.h>
 #include <stdint.h>
+#include "Serial.h"
 
 
 
@@ -33,6 +34,9 @@ extern uint8_t rampRed;
 extern uint8_t rampGreen;
 extern uint8_t rampBlue;
 extern uint8_t led_state;
+extern uint8_t greenPause_flag;
+extern uint8_t bluePause_flag;
+extern uint8_t customValue_flag;
 
 extern uint16_t ledValue;
 
@@ -56,48 +60,50 @@ void ProcessKeyCode(uint8_t _kcode)
   //kbdTest = 27;
   
   switch (_kcode) {
-  case 0x06:  // single keys:   1
-    //kbdTest = 1;
-    //kbdTest++;
-    HAL_UART_Transmit(&huart1,testChar, 1, 1000);
-    if (++testChar[0] > '}') testChar[0] = '!';
-    if(++led_state > 3) {led_state = 0;}
-    switch(led_state){
-    case 0:     // All LEDs cycling
-      rampRed = true;
-      rampGreen = true;
-      rampBlue = true;
+  case 0x06:  // On-board user button pressed
+    led_state++;
+    if(led_state > 3) {led_state = 0;}
+    customValue_flag = false;
+    switch(led_state) {
+    case 0:
+      SendString("All LEDs cycling", 16, StripZeros, AddCRLF);
       break;
-    case 1:     // All LEDs stop cycling
-      rampRed = false;
-      rampGreen = false;
-      rampBlue = false;
+    case 1:
+      SendString("All LEDs stopped", 16, StripZeros, AddCRLF);
       break;
-    case 2:     // All LEDs at 50% duty cycle
-      rampRed = true;
-      rampGreen = true;
-      rampBlue = true;
-      ledValue = 32767;
+    case 2:
+      SendString("50% duty cycle", 14, StripZeros, AddCRLF);
       break;
-    case 3:     // All LEDs off
-      rampRed = true;
-      rampGreen = true;
-      rampBlue = true;
-      ledValue = 0;
+    case 3:
+      SendString("All LEDs off", 12, StripZeros, AddCRLF);
       break;
     default:
       break;
     }
     break;
-  case 0x05:  //                2
-    //kbdTest = 2;
-    if(rampBlue) {rampBlue = false;}
-    else rampBlue = true;
+  case 0x05:  // External button on D8 pressed
+    if(bluePause_flag) {
+      bluePause_flag = false;
+      SendString("Resuming blue LED cycling", 25, StripZeros, AddCRLF);
+    }
+    else {
+      bluePause_flag = true;
+      SendString("Pausing blue LED cycling", 24, StripZeros, AddCRLF);
+    }
+    customValue_flag = false;
+    
     break;
-  case 0x03:  //                3
-    //kbdTest = 37;
-    if(rampGreen) {rampGreen = false;}
-    else rampGreen = true;
+  case 0x03:  // External button on D7 pressed
+    if(greenPause_flag) {
+      greenPause_flag = false;
+      SendString("Resuming green LED cycling", 26, StripZeros, AddCRLF);
+    }
+    else {
+      greenPause_flag = true;
+      SendString("Pausing green LED cycling", 25, StripZeros, AddCRLF);
+    }
+    customValue_flag = false;
+    
     break;
   case 0x02:  // 2-key chords:  1+3
     kbdTest = 4;
