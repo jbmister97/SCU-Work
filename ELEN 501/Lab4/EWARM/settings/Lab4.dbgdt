@@ -155,7 +155,7 @@
                     <item>gOut[ARR_SIZE]</item>
                     <item>bOut[ARR_SIZE]</item>
                     <item>packetBuffer[16]</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>

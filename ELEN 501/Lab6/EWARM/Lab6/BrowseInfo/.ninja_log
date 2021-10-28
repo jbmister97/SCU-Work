@@ -1,0 +1,237 @@
+# ninja log v5
+750	1138	6571058730000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal.xcl	4b85a21122b4ab9e
+401	690	6571058730000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/stm32g0xx_it.xcl	f801f5f826d452d3
+1521	1832	6571058740000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc_ex.xcl	d8721f8411c3b2bb
+8212	10250	6571076763272895	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_rcc_ex.pbi	4d75b7107fc1409c
+22	2311	6571076519222922	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/stm32g0xx_hal_msp.pbi	a626a982a996077
+990	1339	6571058730000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/CMSIS/system_stm32g0xx.xcl	fd148d4febba3c4b
+8648	10406	6571076764928837	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_gpio.pbi	f938f4ee3625afc
+1092	1409	6571058730000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc.xcl	c4a3ac2e76f42d2c
+2182	2514	6571058740000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_rcc_ex.xcl	c35aa70ea4879e03
+1760	2120	6571058740000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_flash_ex.xcl	5c4b9673ad2d99cc
+1158	1471	6571058730000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_cortex.xcl	424209445ee975bb
+1214	1500	6571058730000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_dma.xcl	adb377efeec44c7f
+1494	1778	6571058740000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_dma_ex.xcl	d01c28131e607587
+3539	5264	6571079801663386	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbd	90101b0c6b1d5eaa
+14353	14810	6571076809219852	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part5.pbi	d74ebabedaea5784
+1434	1739	6571058740000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_flash.xcl	8ef4665910eb414d
+3248	3588	6571058760000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_rcc.xcl	a23f71e69b37e501
+1999	2339	6571058740000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_gpio.xcl	af78654782e19246
+2362	2675	6571058750000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_tim_ex.xcl	3617521cd105c713
+6007	7985	6571076740598113	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc_ex.pbi	973c0f7af1505cc
+1358	1632	6571058740000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_exti.xcl	9f858a06b8edb232
+11691	12600	6571076786928028	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_tim_ex.pbi	e5d4915bd5cc3938
+31	1691	6571079765759297	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/stm32g0xx_it.pbi	b844a621c63c460e
+1654	1973	6571058740000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_i2c_ex.xcl	906d7216afd382c8
+10413	11563	6571076776500680	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pwr.pbi	35eb0afd76283f59
+2233	2565	6571058740000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pwr_ex.xcl	761176a9907a3043
+2535	2882	6571058750000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_rcc.xcl	71fb021d4b4e1cc9
+10089	10176	6571058826420314	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_adc.pbi	2e1bee6e53140a02
+6063	8207	6571076742792974	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/SSD1306/fonts.pbi	37e7935f25ee3542
+1854	2210	6571058740000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pwr.xcl	897a658ada62c9ce
+1800	2159	6571058740000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_i2c.xcl	fd9cb66d1453dc1e
+2013	5235	6571078983039108	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbw	19113ea65fbba46b
+2142	2542	6571058740000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_uart.xcl	80074ab93b6c2ea2
+12673	13721	6571076798145616	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_uart.pbi	6ab2f2ec82eac67a
+2560	2855	6571058750000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_tim.xcl	2179e1e9968be80d
+4053	6594	6571076726479574	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal.pbi	bd80109abf1e6034
+11443	12285	6571076783789726	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_flash_ex.pbi	8ba759bd27a9604c
+2934	3226	6571058750000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_uart_ex.xcl	7418db8f3adcb374
+2585	2906	6571058750000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_adc.xcl	3d2a1f714fb144f9
+6	381	6571058720000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/stm32g0xx_hal_msp.xcl	4fabf2bb4f1c8bc5
+87	445	6571058720000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/main.xcl	bd8e6a0b80688a8
+12608	13766	6571076798794187	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part2.pbi	7792d2e0dea052ea
+7990	10263	6571076763322761	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_rcc.pbi	e9d4cc4218ca394
+4381	6691	6571076726449652	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/CMSIS/system_stm32g0xx.pbi	36f2bc4b02844775
+33	1841	6571076678904897	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/main.pbi	e133d66b3b0b94a8
+2900	3201	6571058750000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_dma.xcl	aec9e26fc69f1696
+12293	13437	6571076795296849	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_tim.pbi	b9c563eb03d8817e
+10614	11681	6571076777810795	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_exti.pbi	b60f6d5cc5a970f4
+3961	6056	6571076721233319	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc.pbi	2504089e2d1a2af0
+8793	10607	6571076766957123	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_cortex.pbi	8c42585f6b0bd4f3
+6701	8642	6571076747207892	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_dma_ex.pbi	b673fab643e9ba83
+13444	14594	6571076807071690	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part4.pbi	98b15a9db0c3652b
+10258	11486	6571076775696163	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_flash.pbi	750f950b114a0509
+6609	8782	6571076748643228	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_dma.pbi	c00982e58f75c119
+11571	12667	6571076787565223	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_i2c.pbi	5d09df4c6481041c
+10270	11437	6571076775263614	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_i2c_ex.pbi	c5e85b10e0ca204f
+11493	12329	6571076784192430	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pwr_ex.pbi	908f55f89ddb3655
+10897	11077	6571058835450622	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_dma.pbi	86a8fca2d34f1fb8
+12339	13233	6571076793236699	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_uart_ex.pbi	677edbcdfde0c7cb
+1699	3357	6571079782652259	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part0.pbi	af059719bb8dbd46
+1789	3490	6571079783937247	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part1.pbi	ac7a3e875f817d26
+13728	14855	6571076809675159	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part3.pbi	7666f7167080bb07
+11239	11433	6571058839062987	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_rcc.pbi	420932084bc84852
+92	344	6571058720000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/KeyboardHoldRepeat_User.xcl	cc7264a44d5a2240
+106	418	6571058720000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/serial_user.xcl	a0b722fae5b45756
+368	633	6571058730000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/ASCII_numbers.xcl	de2bfc651b4307fd
+466	729	6571058730000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/KeyboardHoldRepeat.xcl	dfba4f8a4767f6ac
+439	772	6571058730000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/Serial.xcl	6b59960a7216a390
+657	966	6571058730000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/ux_manager.xcl	7e84e140827b49d0
+709	1072	6571058730000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/SSD1306/ssd1306.xcl	f4772f1d217f03c4
+791	1194	6571058730000000	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/SSD1306/fonts.xcl	70b9c5a71be60ec3
+1783	4015	6571076700795189	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/KeyboardHoldRepeat_User.pbi	5c9e4cff0af76a96
+41	1766	6571076678265140	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/KeyboardHoldRepeat.pbi	8248cbad017c0adc
+52	1768	6571079766504451	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/serial_user.pbi	df88e15922f853d9
+2095	4376	6571076704573910	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/ux_manager.pbi	1b2a06039c6b1161
+1836	3805	6571076698765763	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/ASCII_numbers.pbi	fcc02af0c5560d6a
+47	1781	6571079766620202	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/Serial.pbi	41d3f35eaf8c26dc
+3811	6001	6571076720711802	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Drivers/SSD1306/ssd1306.pbi	b2e12517e1a85479
+14	5031	6571079912113652	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbw	19113ea65fbba46b
+11	562	6571082264613443	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/main.pbi	e133d66b3b0b94a8
+572	1216	6571082271320715	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part0.pbi	af059719bb8dbd46
+1232	2189	6571082280622680	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbd	90101b0c6b1d5eaa
+2199	7377	6571082332174754	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbw	19113ea65fbba46b
+30	1654	6571082709315398	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/main.pbi	e133d66b3b0b94a8
+1664	3198	6571082724960163	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part0.pbi	af059719bb8dbd46
+3212	4610	6571082739095415	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbd	90101b0c6b1d5eaa
+13	4573	6571082841309968	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbw	19113ea65fbba46b
+10	652	6571086516556581	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/main.pbi	e133d66b3b0b94a8
+659	1740	6571086527546047	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part0.pbi	af059719bb8dbd46
+1753	3494	6571086545101540	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbd	90101b0c6b1d5eaa
+3507	7887	6571086588377024	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbw	19113ea65fbba46b
+16	1546	6571087775330658	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/main.pbi	e133d66b3b0b94a8
+9	931	6571087896254809	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part0.pbi	af059719bb8dbd46
+947	1933	6571087906266326	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbd	90101b0c6b1d5eaa
+1947	6721	6571087953142218	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbw	19113ea65fbba46b
+33	1929	6571089419365518	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/KeyboardHoldRepeat_User.pbi	5c9e4cff0af76a96
+1943	3275	6571089433109870	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part0.pbi	af059719bb8dbd46
+3321	5281	6571089453112581	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbd	90101b0c6b1d5eaa
+18	5994	6571089572499113	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbw	19113ea65fbba46b
+92	296	6571337790000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/serial_user.xcl	5035cf2638bf5e3f
+61	309	6571337790000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/main.xcl	dfe70e0b06043cb
+76	323	6571337790000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/ux_manager.xcl	8e588738c77cd74f
+4	336	6571337790000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/stm32g0xx_it.xcl	e3971660b23f66c8
+84	350	6571337790000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/Serial.xcl	565fc8f90e362120
+66	365	6571337790000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/stm32g0xx_hal_msp.xcl	39e66e9372cf4aba
+102	388	6571337790000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/KeyboardHoldRepeat.xcl	4e8b45a8a0382b4d
+317	416	6571337790000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/SSD1306/fonts.xcl	5a335aa9802ad45d
+305	431	6571337790000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/KeyboardHoldRepeat_User.xcl	dacf3116e54eab4f
+70	448	6571337790000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/ASCII_numbers.xcl	e36703795e4aaa12
+331	463	6571337790000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc.xcl	1ba06df1d64686c6
+345	479	6571337790000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal.xcl	ffb0c1b9a8b8f415
+360	494	6571337790000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/SSD1306/ssd1306.xcl	cfb987c91135055d
+376	509	6571337790000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/CMSIS/system_stm32g0xx.xcl	93022b45dd20886e
+426	525	6571337790000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_dma.xcl	1c84e47846f5cc26
+398	541	6571337790000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_flash.xcl	b4f1d9db261e6055
+442	570	6571337790000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_cortex.xcl	339c6d5ae3da69b1
+458	588	6571337790000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_dma_ex.xcl	9a6127ee93cf0c53
+474	635	6571337800000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_exti.xcl	6ed5965539690d1f
+489	651	6571337800000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc_ex.xcl	76b21bebcf79ccc2
+536	666	6571337800000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pwr.xcl	d3a129366ede98bb
+550	680	6571337800000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_i2c_ex.xcl	52e40dfd16830bd1
+581	695	6571337800000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pwr_ex.xcl	e610a85134660746
+519	711	6571337800000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_flash_ex.xcl	5aaa37217a2b2e06
+599	726	6571337800000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_gpio.xcl	a98a9a78efb3bdff
+504	741	6571337800000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_i2c.xcl	f051240f01356e41
+676	804	6571337800000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_rcc.xcl	5c9173da295259c4
+690	821	6571337800000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_tim.xcl	1edad0b2dafaacf2
+645	836	6571337800000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_uart_ex.xcl	4e7ffae79d1deca2
+660	854	6571337800000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_uart.xcl	680c21ad45eaedcc
+706	878	6571337800000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_rcc_ex.xcl	696a2df79afe570e
+736	893	6571337800000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_rcc.xcl	bc28f1f186586995
+721	909	6571337800000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_tim_ex.xcl	ac9caa8559acd282
+847	936	6571337800000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_adc.xcl	ba8415e8be2825f1
+865	951	6571337800000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_dma.xcl	2287af3a67a4128
+816	1163	6571337805388778	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/stm32g0xx_hal_msp.pbi	1a23b64fb8f314fe
+831	1209	6571337805859204	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/stm32g0xx_it.pbi	14fbf11186bbe268
+753	1217	6571337805939280	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/main.pbi	e272fa331b8b4c26
+887	1229	6571337806059398	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/KeyboardHoldRepeat_User.pbi	1f3b6c4d6d5c8c6e
+919	1272	6571337806479769	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/ux_manager.pbi	28754faf528aa88c
+904	1279	6571337806519805	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/serial_user.pbi	2c8742fd9c939067
+961	1293	6571337806699974	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/KeyboardHoldRepeat.pbi	684b108b36757741
+945	1315	6571337806910166	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/Serial.pbi	d90a5fd8fac67fda
+1212	1530	6571337809072131	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_cortex.pbi	94effc8c5e27fc34
+1232	1559	6571337809352388	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal.pbi	b1c62e41050a8acf
+1219	1569	6571337809452483	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/SSD1306/ssd1306.pbi	f9a3d43774ef80e1
+1166	1608	6571337809852841	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/ASCII_numbers.pbi	93139a97b78e03e8
+1281	1617	6571337809912899	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/CMSIS/system_stm32g0xx.pbi	4c25c4a4721a3304
+1274	1627	6571337810033021	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc.pbi	34762eda7ad6f09
+1317	1672	6571337810483419	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/SSD1306/fonts.pbi	ace38a2a587b7a8b
+1297	1743	6571337811194063	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc_ex.pbi	735f60b50c46224
+1561	1877	6571337812530326	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_flash_ex.pbi	fe4d2dff369b8d92
+1572	1888	6571337812640421	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_i2c_ex.pbi	f9185584b08aa32
+1619	1928	6571337813050807	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_rcc_ex.pbi	b912416607b392f6
+1611	1935	6571337813040794	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pwr_ex.pbi	da70bbc3669afb7
+1533	1944	6571337813060811	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_i2c.pbi	acc4fc13dec9917d
+1630	1954	6571337813301034	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_gpio.pbi	b612878acae2f76c
+1675	1990	6571337813661361	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pwr.pbi	847d1943a829f5a8
+1746	2060	6571337814301940	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_dma_ex.pbi	81d02959ef6e6112
+1880	2203	6571337815793292	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_dma.pbi	d094b3dc9e78f73f
+1890	2219	6571337815953443	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_rcc.pbi	4d7fdc7437be1cb9
+2222	2253	6571337816293749	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_adc.pbi	c8463c56acfcad35
+1947	2271	6571337816473920	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_flash.pbi	432d599596371323
+1957	2301	6571337816774211	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_tim_ex.pbi	a92f1dfd152f5a48
+2273	2308	6571337816834255	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_dma.pbi	2303040bc878cc5d
+2303	2337	6571337817134516	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_rcc.pbi	f802be72f8b23571
+1931	2350	6571337817264634	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_tim.pbi	69df9f5b14c50522
+1939	2371	6571337817474831	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_exti.pbi	68305a440c357bca
+2063	2390	6571337817665001	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_uart_ex.pbi	b9ad6ef3cc50cee2
+1993	2443	6571337818205491	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part0.pbi	8f74618206585365
+2206	2586	6571337819626785	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part2.pbi	896bb6db2bfd1cb9
+2256	2603	6571337819796940	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_uart.pbi	a56ce7c02d0a84d8
+2311	2658	6571337820347447	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part1.pbi	627a06a3b957767
+2352	2687	6571337820637712	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part4.pbi	cae70e5bcfcf16ed
+2373	2693	6571337820697762	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part3.pbi	7a4e1d4ab7d79962
+2605	2733	6571337821108137	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part5.pbi	e42c8813f60292d2
+2738	3021	6571337823977068	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbd	3ca6c77a30f94d8a
+3025	4666	6571337839994442	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbw	3c0a96c475d74f2c
+6	331	6571369009200754	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/main.pbi	e272fa331b8b4c26
+333	642	6571369012313213	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part0.pbi	8f74618206585365
+648	932	6571369015220582	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbd	3ca6c77a30f94d8a
+937	2376	6571369029181775	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbw	3c0a96c475d74f2c
+5	313	6571370695282308	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/main.pbi	e272fa331b8b4c26
+315	620	6571370698338443	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part0.pbi	8f74618206585365
+625	911	6571370701260773	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbd	3ca6c77a30f94d8a
+915	2376	6571370715432438	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbw	3c0a96c475d74f2c
+5	259	6571379086531124	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/KeyboardHoldRepeat_User.pbi	1f3b6c4d6d5c8c6e
+261	563	6571379089578365	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part0.pbi	8f74618206585365
+569	851	6571379092460861	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbd	3ca6c77a30f94d8a
+855	2315	6571379106543531	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbw	3c0a96c475d74f2c
+5	315	6571379664815911	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/main.pbi	e272fa331b8b4c26
+317	605	6571379667715186	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part0.pbi	8f74618206585365
+611	896	6571379670625557	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbd	3ca6c77a30f94d8a
+900	2346	6571379684575138	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbw	3c0a96c475d74f2c
+5	303	6571379789305819	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/main.pbi	e272fa331b8b4c26
+5	299	6571379843258170	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part0.pbi	8f74618206585365
+304	589	6571379846150644	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbd	3ca6c77a30f94d8a
+593	2008	6571379859917851	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbw	3c0a96c475d74f2c
+5	312	6571383288933962	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/main.pbi	e272fa331b8b4c26
+314	615	6571383291963477	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part0.pbi	8f74618206585365
+620	922	6571383295036094	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbd	3ca6c77a30f94d8a
+5	1403	6571383367440777	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbw	3c0a96c475d74f2c
+9	292	6571383672943781	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/ux_manager.pbi	28754faf528aa88c
+5	332	6571383673354136	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/main.pbi	e272fa331b8b4c26
+294	591	6571383675946331	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part1.pbi	627a06a3b957767
+334	632	6571383676346673	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part0.pbi	8f74618206585365
+637	919	6571383679221379	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbd	3ca6c77a30f94d8a
+923	2350	6571383692993694	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbw	3c0a96c475d74f2c
+5	314	6571387122590947	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/main.pbi	e272fa331b8b4c26
+6	262	6571387178416169	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/KeyboardHoldRepeat_User.pbi	1f3b6c4d6d5c8c6e
+264	553	6571387181333702	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part0.pbi	8f74618206585365
+557	838	6571387184186127	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbd	3ca6c77a30f94d8a
+6	1414	6571387249917868	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbw	3c0a96c475d74f2c
+5	282	6571389670884488	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Modules/ux_manager.pbi	28754faf528aa88c
+284	590	6571389673971597	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part1.pbi	627a06a3b957767
+594	874	6571389676812599	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbd	3ca6c77a30f94d8a
+878	2304	6571389690668084	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbw	3c0a96c475d74f2c
+6	315	6571391709263359	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/main.pbi	e272fa331b8b4c26
+318	616	6571391712285924	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part0.pbi	8f74618206585365
+622	915	6571391715258465	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbd	3ca6c77a30f94d8a
+5	1403	6571391782818185	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbw	3c0a96c475d74f2c
+5	309	6571392138813062	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/main.pbi	e272fa331b8b4c26
+5	293	6571392192889566	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part0.pbi	8f74618206585365
+298	578	6571392195741993	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbd	3ca6c77a30f94d8a
+582	2007	6571392209624968	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbw	3c0a96c475d74f2c
+5	312	6571393069607139	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/main.pbi	e272fa331b8b4c26
+314	608	6571393072579667	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part0.pbi	8f74618206585365
+614	899	6571393075482133	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbd	3ca6c77a30f94d8a
+903	2353	6571393089574096	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbw	3c0a96c475d74f2c
+5	304	6571393849182088	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/main.pbi	e272fa331b8b4c26
+307	592	6571393852051962	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part0.pbi	8f74618206585365
+598	879	6571393854921596	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbd	3ca6c77a30f94d8a
+883	2321	6571393868929499	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbw	3c0a96c475d74f2c
+5	308	6571393973583255	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Application/User/Core/main.pbi	e272fa331b8b4c26
+311	610	6571393976595950	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6_part0.pbi	8f74618206585365
+615	897	6571393979468394	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbd	3ca6c77a30f94d8a
+902	2293	6571393992991199	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/Lab6/EWARM/Lab6/BrowseInfo/Lab6.pbw	3c0a96c475d74f2c
