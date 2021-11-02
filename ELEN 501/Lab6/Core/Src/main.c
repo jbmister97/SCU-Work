@@ -91,6 +91,14 @@ uint8_t skipNumber = 8;
 // Keyboard
 uint8_t keyCode = NO_KEY_PRESSED;
 
+// Display
+DWfloat temperature = {"%4.1f", "----", 0, 0, true, 72.2};
+extern DWfloat humidity;
+DWint8_t count = {"%3d", "----", 0, 0, true, 0};
+DWstring units = {"%s", "----", 0, 0, true, "None"};
+DWstring message = {"%s", "----", 0, 0, true, "None"};
+uint8_t unitChoices[2][5] = {"DegF", "DegC"};
+uint16_t screenTime = 0;
 
 /* USER CODE END PV */
 
@@ -175,9 +183,9 @@ int main(void)
 //  SSD1306_Puts ("22.3", &Font_16x26, SSD1306_COLOR_WHITE);
   SSD1306_UpdateScreen(); 
   
-  HAL_Delay (2000);
+  HAL_Delay (4500);
   
-  SwitchScreens(MAIN);
+  SwitchScreens(HOME);
   
   /* USER CODE END 2 */
 
@@ -244,6 +252,7 @@ int main(void)
     if (one_S_Flag) {
       one_S_Flag = false;
       UpdateScreenValues();
+      count.data++;
      
     } // end of 1Sec Tasks
     //---------------------------------

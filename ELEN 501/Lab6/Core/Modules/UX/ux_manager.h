@@ -12,10 +12,10 @@
 
 // typedefs
 typedef enum  Screens_{
-  MAIN,
-  SHOW_TEMP,
-  SHOW_HUM,
-  SET_TEMP,
+  HOME,
+  DETAIL,
+  SETTINGS,
+  MESSAGE,
   SET_HUM,
   SET_TIME,
 //  NUMBER_OF_SCREENS
