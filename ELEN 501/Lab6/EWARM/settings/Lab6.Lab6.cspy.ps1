@@ -23,9 +23,9 @@
 
 if ($debugfile -eq "")
 {
-& "C:\Program Files\IAR Systems\Embedded Workbench 9.0\common\bin\cspybat" -f "C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\EWARM\settings\Lab6.Lab6.general.xcl" --backend -f "C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\EWARM\settings\Lab6.Lab6.driver.xcl" 
+& "C:\Program Files\IAR Systems\Embedded Workbench 9.0\common\bin\cspybat" -f "C:\GitHub\SCU-Work\ELEN 501\Lab6\EWARM\settings\Lab6.Lab6.general.xcl" --backend -f "C:\GitHub\SCU-Work\ELEN 501\Lab6\EWARM\settings\Lab6.Lab6.driver.xcl" 
 }
 else
 {
-& "C:\Program Files\IAR Systems\Embedded Workbench 9.0\common\bin\cspybat" -f "C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\EWARM\settings\Lab6.Lab6.general.xcl" --debug_file=$debugfile --backend -f "C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\EWARM\settings\Lab6.Lab6.driver.xcl" 
+& "C:\Program Files\IAR Systems\Embedded Workbench 9.0\common\bin\cspybat" -f "C:\GitHub\SCU-Work\ELEN 501\Lab6\EWARM\settings\Lab6.Lab6.general.xcl" --debug_file=$debugfile --backend -f "C:\GitHub\SCU-Work\ELEN 501\Lab6\EWARM\settings\Lab6.Lab6.driver.xcl" 
 }

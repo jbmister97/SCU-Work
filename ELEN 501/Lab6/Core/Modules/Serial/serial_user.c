@@ -1,14 +1,21 @@
 // serial_user.c
 
+#include <stdio.h>
 #include "serial.h"
 #include "serial_user.h"
 #include "ASCII_numbers.h"
+#include "ux_manager.h"
+
+#define PACKET_BUFFER_SIZE      27
 
 
-uint8_t packetBuffer[16];
+uint8_t packetBuffer[PACKET_BUFFER_SIZE];
 uint8_t inPacket = false;
 uint8_t nextPacketChar = 0;
 uint8_t processPacket = false;
+
+uint8_t textOut[10];
+float tempF = 0;
 
 extern uint8_t flashLED;
 extern uint8_t buttonPushed;
@@ -16,8 +23,9 @@ extern uint16_t flashDelay;
 extern uint16_t flashDelaySeed;
 extern uint8_t flashAtSpeed;
 extern uint16_t serialValue;
-
-
+extern DWfloat temperature;
+extern DWstring message;
+extern DWstring units;
 
 // function to process the input buffer
 uint8_t ProcessReceiveBuffer(void)
@@ -62,30 +70,36 @@ uint8_t ProcessPacket(void)
   switch (packetBuffer[1]) {
   // list of commands
   // each command has intentional fallthru for upper/lower case
-  case 'r':     // r = turn on LED
+  case 'r':     // r = Change the temperature to given value
   case 'R':     
-//    HAL_GPIO_WritePin(BOARD_MOUNTED_LED, GPIO_PIN_SET);
-    flashLED = false;
-    flashAtSpeed = false;
+    temperature.data = atof(&packetBuffer[2]);
     break;
-  case 's':     // s = turn off LED
+  case 's':     // s = Report humidity number
   case 'S':
-//    HAL_GPIO_WritePin(BOARD_MOUNTED_LED, GPIO_PIN_RESET);
-    flashLED = false;
-    flashAtSpeed = false;
+    for(uint8_t i = 0; i < sizeof(textOut); i++){textOut[i] = '\0';}
+    sprintf((char *)textOut, humidity.format, humidity.data);
+    SendString((char *)textOut, sizeof(textOut), StripZeros, AddCRLF);
   break;
-  case 't':     // t = toggle LED
+  case 't':     // t = Receive and display message
   case 'T':
-//    HAL_GPIO_TogglePin(BOARD_MOUNTED_LED);
-    flashLED = false;
-    flashAtSpeed = false;
+    for(uint8_t i = 0; i < sizeof(message.data); i++) {message.data[i] = '\0';}
+    for(uint8_t i = 2; i < PACKET_BUFFER_SIZE; i++) {
+      if(packetBuffer[i] == '\n') {break;}
+      else {message.data[i-2] = packetBuffer[i];}
+    }
+    SwitchScreens(MESSAGE);
     break;
-  case 'u':     // u = flash LED at speed (the number entered is the on and off time in 10mS 
-  case 'U':     // increments, so a value of 100 is 1 sec on and 1 sec off
-    flashLED = false;
-    flashAtSpeed = true;
-    ConvertASCII2UINT16((char const *)&packetBuffer[2], 5, '\n', &flashDelaySeed);
-    flashDelay = flashDelaySeed;
+  case 'u':     // u = Toggle between celcius and fahrenheit
+  case 'U':     
+    if(units.data[3] == 'C') {
+      units.data[3] = 'F';
+      temperature.data = tempF;
+    }
+    else if (units.data[3] == 'F') {
+      tempF = temperature.data;
+      units.data[3] = 'C';
+      temperature.data = (-32.0)*(5.0/9.0);
+    }
     break;
   case 'v':     // v = check switch press
   case 'V':

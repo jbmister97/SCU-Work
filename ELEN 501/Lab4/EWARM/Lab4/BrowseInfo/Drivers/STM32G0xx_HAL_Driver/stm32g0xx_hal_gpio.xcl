@@ -1,27 +1,27 @@
-"C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab4\Drivers\STM32G0xx_HAL_Driver\Src\stm32g0xx_hal_gpio.c"
+"C:\GitHub\SCU-Work\ELEN 501\Lab4\Drivers\STM32G0xx_HAL_Driver\Src\stm32g0xx_hal_gpio.c"
 -std=c11
 -ferror-limit=0
 -fbracket-depth=512
 -funsigned-char
 -MD
 -MF
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab4\EWARM\Lab4\BrowseInfo\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_gpio.pbi.dep
+C:\GitHub\SCU-Work\ELEN 501\Lab4\EWARM\Lab4\BrowseInfo\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_gpio.pbi.dep
 -o
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab4\EWARM\Lab4\BrowseInfo\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_gpio.pbi
+C:\GitHub\SCU-Work\ELEN 501\Lab4\EWARM\Lab4\BrowseInfo\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_gpio.pbi
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab4\Drivers\STM32G0xx_HAL_Driver\Src
+C:\GitHub\SCU-Work\ELEN 501\Lab4\Drivers\STM32G0xx_HAL_Driver\Src
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab4\EWARM/../Core/Inc\
+C:\GitHub\SCU-Work\ELEN 501\Lab4\EWARM/../Core/Inc\
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab4\EWARM/../Drivers/STM32G0xx_HAL_Driver/Inc\
+C:\GitHub\SCU-Work\ELEN 501\Lab4\EWARM/../Drivers/STM32G0xx_HAL_Driver/Inc\
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab4\EWARM/../Drivers/STM32G0xx_HAL_Driver/Inc/Legacy\
+C:\GitHub\SCU-Work\ELEN 501\Lab4\EWARM/../Drivers/STM32G0xx_HAL_Driver/Inc/Legacy\
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab4\EWARM/../Drivers/CMSIS/Device/ST/STM32G0xx/Include\
+C:\GitHub\SCU-Work\ELEN 501\Lab4\EWARM/../Drivers/CMSIS/Device/ST/STM32G0xx/Include\
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab4\EWARM/../Drivers/CMSIS/Include\
+C:\GitHub\SCU-Work\ELEN 501\Lab4\EWARM/../Drivers/CMSIS/Include\
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab4\EWARM\..\Core\Modules\KeyboardHoldRepeat\
+C:\GitHub\SCU-Work\ELEN 501\Lab4\EWARM\..\Core\Modules\KeyboardHoldRepeat\
 -I
 C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab4\Core\Modules\Conversions\
 -I
@@ -33,17 +33,17 @@ C:\Program Files\IAR Systems\Embedded Workbench 9.0\arm\inc
 -I
 C:\Program Files\IAR Systems\Embedded Workbench 9.0\arm\inc\c
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab4\Core\Inc
+C:\GitHub\SCU-Work\ELEN 501\Lab4\Core\Inc
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab4\Drivers\STM32G0xx_HAL_Driver\Inc
+C:\GitHub\SCU-Work\ELEN 501\Lab4\Drivers\STM32G0xx_HAL_Driver\Inc
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab4\Drivers\STM32G0xx_HAL_Driver\Inc\Legacy
+C:\GitHub\SCU-Work\ELEN 501\Lab4\Drivers\STM32G0xx_HAL_Driver\Inc\Legacy
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab4\Drivers\CMSIS\Device\ST\STM32G0xx\Include
+C:\GitHub\SCU-Work\ELEN 501\Lab4\Drivers\CMSIS\Device\ST\STM32G0xx\Include
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab4\Drivers\CMSIS\Include
+C:\GitHub\SCU-Work\ELEN 501\Lab4\Drivers\CMSIS\Include
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab4\Core\Modules\KeyboardHoldRepeat
+C:\GitHub\SCU-Work\ELEN 501\Lab4\Core\Modules\KeyboardHoldRepeat
 -I
 C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab4\Core\Modules\Conversions
 -I

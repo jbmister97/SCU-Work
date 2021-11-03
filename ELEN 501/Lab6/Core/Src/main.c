@@ -87,18 +87,38 @@ uint8_t rampBlue = true;
 uint16_t ledLevel = 0;
 uint8_t changeLeds = false;
 uint8_t skipNumber = 8;
+uint8_t timeout_flag = 0;
+uint8_t timeout_count = 0;
+uint8_t count_flag = 0;
 
 // Keyboard
 uint8_t keyCode = NO_KEY_PRESSED;
+
+// Comm
+extern uint8_t processPacket;
+
+// system variables
+volatile uint16_t serialValue = 23;
+
+// UI
+uint8_t flashLED = false;
+uint8_t buttonPushed = false;
+uint16_t flashDelay = 1000;
+uint16_t flashDelaySeed = 1000;
+uint8_t flashAtSpeed = false;
+uint16_t number = 43;
+uint8_t errcode = 0;
 
 // Display
 DWfloat temperature = {"%4.1f", "----", 0, 0, true, 72.2};
 extern DWfloat humidity;
 DWint8_t count = {"%3d", "----", 0, 0, true, 0};
-DWstring units = {"%s", "----", 0, 0, true, "None"};
+DWstring units = {"%s", "----", 0, 0, true, "DegF"};
 DWstring message = {"%s", "----", 0, 0, true, "None"};
 uint8_t unitChoices[2][5] = {"DegF", "DegC"};
 uint16_t screenTime = 0;
+#define SCREEN_TIMEOUT_COUNT     15
+extern ui_screen currentScreen;
 
 /* USER CODE END PV */
 
@@ -253,6 +273,19 @@ int main(void)
       one_S_Flag = false;
       UpdateScreenValues();
       count.data++;
+      
+      if(timeout_flag) {
+        timeout_flag = 0;
+        timeout_count = 0;
+        count_flag = 1;
+      }
+      else if(count_flag) {
+        if(timeout_count >= SCREEN_TIMEOUT_COUNT){
+          count_flag = 0;
+          if(currentScreen != HOME) {SwitchScreens(HOME);}
+        }
+        else {timeout_count++;}
+      }
      
     } // end of 1Sec Tasks
     //---------------------------------
@@ -260,7 +293,15 @@ int main(void)
     
     //---------------------------------
     // Every time through the loop
+    if (nextSerialRxIn != nextSerialRx2Proc) {
+      ProcessReceiveBuffer();
+    }
     
+    if (processPacket == true) {
+      processPacket = false;
+      timeout_flag = 1;
+      ProcessPacket();
+    }
     // end Every time through the loop
     //---------------------------------
         

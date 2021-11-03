@@ -1,35 +1,35 @@
-"C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\Drivers\SSD1306\OLED\Src\ssd1306.c"
+"C:\GitHub\SCU-Work\ELEN 501\Lab6\Drivers\SSD1306\OLED\Src\ssd1306.c"
 -std=c11
 -ferror-limit=0
 -fbracket-depth=512
 -funsigned-char
 -MD
 -MF
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\EWARM\Lab6\BrowseInfo\Drivers\SSD1306\ssd1306.pbi.dep
+C:\GitHub\SCU-Work\ELEN 501\Lab6\EWARM\Lab6\BrowseInfo\Drivers\SSD1306\ssd1306.pbi.dep
 -o
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\EWARM\Lab6\BrowseInfo\Drivers\SSD1306\ssd1306.pbi
+C:\GitHub\SCU-Work\ELEN 501\Lab6\EWARM\Lab6\BrowseInfo\Drivers\SSD1306\ssd1306.pbi
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\Drivers\SSD1306\OLED\Src
+C:\GitHub\SCU-Work\ELEN 501\Lab6\Drivers\SSD1306\OLED\Src
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\EWARM/../Core/Inc\
+C:\GitHub\SCU-Work\ELEN 501\Lab6\EWARM/../Core/Inc\
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\EWARM/../Drivers/STM32G0xx_HAL_Driver/Inc\
+C:\GitHub\SCU-Work\ELEN 501\Lab6\EWARM/../Drivers/STM32G0xx_HAL_Driver/Inc\
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\EWARM/../Drivers/STM32G0xx_HAL_Driver/Inc/Legacy\
+C:\GitHub\SCU-Work\ELEN 501\Lab6\EWARM/../Drivers/STM32G0xx_HAL_Driver/Inc/Legacy\
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\EWARM/../Drivers/CMSIS/Device/ST/STM32G0xx/Include\
+C:\GitHub\SCU-Work\ELEN 501\Lab6\EWARM/../Drivers/CMSIS/Device/ST/STM32G0xx/Include\
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\EWARM/../Drivers/CMSIS/Include\
+C:\GitHub\SCU-Work\ELEN 501\Lab6\EWARM/../Drivers/CMSIS/Include\
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\EWARM\..\Drivers\SSD1306\OLED\Inc\
+C:\GitHub\SCU-Work\ELEN 501\Lab6\EWARM\..\Drivers\SSD1306\OLED\Inc\
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\EWARM\..\Core\Modules\Conversions\
+C:\GitHub\SCU-Work\ELEN 501\Lab6\EWARM\..\Core\Modules\Conversions\
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\EWARM\..\Core\Modules\KeyboardHoldRepeat\
+C:\GitHub\SCU-Work\ELEN 501\Lab6\EWARM\..\Core\Modules\KeyboardHoldRepeat\
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\EWARM\..\Core\Modules\Serial\
+C:\GitHub\SCU-Work\ELEN 501\Lab6\EWARM\..\Core\Modules\Serial\
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\EWARM\..\Core\Modules\UX\
+C:\GitHub\SCU-Work\ELEN 501\Lab6\EWARM\..\Core\Modules\UX\
 -I
 C:\Program Files\IAR Systems\Embedded Workbench 9.0\arm\inc\c\aarch32
 -I
@@ -37,25 +37,25 @@ C:\Program Files\IAR Systems\Embedded Workbench 9.0\arm\inc
 -I
 C:\Program Files\IAR Systems\Embedded Workbench 9.0\arm\inc\c
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\Core\Inc
+C:\GitHub\SCU-Work\ELEN 501\Lab6\Core\Inc
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\Drivers\STM32G0xx_HAL_Driver\Inc
+C:\GitHub\SCU-Work\ELEN 501\Lab6\Drivers\STM32G0xx_HAL_Driver\Inc
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\Drivers\STM32G0xx_HAL_Driver\Inc\Legacy
+C:\GitHub\SCU-Work\ELEN 501\Lab6\Drivers\STM32G0xx_HAL_Driver\Inc\Legacy
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\Drivers\CMSIS\Device\ST\STM32G0xx\Include
+C:\GitHub\SCU-Work\ELEN 501\Lab6\Drivers\CMSIS\Device\ST\STM32G0xx\Include
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\Drivers\CMSIS\Include
+C:\GitHub\SCU-Work\ELEN 501\Lab6\Drivers\CMSIS\Include
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\Drivers\SSD1306\OLED\Inc
+C:\GitHub\SCU-Work\ELEN 501\Lab6\Drivers\SSD1306\OLED\Inc
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\Core\Modules\Conversions
+C:\GitHub\SCU-Work\ELEN 501\Lab6\Core\Modules\Conversions
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\Core\Modules\KeyboardHoldRepeat
+C:\GitHub\SCU-Work\ELEN 501\Lab6\Core\Modules\KeyboardHoldRepeat
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\Core\Modules\Serial
+C:\GitHub\SCU-Work\ELEN 501\Lab6\Core\Modules\Serial
 -I
-C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN 501\Lab6\Core\Modules\UX
+C:\GitHub\SCU-Work\ELEN 501\Lab6\Core\Modules\UX
 -D__CHAR_BITS__=8
 -D__CHAR_MAX__=0xff
 -D__CHAR_MIN__=0
