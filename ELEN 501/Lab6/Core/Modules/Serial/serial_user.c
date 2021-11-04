@@ -16,6 +16,7 @@ uint8_t processPacket = false;
 
 uint8_t textOut[10];
 float tempF = 0;
+float lastTempC = 0;
 
 extern uint8_t flashLED;
 extern uint8_t buttonPushed;
@@ -93,12 +94,16 @@ uint8_t ProcessPacket(void)
   case 'U':     
     if(units.data[3] == 'C') {
       units.data[3] = 'F';
-      temperature.data = tempF;
+      if(lastTempC != temperature.data) { // temp changed while in C
+        tempF = (temperature.data*(9.0/5.0)) + 32; // update temp in F
+        temperature.data = tempF;
+      }
+      else {temperature.data = tempF;}
     }
     else if (units.data[3] == 'F') {
       tempF = temperature.data;
       units.data[3] = 'C';
-      temperature.data = (-32.0)*(5.0/9.0);
+      temperature.data = (tempF-32.0)*(5.0/9.0);
     }
     break;
   case 'v':     // v = check switch press

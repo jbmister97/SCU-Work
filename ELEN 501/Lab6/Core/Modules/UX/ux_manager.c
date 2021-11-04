@@ -31,7 +31,7 @@ DWfloat tempInF = {"%4.1f", "----", 0, 0, true, 72.2};
 DWfloat humidity = {"%4.1f", "----", 0, 0, true, 40.1};
 DWint16_t tempCJ_F = {"%5d", "!!!!", 0, 0, true, 0};
 extern DWfloat temperature;
-extern DWint8_t count;
+extern DWuint8_t count;
 extern DWstring units;
 extern DWstring message;
 extern uint8_t unitChoices[2][5];
@@ -254,16 +254,17 @@ void UpdateScreenValues(void)
   
   switch (currentScreen) {
   case HOME:
-    if(temperature.data >= 0) {
-      temperature.xPos = 31;
-      SSD1306_GotoXY (0, temperature.yPos); // to clear negative sign location
-      SSD1306_Puts(displayString, &Font_11x18, SSD1306_COLOR_WHITE);
-      degOffset = 44;
-    }
-    else {
-      degOffset = 55;
-      temperature.xPos = 20;
-    }
+//    if(temperature.data >= 0) {
+//      temperature.xPos = 31;
+//      SSD1306_GotoXY (20, temperature.yPos); // to clear negative sign location
+//      displayString[0] = ' ';
+//      SSD1306_Puts(displayString, &Font_11x18, SSD1306_COLOR_WHITE);
+//      degOffset = 44;
+//    }
+//    else {
+//      degOffset = 55;
+//      temperature.xPos = 20;
+//    }
     SSD1306_GotoXY (temperature.xPos, temperature.yPos);
     if (temperature.valid) {
       sprintf(displayString, temperature.format, temperature.data);
@@ -272,7 +273,7 @@ void UpdateScreenValues(void)
     else 
       SSD1306_Puts(temperature.invalidMsg, &Font_11x18, SSD1306_COLOR_WHITE);
     
-    SSD1306_GotoXY ((temperature.xPos + degOffset), temperature.yPos);
+    SSD1306_GotoXY ((temperature.xPos + 44), temperature.yPos);
     if (units.data[3] == 'C') {SSD1306_Puts(endC, &Font_11x18, SSD1306_COLOR_WHITE);}
     else {SSD1306_Puts(endF, &Font_11x18, SSD1306_COLOR_WHITE);}
     break;
@@ -285,7 +286,7 @@ void UpdateScreenValues(void)
     else 
       SSD1306_Puts(temperature.invalidMsg, &Font_11x18, SSD1306_COLOR_WHITE);
     
-    SSD1306_GotoXY ((temperature.xPos + degOffset), temperature.yPos);
+    SSD1306_GotoXY ((temperature.xPos + 44), temperature.yPos);
     if (units.data[3] == 'C') {SSD1306_Puts(endC, &Font_11x18, SSD1306_COLOR_WHITE);}
     else {SSD1306_Puts(endF, &Font_11x18, SSD1306_COLOR_WHITE);}
     

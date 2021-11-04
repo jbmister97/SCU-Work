@@ -112,7 +112,7 @@ uint8_t errcode = 0;
 // Display
 DWfloat temperature = {"%4.1f", "----", 0, 0, true, 72.2};
 extern DWfloat humidity;
-DWint8_t count = {"%3d", "----", 0, 0, true, 0};
+DWuint8_t count = {"%3d", "----", 0, 0, true, 0};
 DWstring units = {"%s", "----", 0, 0, true, "DegF"};
 DWstring message = {"%s", "----", 0, 0, true, "None"};
 uint8_t unitChoices[2][5] = {"DegF", "DegC"};
