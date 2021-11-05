@@ -32,6 +32,11 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define LED_SLOW        0
+#define LED_FAST        1
+#define LED_OFF         0
+#define LED_FIRST_ON    1
+#define LED_SECOND_ON   2
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -44,9 +49,20 @@ ADC_HandleTypeDef hadc1;
 
 TIM_HandleTypeDef htim1;
 
-uint8_t switches;
-
 /* USER CODE BEGIN PV */
+
+// LED Sequencing
+uint8_t switches;
+uint8_t ledSpeed = LED_SLOW;
+uint8_t ledState = LED_OFF;
+
+extern uint8_t counter_10mS_Flag;
+extern uint8_t counter_1S_Flag;
+extern uint8_t counter_2_5S_Flag;
+
+// Variable LED
+uint16_t adcValue;
+uint16_t ledDuty;
 
 /* USER CODE END PV */
 
@@ -56,7 +72,7 @@ static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_TIM1_Init(void);
 /* USER CODE BEGIN PFP */
-
+void Set_LED_Duty(uint16_t duty);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -95,7 +111,8 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
-
+  
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -103,7 +120,73 @@ int main(void)
   while (1)
   {
     switches = (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_14) << 1) | (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_15) << 0);
+    switches &= 0x3;
     
+    switch(switches){
+    case 0: 
+      ledState = LED_OFF;
+      break;
+    case 1:
+      ledState = LED_OFF;
+      break;
+    case 2:
+      ledState = LED_SLOW;
+      break;
+    case 3:
+      ledState = LED_FAST;
+      break;
+    default:
+      ledState = LED_OFF;
+      break;
+    }
+    
+    // 10ms scheduler
+    if(counter_10mS_Flag == true) {
+      ledDuty = adcValue << 4;
+      Set_LED_Duty(ledDuty);
+    }
+    
+    // 1 sec scheduler
+    if(counter_1S_Flag == true) {
+      counter_1S_Flag = false;
+      if((ledState != LED_OFF) && (ledSpeed == LED_FAST)){
+        if(ledState == LED_FIRST_ON) {
+          HAL_GPIO_WritePin(GPIOA,GPIO_PIN_3,GPIO_PIN_SET);
+          HAL_GPIO_WritePin(GPIOA,GPIO_PIN_4,GPIO_PIN_RESET);
+          ledState = LED_SECOND_ON;
+        }
+        else if(ledState == LED_SECOND_ON) {
+          HAL_GPIO_WritePin(GPIOA,GPIO_PIN_3,GPIO_PIN_RESET);
+          HAL_GPIO_WritePin(GPIOA,GPIO_PIN_4,GPIO_PIN_SET);
+          ledState = LED_FIRST_ON;
+        }
+      }
+      else {
+        HAL_GPIO_WritePin(GPIOA,GPIO_PIN_3,GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(GPIOA,GPIO_PIN_4,GPIO_PIN_RESET);
+      }
+    }
+    
+    // 2.5 sec scheduler
+    if(counter_2_5S_Flag == true) {
+      counter_2_5S_Flag = false;
+      if((ledState != LED_OFF) && (ledSpeed == LED_SLOW)){
+        if(ledState == LED_FIRST_ON) {
+          HAL_GPIO_WritePin(GPIOA,GPIO_PIN_3,GPIO_PIN_SET);
+          HAL_GPIO_WritePin(GPIOA,GPIO_PIN_4,GPIO_PIN_RESET);
+          ledState = LED_SECOND_ON;
+        }
+        else if(ledState == LED_SECOND_ON) {
+          HAL_GPIO_WritePin(GPIOA,GPIO_PIN_3,GPIO_PIN_RESET);
+          HAL_GPIO_WritePin(GPIOA,GPIO_PIN_4,GPIO_PIN_SET);
+          ledState = LED_FIRST_ON;
+        }
+      }
+      else {
+        HAL_GPIO_WritePin(GPIOA,GPIO_PIN_3,GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(GPIOA,GPIO_PIN_4,GPIO_PIN_RESET);
+      }
+    }
 
     /* USER CODE END WHILE */
 
@@ -175,7 +258,7 @@ static void MX_ADC1_Init(void)
   /** Common config
   */
   hadc1.Instance = ADC1;
-  hadc1.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV1;
+  hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;
   hadc1.Init.Resolution = ADC_RESOLUTION_12B;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc1.Init.ScanConvMode = ADC_SCAN_DISABLE;
@@ -202,7 +285,7 @@ static void MX_ADC1_Init(void)
   }
   /** Configure Regular Channel
   */
-  sConfig.Channel = ADC_CHANNEL_5;
+  sConfig.Channel = ADC_CHANNEL_6;
   sConfig.Rank = ADC_REGULAR_RANK_1;
   sConfig.SamplingTime = ADC_SAMPLETIME_2CYCLES_5;
   sConfig.SingleDiff = ADC_SINGLE_ENDED;
@@ -320,7 +403,21 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void Set_LED_Duty(uint16_t duty){
+  TIM_OC_InitTypeDef ledConfig = {0};
+  
+  ledConfig.OCMode = TIM_OCMODE_PWM1;
+  ledConfig.Pulse = duty;
+  ledConfig.OCPolarity = TIM_OCPOLARITY_HIGH;
+  ledConfig.OCNPolarity = TIM_OCNPOLARITY_HIGH;
+  ledConfig.OCFastMode = TIM_OCFAST_DISABLE;
+  ledConfig.OCIdleState = TIM_OCIDLESTATE_RESET;
+  ledConfig.OCNIdleState = TIM_OCNIDLESTATE_RESET;
+  
+  HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
+  HAL_TIM_PWM_ConfigChannel(&htim1, &ledConfig, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+}
 /* USER CODE END 4 */
 
 /**
