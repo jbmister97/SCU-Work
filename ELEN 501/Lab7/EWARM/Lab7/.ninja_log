@@ -1,0 +1,93 @@
+# ninja log v5
+27	184	6576994259527702	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Application/EWARM/startup_stm32g070xx.o	f2ee684b20b3f862
+11	3857	6577172920741328	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Application/User/Core/stm32g0xx_hal_msp.o	dea2c097626e896c
+13873	13960	6577173022095059	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_adc.o	29971c67037f7e45
+7352	8509	6577172967345738	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc_ex.o	8cbb0b597d3b88fd
+6066	7186	6577172954041351	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/CMSIS/system_stm32g0xx.o	e2a8d38844454659
+10750	14909	6577173031469978	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_tim.o	e3e8cda95c399bc
+8526	9938	6577172981298422	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_flash.o	25e824a4a60db9c2
+7203	8601	6577172968013979	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_cortex.o	4389f1beec9b4efb
+6559	7966	6577172961740725	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal.o	b0a9c88377a506d2
+5949	7326	6577172954809261	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Application/User/Modules/serial_user.o	55537763ecbd8492
+4647	6050	6577172941944629	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_dma_ex.o	aa53894a1e5bdfb0
+10225	11014	6577172992574005	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_flash_ex.o	c7653adeaa7ebe5e
+10465	14108	6577173023461391	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_i2c.o	557abbbf1eb7bd80
+7984	11252	6577172994887812	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc.o	c1a0f00d00b4f853
+6989	9000	6577172971404890	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_dma.o	1c7c1b6b2f8d2e7e
+9957	10734	6577172989751545	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_i2c_ex.o	edf8e01351edd69
+13704	15477	6577173037204964	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_uart.o	69465cd5b2417668
+4362	6970	6577172951837214	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/SSD1306/ssd1306.o	4230c5cf79764e49
+9034	10447	6577172986849318	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_exti.o	e18aba1b6eb0f241
+4	5232	6577172934344967	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Application/User/Core/main.o	1c68479179716c95
+15769	15799	6577173040605555	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Exe/Lab7.hex	f5cd77c6802449ba
+13281	13856	6577173020997986	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pwr_ex.o	cd46f1f88168395b
+8616	10204	6577172984346013	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_gpio.o	910543cfee24f4ce
+11273	12453	6577173006885738	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_rcc.o	b085fe95fd6c56d2
+4748	5926	6577172941256471	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/SSD1306/fonts.o	a1fb43265279afdd
+11035	11604	6577172998478210	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pwr.o	bf17c60e3a9db54d
+12475	13261	6577173015053884	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_rcc_ex.o	eac9eceb7a6067e8
+14124	14195	6577173024468705	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_dma.o	46b00e853772c5b6
+13980	14716	6577173029594996	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_uart_ex.o	ed66cba61877b89e
+13606	13685	6577173019382311	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_rcc.o	f0bc0f5b8f6551bc
+15503	15706	6577173039458621	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Exe/Lab7.out	77c19f6cde179bf2
+11624	13584	6577173018235375	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_tim_ex.o	c8670ac76301f793
+21	3699	6577172919265321	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Application/User/Modules/KeyboardHoldRepeat.o	b4413bcb101297cc
+3578	4343	6577172925837705	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Application/User/Modules/Serial.o	67cc9d7b7e70d7e4
+16	3563	6577172917809168	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Application/User/Modules/ASCII_numbers.o	f347232e1d84edbb
+3874	4721	6577172928829733	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Application/User/Modules/KeyboardHoldRepeat_User.o	b2625e0889dc94b5
+3720	4627	6577172928141558	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Application/User/Core/stm32g0xx_it.o	3d3a72843ecfd25f
+5249	6543	6577172947778067	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Application/User/Modules/ux_manager.o	cdbacb07a975fdb3
+4685	4850	6577159768286665	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Application/User/Modules/Thermistor.o	48b8217700f0118b
+11	441	6577175453294244	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Obj/Application/User/Modules/KeyboardHoldRepeat_User.o	b2625e0889dc94b5
+463	653	6577175455368696	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Exe/Lab7.out	77c19f6cde179bf2
+717	756	6577175456575471	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN501L/Lab7/EWARM/Lab7/Exe/Lab7.hex	f5cd77c6802449ba
+6	45	6577409326183658	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Application/EWARM/startup_stm32g070xx.o	91dc2877ec518d03
+11	364	6577409329447281	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Application/User/Modules/ASCII_numbers.o	2dc49245b3664ad
+15	408	6577409329896811	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Application/User/Modules/KeyboardHoldRepeat.o	df0e764c07571273
+30	513	6577409330937815	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Application/User/Modules/KeyboardHoldRepeat_User.o	847e56dac5592d2e
+20	526	6577409330927795	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Application/User/Core/stm32g0xx_hal_msp.o	709dc82552bb3ea9
+25	552	6577409331268120	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Application/User/Core/stm32g0xx_it.o	d50e14af8f50cbf3
+48	565	6577409331178028	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/CMSIS/system_stm32g0xx.o	7b9f05a475c01f3a
+36	591	6577409331468309	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Application/User/Modules/Serial.o	ca808df7dc0dbb56
+371	727	6577409333069830	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_cortex.o	a6858a8ae51d6d2a
+415	754	6577409333340087	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Application/User/Modules/serial_user.o	58ba3f6289ae611d
+0	818	6577409333990701	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Application/User/Core/main.o	7f3c4d773c745611
+572	862	6577409334441118	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc_ex.o	a185ac45301282c
+520	883	6577409334491178	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Application/User/Modules/ux_manager.o	345c75e83f43c198
+560	895	6577409334581272	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal.o	8f216f82edd0b8db
+597	926	6577409335041687	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_flash_ex.o	d053334a73fae27a
+762	1052	6577409336342925	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/SSD1306/fonts.o	281c56551b18d130
+534	1152	6577409337313848	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/SSD1306/ssd1306.o	a39d89c79b291d8c
+826	1203	6577409337844367	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_exti.o	43d708cbcce0c64a
+933	1216	6577409337834342	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_dma_ex.o	298e6bdeb0c5ba1c
+868	1237	6577409337914421	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pwr_ex.o	a7b1f45c78470b3c
+890	1252	6577409337894411	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_flash.o	8b0948b12c3b9394
+903	1353	6577409339335818	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_dma.o	f495962a43f71f1a
+1223	1481	6577409340637108	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pwr.o	1b5cef21649d2328
+1159	1504	6577409340787250	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_i2c_ex.o	2d1ce9b2791ebc4
+1260	1602	6577409341848547	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_rcc_ex.o	61866c0a11ab0d08
+1245	1624	6577409341928615	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_gpio.o	cad9739d67cdec8d
+1609	1652	6577409342379115	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_adc.o	e066256b700d1fdc
+1632	1676	6577409342629334	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_dma.o	8df619f1f75bd05b
+734	1713	6577409342929623	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc.o	78256f5f78076d2
+1682	1725	6577409343089766	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_rcc.o	3dbcbcb4c6952726
+1659	2043	6577409346253278	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_uart_ex.o	3285a442954320e9
+1511	2051	6577409346282658	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_rcc.o	f2a80f6208edc1a
+1210	2397	6577409349768750	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_uart.o	5f0730536b71e401
+1488	2412	6577409349838817	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_tim_ex.o	9aeca3e9e555c76b
+1059	2711	6577409352891705	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_i2c.o	85382c5b47902c81
+1360	3177	6577409357546311	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_tim.o	444f2484aafe7523
+3183	3292	6577409358727431	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Exe/Lab7.out	e5f0a372992bd80b
+3309	3330	6577409359207805	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Exe/Lab7.hex	a02552a85ad79ce2
+2	577	6577411413217534	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Application/User/Core/main.o	7f3c4d773c745611
+2	569	6577411596804689	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Application/User/Core/main.o	7f3c4d773c745611
+2	621	6577412623176793	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Application/User/Core/main.o	7f3c4d773c745611
+2	63	6577413540935079	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Application/User/Modules/Thermistor.o	6fc58b2a4a44b79c
+69	173	6577413541976067	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Exe/Lab7.out	d79d42e41428e537
+195	213	6577413542466532	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Exe/Lab7.hex	a02552a85ad79ce2
+2	624	6577419148503500	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Application/User/Core/main.o	7f3c4d773c745611
+632	738	6577419149634573	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Exe/Lab7.out	d79d42e41428e537
+761	780	6577419150146299	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Exe/Lab7.hex	a02552a85ad79ce2
+1	564	6577420086439593	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Obj/Application/User/Core/main.o	7f3c4d773c745611
+569	675	6577420087530605	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Exe/Lab7.out	d79d42e41428e537
+693	711	6577420087983276	C:/GitHub/SCU-Work/ELEN 501/Lab7/EWARM/Lab7/Exe/Lab7.hex	a02552a85ad79ce2
