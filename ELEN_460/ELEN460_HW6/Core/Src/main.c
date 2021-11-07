@@ -32,11 +32,26 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define LED_SLOW        0
-#define LED_FAST        1
-#define LED_OFF         0
-#define LED_FIRST_ON    1
-#define LED_SECOND_ON   2
+#define LED_OFF                 0
+#define LED_SLOW                1
+#define LED_FAST                2
+#define LED_FIRST_ON            1
+#define LED_SECOND_ON           2
+#define LED_1_PIN               GPIOB, GPIO_PIN_5
+#define LED_2_PIN               GPIOA, GPIO_PIN_3
+#define SW_1_PIN                GPIOA, GPIO_PIN_11
+#define SW_2_PIN                GPIOA, GPIO_PIN_4
+#define SW_3_PIN                GPIOB, GPIO_PIN_7
+#define BCD_A_PIN               GPIOB, GPIO_PIN_3
+#define BCD_B_PIN               GPIOA, GPIO_PIN_5
+#define BCD_C_PIN               GPIOA, GPIO_PIN_1
+#define BCD_D_PIN               GPIOA, GPIO_PIN_0
+#define SEG_DOT_PIN             GPIOA, GPIO_PIN_8
+#define DISPLAY_1_EN_PIN        GPIOA, GPIO_PIN_6
+#define DISPLAY_2_EN_PIN        GPIOA, GPIO_PIN_7
+#define DISPLAY_1_ON            1
+#define DISPLAY_2_ON            2
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -47,16 +62,18 @@
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
 
-TIM_HandleTypeDef htim1;
+TIM_HandleTypeDef htim15;
 
 /* USER CODE BEGIN PV */
 
 // LED Sequencing
-uint8_t switches;
-uint8_t ledSpeed = LED_SLOW;
+uint8_t sw;
+uint8_t currentLED = LED_FIRST_ON;
 uint8_t ledState = LED_OFF;
 
 extern uint8_t counter_10mS_Flag;
+extern uint8_t counter_16mS_Flag;
+extern uint8_t counter_250mS_Flag;
 extern uint8_t counter_1S_Flag;
 extern uint8_t counter_2_5S_Flag;
 
@@ -64,15 +81,24 @@ extern uint8_t counter_2_5S_Flag;
 uint16_t adcValue;
 uint16_t ledDuty;
 
+// 7-Segment Display
+uint8_t displayState = DISPLAY_1_ON;
+float voltage = 0;
+uint8_t firstDigit = 0;
+uint8_t secondDigit = 0;
+uint8_t segDisplayEnable = 1;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
-static void MX_TIM1_Init(void);
+static void MX_TIM15_Init(void);
 /* USER CODE BEGIN PFP */
 void Set_LED_Duty(uint16_t duty);
+void Toggle_LED(void);
+void Update_Display(uint8_t digit);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -109,83 +135,105 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_ADC1_Init();
-  MX_TIM1_Init();
+  MX_TIM15_Init();
   /* USER CODE BEGIN 2 */
   
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    switches = (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_14) << 1) | (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_15) << 0);
-    switches &= 0x3;
     
-    switch(switches){
-    case 0: 
-      ledState = LED_OFF;
-      break;
-    case 1:
-      ledState = LED_OFF;
-      break;
-    case 2:
-      ledState = LED_SLOW;
-      break;
-    case 3:
-      ledState = LED_FAST;
-      break;
-    default:
-      ledState = LED_OFF;
-      break;
-    }
     
     // 10ms scheduler
     if(counter_10mS_Flag == true) {
       ledDuty = adcValue << 4;
       Set_LED_Duty(ledDuty);
+      sw = (HAL_GPIO_ReadPin(SW_1_PIN) << 1) | (HAL_GPIO_ReadPin(SW_2_PIN) << 0);
+
+      segDisplayEnable = HAL_GPIO_ReadPin(SW_3_PIN);
+      
+      switch(sw){
+      case 0: 
+        ledState = LED_OFF;
+        break;
+      case 1:
+        ledState = LED_OFF;
+        break;
+      case 2:
+        ledState = LED_SLOW;
+        break;
+      case 3:
+        ledState = LED_FAST;
+        break;
+      default:
+        ledState = LED_OFF;
+        break;
+      }
+      
+      HAL_ADC_Start_IT(&hadc1);
+    }
+    
+    // 16ms scheduler
+    if(counter_16mS_Flag == true) {
+      counter_16mS_Flag = false;
+      
+      //if(segDisplayEnable == 0) {
+        switch(displayState) {
+        case DISPLAY_1_ON:
+          HAL_GPIO_WritePin(DISPLAY_2_EN_PIN,GPIO_PIN_SET);
+          Update_Display(firstDigit);
+          HAL_GPIO_WritePin(DISPLAY_1_EN_PIN,GPIO_PIN_RESET);
+          HAL_GPIO_WritePin(SEG_DOT_PIN,GPIO_PIN_SET);
+          displayState = DISPLAY_2_ON;
+          break;
+        case DISPLAY_2_ON:
+          HAL_GPIO_WritePin(DISPLAY_1_EN_PIN,GPIO_PIN_SET);
+          HAL_GPIO_WritePin(SEG_DOT_PIN,GPIO_PIN_RESET);
+          Update_Display(secondDigit);
+          HAL_GPIO_WritePin(DISPLAY_2_EN_PIN,GPIO_PIN_RESET);
+          displayState = DISPLAY_1_ON;
+          break;
+        }
+      //}
+//      else {
+//        HAL_GPIO_WritePin(DISPLAY_1_EN_PIN,GPIO_PIN_SET);
+//        HAL_GPIO_WritePin(DISPLAY_2_EN_PIN,GPIO_PIN_SET);
+//        HAL_GPIO_WritePin(SEG_DOT_PIN,GPIO_PIN_RESET);
+//      }
+    }
+    
+    // 250ms scheduler
+    if(counter_250mS_Flag == true) {
+      counter_250mS_Flag = false;
+      
+      voltage = 3.3 * (adcValue/4095.0);
+      firstDigit = (uint8_t) voltage;
+      voltage *= 10;
+      secondDigit = (uint8_t) voltage % 10;
     }
     
     // 1 sec scheduler
     if(counter_1S_Flag == true) {
       counter_1S_Flag = false;
-      if((ledState != LED_OFF) && (ledSpeed == LED_FAST)){
-        if(ledState == LED_FIRST_ON) {
-          HAL_GPIO_WritePin(GPIOA,GPIO_PIN_3,GPIO_PIN_SET);
-          HAL_GPIO_WritePin(GPIOA,GPIO_PIN_4,GPIO_PIN_RESET);
-          ledState = LED_SECOND_ON;
-        }
-        else if(ledState == LED_SECOND_ON) {
-          HAL_GPIO_WritePin(GPIOA,GPIO_PIN_3,GPIO_PIN_RESET);
-          HAL_GPIO_WritePin(GPIOA,GPIO_PIN_4,GPIO_PIN_SET);
-          ledState = LED_FIRST_ON;
-        }
-      }
-      else {
-        HAL_GPIO_WritePin(GPIOA,GPIO_PIN_3,GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(GPIOA,GPIO_PIN_4,GPIO_PIN_RESET);
+      if(ledState == LED_FAST){
+        Toggle_LED();
       }
     }
     
     // 2.5 sec scheduler
     if(counter_2_5S_Flag == true) {
       counter_2_5S_Flag = false;
-      if((ledState != LED_OFF) && (ledSpeed == LED_SLOW)){
-        if(ledState == LED_FIRST_ON) {
-          HAL_GPIO_WritePin(GPIOA,GPIO_PIN_3,GPIO_PIN_SET);
-          HAL_GPIO_WritePin(GPIOA,GPIO_PIN_4,GPIO_PIN_RESET);
-          ledState = LED_SECOND_ON;
-        }
-        else if(ledState == LED_SECOND_ON) {
-          HAL_GPIO_WritePin(GPIOA,GPIO_PIN_3,GPIO_PIN_RESET);
-          HAL_GPIO_WritePin(GPIOA,GPIO_PIN_4,GPIO_PIN_SET);
-          ledState = LED_FIRST_ON;
-        }
+      if(ledState == LED_SLOW){
+        Toggle_LED();
       }
-      else {
-        HAL_GPIO_WritePin(GPIOA,GPIO_PIN_3,GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(GPIOA,GPIO_PIN_4,GPIO_PIN_RESET);
-      }
+    }
+    
+    if(ledState == LED_OFF) {
+      HAL_GPIO_WritePin(LED_1_PIN,GPIO_PIN_RESET);
+      HAL_GPIO_WritePin(LED_2_PIN,GPIO_PIN_RESET);
     }
 
     /* USER CODE END WHILE */
@@ -258,7 +306,7 @@ static void MX_ADC1_Init(void)
   /** Common config
   */
   hadc1.Instance = ADC1;
-  hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;
+  hadc1.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV1;
   hadc1.Init.Resolution = ADC_RESOLUTION_12B;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc1.Init.ScanConvMode = ADC_SCAN_DISABLE;
@@ -285,7 +333,7 @@ static void MX_ADC1_Init(void)
   }
   /** Configure Regular Channel
   */
-  sConfig.Channel = ADC_CHANNEL_6;
+  sConfig.Channel = ADC_CHANNEL_15;
   sConfig.Rank = ADC_REGULAR_RANK_1;
   sConfig.SamplingTime = ADC_SAMPLETIME_2CYCLES_5;
   sConfig.SingleDiff = ADC_SINGLE_ENDED;
@@ -302,50 +350,49 @@ static void MX_ADC1_Init(void)
 }
 
 /**
-  * @brief TIM1 Initialization Function
+  * @brief TIM15 Initialization Function
   * @param None
   * @retval None
   */
-static void MX_TIM1_Init(void)
+static void MX_TIM15_Init(void)
 {
 
-  /* USER CODE BEGIN TIM1_Init 0 */
+  /* USER CODE BEGIN TIM15_Init 0 */
 
-  /* USER CODE END TIM1_Init 0 */
+  /* USER CODE END TIM15_Init 0 */
 
   TIM_MasterConfigTypeDef sMasterConfig = {0};
   TIM_OC_InitTypeDef sConfigOC = {0};
   TIM_BreakDeadTimeConfigTypeDef sBreakDeadTimeConfig = {0};
 
-  /* USER CODE BEGIN TIM1_Init 1 */
+  /* USER CODE BEGIN TIM15_Init 1 */
 
-  /* USER CODE END TIM1_Init 1 */
-  htim1.Instance = TIM1;
-  htim1.Init.Prescaler = 0;
-  htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 65535;
-  htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim1.Init.RepetitionCounter = 0;
-  htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if (HAL_TIM_OC_Init(&htim1) != HAL_OK)
+  /* USER CODE END TIM15_Init 1 */
+  htim15.Instance = TIM15;
+  htim15.Init.Prescaler = 0;
+  htim15.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim15.Init.Period = 65535;
+  htim15.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim15.Init.RepetitionCounter = 0;
+  htim15.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_PWM_Init(&htim15) != HAL_OK)
   {
     Error_Handler();
   }
   sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
-  sMasterConfig.MasterOutputTrigger2 = TIM_TRGO2_RESET;
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim1, &sMasterConfig) != HAL_OK)
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim15, &sMasterConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  sConfigOC.OCMode = TIM_OCMODE_TIMING;
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
   sConfigOC.Pulse = 0;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
   sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
-  if (HAL_TIM_OC_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+  if (HAL_TIM_PWM_ConfigChannel(&htim15, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
   {
     Error_Handler();
   }
@@ -355,19 +402,15 @@ static void MX_TIM1_Init(void)
   sBreakDeadTimeConfig.DeadTime = 0;
   sBreakDeadTimeConfig.BreakState = TIM_BREAK_DISABLE;
   sBreakDeadTimeConfig.BreakPolarity = TIM_BREAKPOLARITY_HIGH;
-  sBreakDeadTimeConfig.BreakFilter = 0;
-  sBreakDeadTimeConfig.Break2State = TIM_BREAK2_DISABLE;
-  sBreakDeadTimeConfig.Break2Polarity = TIM_BREAK2POLARITY_HIGH;
-  sBreakDeadTimeConfig.Break2Filter = 0;
   sBreakDeadTimeConfig.AutomaticOutput = TIM_AUTOMATICOUTPUT_DISABLE;
-  if (HAL_TIMEx_ConfigBreakDeadTime(&htim1, &sBreakDeadTimeConfig) != HAL_OK)
+  if (HAL_TIMEx_ConfigBreakDeadTime(&htim15, &sBreakDeadTimeConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN TIM1_Init 2 */
+  /* USER CODE BEGIN TIM15_Init 2 */
 
-  /* USER CODE END TIM1_Init 2 */
-  HAL_TIM_MspPostInit(&htim1);
+  /* USER CODE END TIM15_Init 2 */
+  HAL_TIM_MspPostInit(&htim15);
 
 }
 
@@ -381,24 +424,51 @@ static void MX_GPIO_Init(void)
   GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3|GPIO_PIN_4, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_3|GPIO_PIN_5
+                          |GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_8, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : PC14 PC15 */
-  GPIO_InitStruct.Pin = GPIO_PIN_14|GPIO_PIN_15;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3|GPIO_PIN_5, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : PA3 PA4 */
-  GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_4;
+  /*Configure GPIO pins : PA0 PA1 PA5 PA6
+                           PA7 PA8 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_5|GPIO_PIN_6
+                          |GPIO_PIN_7|GPIO_PIN_8;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PA3 */
+  GPIO_InitStruct.Pin = GPIO_PIN_3;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PA4 PA11 */
+  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_11;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PB3 */
+  GPIO_InitStruct.Pin = GPIO_PIN_3;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PB5 */
+  GPIO_InitStruct.Pin = GPIO_PIN_5;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 }
 
@@ -414,9 +484,43 @@ void Set_LED_Duty(uint16_t duty){
   ledConfig.OCIdleState = TIM_OCIDLESTATE_RESET;
   ledConfig.OCNIdleState = TIM_OCNIDLESTATE_RESET;
   
-  HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
-  HAL_TIM_PWM_ConfigChannel(&htim1, &ledConfig, TIM_CHANNEL_1);
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Stop(&htim15, TIM_CHANNEL_1);
+  HAL_TIM_PWM_ConfigChannel(&htim15, &ledConfig, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_1);
+}
+
+void Toggle_LED(void) {
+  if(currentLED == LED_FIRST_ON) {
+    HAL_GPIO_WritePin(LED_1_PIN,GPIO_PIN_SET);
+    HAL_GPIO_WritePin(LED_2_PIN,GPIO_PIN_RESET);
+    currentLED = LED_SECOND_ON;
+  }
+  else if(currentLED == LED_SECOND_ON) {
+    HAL_GPIO_WritePin(LED_1_PIN,GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(LED_2_PIN,GPIO_PIN_SET);
+    currentLED = LED_FIRST_ON;
+  }
+}
+
+void Update_Display(uint8_t digit) {
+  if(digit > 9) {return;}
+  digit &= 0xF;
+  
+  // Get first bit and set BCD A pin
+  if((digit >> 0) & 0x1){HAL_GPIO_WritePin(BCD_A_PIN, GPIO_PIN_SET);}
+  else {HAL_GPIO_WritePin(BCD_A_PIN, GPIO_PIN_RESET);}
+  
+  // Get second bit and set BCD B pin
+  if((digit >> 1) & 0x1){HAL_GPIO_WritePin(BCD_B_PIN, GPIO_PIN_SET);}
+  else {HAL_GPIO_WritePin(BCD_B_PIN, GPIO_PIN_RESET);}
+  
+  // Get second bit and set BCD B pin
+  if((digit >> 2) & 0x1){HAL_GPIO_WritePin(BCD_C_PIN, GPIO_PIN_SET);}
+  else {HAL_GPIO_WritePin(BCD_C_PIN, GPIO_PIN_RESET);}
+  
+  // Get second bit and set BCD B pin
+  if((digit >> 3) & 0x1){HAL_GPIO_WritePin(BCD_D_PIN, GPIO_PIN_SET);}
+  else {HAL_GPIO_WritePin(BCD_D_PIN, GPIO_PIN_RESET);}
 }
 /* USER CODE END 4 */
 
