@@ -13,8 +13,9 @@ uint8_t packetBuffer[PACKET_BUFFER_SIZE];
 uint8_t inPacket = false;
 uint8_t nextPacketChar = 0;
 uint8_t processPacket = false;
+char hum_str[20];
 
-uint8_t textOut[10];
+char textOut[10];
 float tempF = 0;
 float lastTempC = 0;
 
@@ -78,8 +79,11 @@ uint8_t ProcessPacket(void)
   case 's':     // s = Report humidity number
   case 'S':
     for(uint8_t i = 0; i < sizeof(textOut); i++){textOut[i] = '\0';}
+    for(uint8_t i = 0; i < sizeof(hum_str); i++){hum_str[i] = '\0';}
     sprintf((char *)textOut, humidity.format, humidity.data);
-    SendString((char *)textOut, sizeof(textOut), StripZeros, AddCRLF);
+    strcat(hum_str, "Humidity: ");
+    strcat(hum_str,textOut);
+    SendString(hum_str, sizeof(hum_str), StripZeros, AddCRLF);
   break;
   case 't':     // t = Receive and display message
   case 'T':

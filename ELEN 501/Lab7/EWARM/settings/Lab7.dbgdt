@@ -133,7 +133,7 @@
                     <item>adcResults</item>
                     <item>adcChanIndex</item>
                     <item>thTempInC</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>
