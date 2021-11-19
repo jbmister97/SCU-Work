@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "Scheduler.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -32,7 +32,11 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define ADC_DATA_SIZE   512     // # of bytes
+//#define ADC_DATA_SIZE   512     // # of bytes
+
+#define LED1_PIN        GPIOB, GPIO_PIN4
+#define LED2_PIN        GPIOB, GPIO_PIN5
+#define LED3_PIN        GPIOA, GPIO_PIN11
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -49,15 +53,20 @@ TIM_HandleTypeDef htim6;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-uint16_t ADC_Data[ADC_DATA_SIZE];
+//uint16_t ADC_Data[ADC_DATA_SIZE];
+uint16_t adcValue;
+
+uint16_t waveformCapture[128];
+uint8_t triggerWaveform = false;
+uint8_t count;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
-static void MX_DMA_Init(void);
 static void MX_USART2_UART_Init(void);
+static void MX_DMA_Init(void);
 static void MX_TIM6_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -65,7 +74,10 @@ static void MX_TIM6_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+extern uint8_t ten_mS_Flag;
+extern uint8_t twentyfive_mS_Flag;
+extern uint8_t hundred_mS_Flag;
+extern uint8_t one_S_Flag;
 /* USER CODE END 0 */
 
 /**
@@ -97,12 +109,12 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_ADC1_Init();
-  MX_DMA_Init();
   MX_USART2_UART_Init();
+  MX_DMA_Init();
   MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start(&htim6);
-  HAL_ADC_Start_DMA(&hadc1, (uint32_t *) ADC_Data, sizeof(ADC_Data));
+  
   
   /* USER CODE END 2 */
 
@@ -110,6 +122,33 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    if(ten_mS_Flag) {
+      ten_mS_Flag = false;
+      
+    }
+    
+    if(twentyfive_mS_Flag) {
+      twentyfive_mS_Flag = false;
+      
+    }
+    
+    if(hundred_mS_Flag) {
+      hundred_mS_Flag = false;
+      //HAL_ADC_Start_IT(&hadc1);
+      
+      if(triggerWaveform) {
+        triggerWaveform = false;
+        count = 0;
+        HAL_ADC_Start_DMA(&hadc1, (uint32_t *) waveformCapture, sizeof(waveformCapture));
+      }
+      
+      
+    }
+    
+    if(one_S_Flag) {
+      one_S_Flag = false;
+      
+    }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -243,13 +282,13 @@ static void MX_TIM6_Init(void)
   htim6.Instance = TIM6;
   htim6.Init.Prescaler = 0;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 65535;
+  htim6.Init.Period = 1000;
   htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
   {
     Error_Handler();
   }
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_UPDATE;
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
   if (HAL_TIMEx_MasterConfigSynchronization(&htim6, &sMasterConfig) != HAL_OK)
   {
