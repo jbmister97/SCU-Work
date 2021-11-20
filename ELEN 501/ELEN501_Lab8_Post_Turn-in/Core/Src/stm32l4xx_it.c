@@ -47,6 +47,7 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
 SCHEDULER_VAR
+uint8_t dmaFlags = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -61,9 +62,10 @@ SCHEDULER_VAR
 
 /* External variables --------------------------------------------------------*/
 extern DMA_HandleTypeDef hdma_adc1;
+extern ADC_HandleTypeDef hadc1;
 /* USER CODE BEGIN EV */
-extern uint16_t adcValue;
-extern uint8_t count;
+extern uint8_t firstHalfCaptured;
+extern uint8_t secondHalfCaptured;
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -210,12 +212,30 @@ void SysTick_Handler(void)
 void DMA1_Channel1_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA1_Channel1_IRQn 0 */
-  count++;
+  dmaFlags = hdma_adc1.DmaBaseAddress->ISR;
+  
+  if(dmaFlags & (0x1 << 2)) {firstHalfCaptured = true;}
+  else if(dmaFlags & (0x1 << 1)) {secondHalfCaptured = true;}
+
   /* USER CODE END DMA1_Channel1_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_adc1);
   /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
 
   /* USER CODE END DMA1_Channel1_IRQn 1 */
+}
+
+/**
+  * @brief This function handles ADC1 and ADC2 interrupts.
+  */
+void ADC1_2_IRQHandler(void)
+{
+  /* USER CODE BEGIN ADC1_2_IRQn 0 */
+
+  /* USER CODE END ADC1_2_IRQn 0 */
+  HAL_ADC_IRQHandler(&hadc1);
+  /* USER CODE BEGIN ADC1_2_IRQn 1 */
+
+  /* USER CODE END ADC1_2_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

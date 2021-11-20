@@ -23,6 +23,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Scheduler.h"
+#include "arm_math.h"
+#include "arm_const_structs.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -32,11 +34,12 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-//#define ADC_DATA_SIZE   512     // # of bytes
 
 #define LED1_PIN        GPIOB, GPIO_PIN4
 #define LED2_PIN        GPIOB, GPIO_PIN5
 #define LED3_PIN        GPIOA, GPIO_PIN11
+#define WAVEFORM_SIZE   2048
+#define BUCKET_SIZE     WAVEFORM_SIZE/4
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -53,12 +56,25 @@ TIM_HandleTypeDef htim6;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-//uint16_t ADC_Data[ADC_DATA_SIZE];
-uint16_t adcValue;
 
-uint16_t waveformCapture[128];
+uint16_t waveformInput[WAVEFORM_SIZE];
+float32_t waveformCapture[WAVEFORM_SIZE/2];
+float32_t waveformProcessed[BUCKET_SIZE];
 uint8_t triggerWaveform = false;
-uint8_t count;
+uint8_t count = 0;
+uint8_t subCount = 0;
+uint8_t firstHalfCaptured = false;
+uint8_t secondHalfCaptured = false;
+
+uint32_t fftSize = BUCKET_SIZE;
+uint32_t ifftFlag = 0;
+uint32_t doBitReverse = 1;
+uint32_t binIndex = 0;
+uint32_t binRed;
+uint32_t binGreen;
+uint32_t binBlue;
+
+float32_t maxValue;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -69,7 +85,7 @@ static void MX_USART2_UART_Init(void);
 static void MX_DMA_Init(void);
 static void MX_TIM6_Init(void);
 /* USER CODE BEGIN PFP */
-
+void RGB_Process(float32_t *array);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -78,6 +94,7 @@ extern uint8_t ten_mS_Flag;
 extern uint8_t twentyfive_mS_Flag;
 extern uint8_t hundred_mS_Flag;
 extern uint8_t one_S_Flag;
+
 /* USER CODE END 0 */
 
 /**
@@ -108,14 +125,14 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_ADC1_Init();
   MX_USART2_UART_Init();
-  MX_DMA_Init();
   MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start(&htim6);
   
-  
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -130,18 +147,42 @@ int main(void)
     if(twentyfive_mS_Flag) {
       twentyfive_mS_Flag = false;
       
+      subCount++;
+      
+      // Wait 250ms before triggering DMA
+      if(subCount == 10) {
+        subCount = 0;
+        HAL_ADC_Start_DMA(&hadc1, (uint32_t *) waveformInput, WAVEFORM_SIZE);
+      }
+
+    }
+    
+    
+    if(firstHalfCaptured) {
+      firstHalfCaptured = false;
+
+      for(uint16_t i = 0; i < WAVEFORM_SIZE/2; i++) {waveformCapture[i] = waveformInput[i] - 1980;}
+      
+      arm_cfft_f32(&arm_cfft_sR_f32_len512, waveformCapture, ifftFlag, doBitReverse);
+      arm_cmplx_mag_f32(waveformCapture, waveformProcessed, fftSize);
+      arm_max_f32(waveformProcessed, fftSize, &maxValue, &binIndex);
+      
+      RGB_Process(waveformProcessed);
+    }
+    else if(secondHalfCaptured) {
+      secondHalfCaptured = false;
+
+      for(uint16_t i = WAVEFORM_SIZE/2; i < WAVEFORM_SIZE; i++) {waveformCapture[i-(WAVEFORM_SIZE/2)] = waveformInput[i] - 1980;}
+      
+      arm_cfft_f32(&arm_cfft_sR_f32_len512, waveformCapture, ifftFlag, doBitReverse);
+      arm_cmplx_mag_f32(waveformCapture, waveformProcessed, fftSize);
+      arm_max_f32(waveformProcessed, fftSize, &maxValue, &binIndex);
+      
+      RGB_Process(waveformProcessed);
     }
     
     if(hundred_mS_Flag) {
       hundred_mS_Flag = false;
-      //HAL_ADC_Start_IT(&hadc1);
-      
-      if(triggerWaveform) {
-        triggerWaveform = false;
-        count = 0;
-        HAL_ADC_Start_DMA(&hadc1, (uint32_t *) waveformCapture, sizeof(waveformCapture));
-      }
-      
       
     }
     
@@ -282,7 +323,7 @@ static void MX_TIM6_Init(void)
   htim6.Instance = TIM6;
   htim6.Init.Prescaler = 0;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 1000;
+  htim6.Init.Period = 100;
   htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
   {
@@ -387,7 +428,26 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void RGB_Process(float32_t *array) {
+  uint16_t i = 0;
+  binRed = 0;
+  binGreen = 0;
+  binBlue = 0;
+  // Calculate red bucket
+  for(i = 0; i < (BUCKET_SIZE/4); i++) {
+    binRed += array[i];
+  }
+  
+  // Calculate green bucket
+  for(i = BUCKET_SIZE/4; i < (BUCKET_SIZE-(BUCKET_SIZE/4)); i++) {
+    binGreen += array[i];
+  }
+  
+  // Calculate blue bucket
+  for(i = (BUCKET_SIZE-(BUCKET_SIZE/4)); i < BUCKET_SIZE; i++ ) {
+    binBlue += array[i];
+  }
+}
 /* USER CODE END 4 */
 
 /**

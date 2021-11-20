@@ -21,6 +21,10 @@ C:\GitHub\SCU-Work\ELEN 501\ELEN501_Lab8_Post_Turn-in\EWARM/../Drivers/CMSIS/Dev
 -I
 C:\GitHub\SCU-Work\ELEN 501\ELEN501_Lab8_Post_Turn-in\EWARM/../Drivers/CMSIS/Include\
 -I
+C:\GitHub\SCU-Work\ELEN 501\ELEN501_Lab8_Post_Turn-in\Drivers\CMSIS\DSP\Include\
+-I
+C:\GitHub\SCU-Work\ELEN 501\ELEN501_Lab8_Post_Turn-in\Drivers\CMSIS\DSP\Source\TransformFunctions\
+-I
 C:\Program Files\IAR Systems\Embedded Workbench 9.0\arm\inc\c\aarch32
 -I
 C:\Program Files\IAR Systems\Embedded Workbench 9.0\arm\inc
@@ -36,6 +40,10 @@ C:\GitHub\SCU-Work\ELEN 501\ELEN501_Lab8_Post_Turn-in\Drivers\STM32L4xx_HAL_Driv
 C:\GitHub\SCU-Work\ELEN 501\ELEN501_Lab8_Post_Turn-in\Drivers\CMSIS\Device\ST\STM32L4xx\Include
 -I
 C:\GitHub\SCU-Work\ELEN 501\ELEN501_Lab8_Post_Turn-in\Drivers\CMSIS\Include
+-I
+C:\GitHub\SCU-Work\ELEN 501\ELEN501_Lab8_Post_Turn-in\Drivers\CMSIS\DSP\Include
+-I
+C:\GitHub\SCU-Work\ELEN 501\ELEN501_Lab8_Post_Turn-in\Drivers\CMSIS\DSP\Source\TransformFunctions
 -D__CHAR_BITS__=8
 -D__CHAR_MAX__=0xff
 -D__CHAR_MIN__=0
