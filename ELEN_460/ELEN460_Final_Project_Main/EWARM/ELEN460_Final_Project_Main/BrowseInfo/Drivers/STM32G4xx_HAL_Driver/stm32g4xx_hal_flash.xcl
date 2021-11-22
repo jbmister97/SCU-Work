@@ -21,6 +21,8 @@ C:\GitHub\SCU-Work\ELEN_460\ELEN460_Final_Project_Main\EWARM/../Drivers/CMSIS/De
 -I
 C:\GitHub\SCU-Work\ELEN_460\ELEN460_Final_Project_Main\EWARM/../Drivers/CMSIS/Include
 -I
+C:\GitHub\SCU-Work\ELEN_460\ELEN460_Final_Project_Main\Core\Modules\KeyboardHoldRepeat
+-I
 C:\Program Files\IAR Systems\Embedded Workbench 9.0\arm\inc\c\aarch32
 -I
 C:\Program Files\IAR Systems\Embedded Workbench 9.0\arm\inc
@@ -36,6 +38,8 @@ C:\GitHub\SCU-Work\ELEN_460\ELEN460_Final_Project_Main\Drivers\STM32G4xx_HAL_Dri
 C:\GitHub\SCU-Work\ELEN_460\ELEN460_Final_Project_Main\Drivers\CMSIS\Device\ST\STM32G4xx\Include
 -I
 C:\GitHub\SCU-Work\ELEN_460\ELEN460_Final_Project_Main\Drivers\CMSIS\Include
+-I
+C:\GitHub\SCU-Work\ELEN_460\ELEN460_Final_Project_Main\Core\Modules\KeyboardHoldRepeat
 -D__CHAR_BITS__=8
 -D__CHAR_MAX__=0xff
 -D__CHAR_MIN__=0
