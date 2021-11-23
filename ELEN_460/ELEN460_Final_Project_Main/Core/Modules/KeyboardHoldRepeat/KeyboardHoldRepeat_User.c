@@ -51,7 +51,7 @@ void ProcessKeyCode(uint8_t _kcode)
   //kbdTest = 27;
   
   buttonPressed = true;
-  
+
   /*
   switch (_kcode) {
   case 0x06:  // single keys:   1

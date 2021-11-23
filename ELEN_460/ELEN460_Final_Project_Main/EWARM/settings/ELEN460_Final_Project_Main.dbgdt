@@ -233,7 +233,7 @@
                 <expressions>
                     <item>buttonPressed</item>
                     <item>keyCode</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>

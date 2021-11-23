@@ -29,9 +29,17 @@
 /* USER CODE BEGIN PTD */
     
 // Button GPIO defined in main.h
-#define COIL_PIN        GPIOB, GPIO_PIN_6
-#define LED_PIN         GPIOA, GPIO_PIN_11
-#define GOAL_1_PIN      GPIOB, GPIO_PIN_7
+#define COIL_PIN                GPIOB, GPIO_PIN_6
+#define LED_PIN                 GPIOA, GPIO_PIN_11
+#define GOAL_1_PIN              GPIOB, GPIO_PIN_7
+#define MOTOR_AIN1_PIN          GPIOB, GPIO_PIN_5
+#define MOTOR_AIN2_PIN          GPIOB, GPIO_PIN_4
+#define MOTOR_DIR_PIN           GPIOA, GPIO_PIN_10
+
+#define MOTOR_STOP              0
+#define MOTOR_FWD               1
+#define MOTOR_REV               2
+#define MOTOR_SPEED             65535
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -45,17 +53,24 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+TIM_HandleTypeDef htim3;
+TIM_HandleTypeDef htim17;
 
 /* USER CODE BEGIN PV */
 uint8_t keyCode = NO_KEY_PRESSED;
 uint8_t buttonPressed = false;
+uint8_t motorDir = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_TIM3_Init(void);
+static void MX_TIM17_Init(void);
 /* USER CODE BEGIN PFP */
-
+void Motor_Set_State(uint8_t state);
+void Motor_Set_AIN1(uint16_t duty);
+void Motor_Set_AIN2(uint16_t duty);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -94,8 +109,11 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_TIM3_Init();
+  MX_TIM17_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start_IT(&htim17, TIM_CHANNEL_1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -113,7 +131,7 @@ int main(void)
     if (twentyfive_mS_Flag) {
       twentyfive_mS_Flag = false;
       
-      /*
+      /* // DC push-pull coil test
       keyCode = ScanKeyboard();
       DebounceKeyCode(keyCode);
       
@@ -130,6 +148,25 @@ int main(void)
         HAL_GPIO_WritePin(COIL_PIN, GPIO_PIN_RESET);
       }
       */
+      
+      // Motor test
+      keyCode = ScanKeyboard();
+      DebounceKeyCode(keyCode);
+      
+      // If we've gotten a valid debounced keyCode, process it
+      if (processKeyCode == true) {
+        ProcessKeyCode(keyCode);
+      }
+      
+      motorDir = HAL_GPIO_ReadPin(MOTOR_DIR_PIN);
+      
+      if(buttonPressed) {
+        if(motorDir) {Motor_Set_State(MOTOR_FWD);}
+        else {Motor_Set_State(MOTOR_REV);}
+      }
+      else {
+        Motor_Set_State(MOTOR_STOP);
+      }
     }
 
     // 100mS Tasks 
@@ -144,12 +181,14 @@ int main(void)
 
     }
     
+    /* // Goal sensor test
     if(HAL_GPIO_ReadPin(GOAL_1_PIN)) {
       HAL_GPIO_WritePin(LED_PIN, GPIO_PIN_SET);
     }
     else {
       HAL_GPIO_WritePin(LED_PIN, GPIO_PIN_RESET);
     }
+    */
     
     /* USER CODE END WHILE */
 
@@ -197,6 +236,118 @@ void SystemClock_Config(void)
 }
 
 /**
+  * @brief TIM3 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM3_Init(void)
+{
+
+  /* USER CODE BEGIN TIM3_Init 0 */
+
+  /* USER CODE END TIM3_Init 0 */
+
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+  TIM_OC_InitTypeDef sConfigOC = {0};
+
+  /* USER CODE BEGIN TIM3_Init 1 */
+
+  /* USER CODE END TIM3_Init 1 */
+  htim3.Instance = TIM3;
+  htim3.Init.Prescaler = 0;
+  htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim3.Init.Period = 65535;
+  htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_PWM_Init(&htim3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = 0;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  if (HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM3_Init 2 */
+
+  /* USER CODE END TIM3_Init 2 */
+  HAL_TIM_MspPostInit(&htim3);
+
+}
+
+/**
+  * @brief TIM17 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM17_Init(void)
+{
+
+  /* USER CODE BEGIN TIM17_Init 0 */
+
+  /* USER CODE END TIM17_Init 0 */
+
+  TIM_OC_InitTypeDef sConfigOC = {0};
+  TIM_BreakDeadTimeConfigTypeDef sBreakDeadTimeConfig = {0};
+
+  /* USER CODE BEGIN TIM17_Init 1 */
+
+  /* USER CODE END TIM17_Init 1 */
+  htim17.Instance = TIM17;
+  htim17.Init.Prescaler = 0;
+  htim17.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim17.Init.Period = 65535;
+  htim17.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim17.Init.RepetitionCounter = 0;
+  htim17.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim17) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_TIM_PWM_Init(&htim17) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = 0;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
+  sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
+  if (HAL_TIM_PWM_ConfigChannel(&htim17, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sBreakDeadTimeConfig.OffStateRunMode = TIM_OSSR_DISABLE;
+  sBreakDeadTimeConfig.OffStateIDLEMode = TIM_OSSI_DISABLE;
+  sBreakDeadTimeConfig.LockLevel = TIM_LOCKLEVEL_OFF;
+  sBreakDeadTimeConfig.DeadTime = 0;
+  sBreakDeadTimeConfig.BreakState = TIM_BREAK_DISABLE;
+  sBreakDeadTimeConfig.BreakPolarity = TIM_BREAKPOLARITY_HIGH;
+  sBreakDeadTimeConfig.BreakFilter = 0;
+  sBreakDeadTimeConfig.AutomaticOutput = TIM_AUTOMATICOUTPUT_DISABLE;
+  if (HAL_TIMEx_ConfigBreakDeadTime(&htim17, &sBreakDeadTimeConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM17_Init 2 */
+
+  /* USER CODE END TIM17_Init 2 */
+  HAL_TIM_MspPostInit(&htim17);
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -221,6 +372,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : PA10 */
+  GPIO_InitStruct.Pin = GPIO_PIN_10;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
   /*Configure GPIO pin : PA11 */
   GPIO_InitStruct.Pin = GPIO_PIN_11;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -244,7 +401,58 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void Motor_Set_State(uint8_t state) {
+  
+  switch(state){
+  case MOTOR_STOP:
+    // Set AIN1 and AIN2 to full duty to brake the motor
+    Motor_Set_AIN1(MOTOR_SPEED);
+    Motor_Set_AIN2(MOTOR_SPEED);
+    break;
+  case MOTOR_FWD:
+    Motor_Set_AIN1(MOTOR_SPEED);
+    Motor_Set_AIN2(0);
+    break;
+  case MOTOR_REV:
+    Motor_Set_AIN1(0);
+    Motor_Set_AIN2(MOTOR_SPEED);
+    break;
+  }
+}
 
+void Motor_Set_AIN1(uint16_t duty) {
+  TIM_OC_InitTypeDef sConfigOC = {0};
+ 
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = duty;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
+  sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
+ 
+  HAL_TIM_PWM_Stop(&htim17, TIM_CHANNEL_1);
+  HAL_TIM_PWM_ConfigChannel(&htim17, &sConfigOC, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim17, TIM_CHANNEL_1);
+
+}
+
+void Motor_Set_AIN2(uint16_t duty) {
+  TIM_OC_InitTypeDef sConfigOC = {0};
+ 
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = duty;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
+  sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
+ 
+  HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
+  HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
+
+}
 /* USER CODE END 4 */
 
 /**
