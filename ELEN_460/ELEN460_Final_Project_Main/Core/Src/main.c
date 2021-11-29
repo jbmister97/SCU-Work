@@ -39,7 +39,7 @@
 #define MOTOR_STOP              0
 #define MOTOR_FWD               1
 #define MOTOR_REV               2
-#define MOTOR_SPEED             65535
+#define MOTOR_SPEED             10000
 
 // I2C Device Addresses
 //#define BOARD_ADDR              0x60
@@ -177,6 +177,7 @@ int main(void)
   HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start_IT(&htim17, TIM_CHANNEL_1);
   
+  /*
   // Display test
   Display_Init(DISPLAY_1_ADDR);
   for(uint8_t i = 0; i < sizeof(arr) - 1; i++) {
@@ -195,6 +196,7 @@ int main(void)
   // Turn on the display
   buffer[0] = DISPLAY_ON;
   HAL_I2C_Master_Transmit(&hi2c2, DISPLAY_1_ADDR, buffer, 1, HAL_MAX_DELAY);
+  */
   
   /* USER CODE END 2 */
 
@@ -231,7 +233,7 @@ int main(void)
       }
       */
       
-      /*
+      
       // Motor test
       keyCode = ScanKeyboard();
       DebounceKeyCode(keyCode);
@@ -244,13 +246,14 @@ int main(void)
       motorDir = HAL_GPIO_ReadPin(MOTOR_DIR_PIN);
       
       if(buttonPressed) {
+        // Update logic so that it only changes speed when different
         if(motorDir) {Motor_Set_State(MOTOR_FWD);}
         else {Motor_Set_State(MOTOR_REV);}
       }
       else {
         Motor_Set_State(MOTOR_STOP);
       }
-      */
+      
     }
 
     // 100mS Tasks 
@@ -392,7 +395,7 @@ static void MX_TIM3_Init(void)
 
   /* USER CODE END TIM3_Init 1 */
   htim3.Instance = TIM3;
-  htim3.Init.Prescaler = 0;
+  htim3.Init.Prescaler = 6;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim3.Init.Period = 65535;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -441,7 +444,7 @@ static void MX_TIM17_Init(void)
 
   /* USER CODE END TIM17_Init 1 */
   htim17.Instance = TIM17;
-  htim17.Init.Prescaler = 0;
+  htim17.Init.Prescaler = 6;
   htim17.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim17.Init.Period = 65535;
   htim17.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -544,8 +547,8 @@ void Motor_Set_State(uint8_t state) {
   switch(state){
   case MOTOR_STOP:
     // Set AIN1 and AIN2 to full duty to brake the motor
-    Motor_Set_AIN1(MOTOR_SPEED);
-    Motor_Set_AIN2(MOTOR_SPEED);
+    Motor_Set_AIN1(0);
+    Motor_Set_AIN2(0);
     break;
   case MOTOR_FWD:
     Motor_Set_AIN1(MOTOR_SPEED);
