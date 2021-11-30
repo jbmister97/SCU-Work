@@ -237,7 +237,7 @@
                     <item>motorDir</item>
                     <item>htim3</item>
                     <item>htim17</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>

@@ -1,0 +1,23 @@
+# ninja log v5
+1	50	6599581158854165	C:/GitHub/SCU-Work/ELEN_460/ELEN460_Final_Project_Secondary/EWARM/ELEN460_Final_Project_Secondary/Obj/Application/EWARM/startup_stm32g431xx.o	e38e7324ad3a969d
+8	283	6599581161326827	C:/GitHub/SCU-Work/ELEN_460/ELEN460_Final_Project_Secondary/EWARM/ELEN460_Final_Project_Secondary/Obj/Application/User/Core/main.o	a670989f56214399
+18	309	6599581161567094	C:/GitHub/SCU-Work/ELEN_460/ELEN460_Final_Project_Secondary/EWARM/ELEN460_Final_Project_Secondary/Obj/Application/User/Core/stm32g4xx_hal_msp.o	964ed1a86a9559c7
+13	322	6599581161587115	C:/GitHub/SCU-Work/ELEN_460/ELEN460_Final_Project_Secondary/EWARM/ELEN460_Final_Project_Secondary/Obj/Drivers/STM32G4xx_HAL_Driver/stm32g4xx_hal_dma_ex.o	a3aded569181f962
+23	350	6599581161817354	C:/GitHub/SCU-Work/ELEN_460/ELEN460_Final_Project_Secondary/EWARM/ELEN460_Final_Project_Secondary/Obj/Drivers/CMSIS/system_stm32g4xx.o	866243874725a37c
+29	396	6599581162458041	C:/GitHub/SCU-Work/ELEN_460/ELEN460_Final_Project_Secondary/EWARM/ELEN460_Final_Project_Secondary/Obj/Application/User/Core/stm32g4xx_it.o	9ba78d388db4ac8a
+35	500	6599581163509172	C:/GitHub/SCU-Work/ELEN_460/ELEN460_Final_Project_Secondary/EWARM/ELEN460_Final_Project_Secondary/Obj/Drivers/STM32G4xx_HAL_Driver/stm32g4xx_hal_cortex.o	67929f3b2d72ec36
+330	525	6599581163659341	C:/GitHub/SCU-Work/ELEN_460/ELEN460_Final_Project_Secondary/EWARM/ELEN460_Final_Project_Secondary/Obj/Drivers/STM32G4xx_HAL_Driver/stm32g4xx_hal_flash_ramfunc.o	6d8616249626114b
+40	540	6599581163799487	C:/GitHub/SCU-Work/ELEN_460/ELEN460_Final_Project_Secondary/EWARM/ELEN460_Final_Project_Secondary/Obj/Drivers/STM32G4xx_HAL_Driver/stm32g4xx_hal.o	8a691b869a6e28f8
+316	592	6599581164420152	C:/GitHub/SCU-Work/ELEN_460/ELEN460_Final_Project_Secondary/EWARM/ELEN460_Final_Project_Secondary/Obj/Drivers/STM32G4xx_HAL_Driver/stm32g4xx_hal_exti.o	8a501a80b97a6fad
+357	628	6599581164780547	C:/GitHub/SCU-Work/ELEN_460/ELEN460_Final_Project_Secondary/EWARM/ELEN460_Final_Project_Secondary/Obj/Drivers/STM32G4xx_HAL_Driver/stm32g4xx_hal_pwr.o	99e7a1c9a7415f77
+289	646	6599581164850613	C:/GitHub/SCU-Work/ELEN_460/ELEN460_Final_Project_Secondary/EWARM/ELEN460_Final_Project_Secondary/Obj/Drivers/STM32G4xx_HAL_Driver/stm32g4xx_hal_gpio.o	9117ddcb9f9e1bb1
+53	710	6599581165581402	C:/GitHub/SCU-Work/ELEN_460/ELEN460_Final_Project_Secondary/EWARM/ELEN460_Final_Project_Secondary/Obj/Drivers/STM32G4xx_HAL_Driver/stm32g4xx_hal_dma.o	b8e73d1de666a7fe
+534	740	6599581165931785	C:/GitHub/SCU-Work/ELEN_460/ELEN460_Final_Project_Secondary/EWARM/ELEN460_Final_Project_Secondary/Obj/Drivers/STM32G4xx_HAL_Driver/stm32g4xx_hal_tim.o	45e9a2b7822af532
+598	800	6599581166532433	C:/GitHub/SCU-Work/ELEN_460/ELEN460_Final_Project_Secondary/EWARM/ELEN460_Final_Project_Secondary/Obj/Drivers/STM32G4xx_HAL_Driver/stm32g4xx_hal_tim_ex.o	79b3548196903190
+402	820	6599581166692603	C:/GitHub/SCU-Work/ELEN_460/ELEN460_Final_Project_Secondary/EWARM/ELEN460_Final_Project_Secondary/Obj/Drivers/STM32G4xx_HAL_Driver/stm32g4xx_hal_flash_ex.o	57cf4128405498f3
+506	841	6599581166922848	C:/GitHub/SCU-Work/ELEN_460/ELEN460_Final_Project_Secondary/EWARM/ELEN460_Final_Project_Secondary/Obj/Drivers/STM32G4xx_HAL_Driver/stm32g4xx_hal_flash.o	140d28d2c3a4db3c
+546	907	6599581167593570	C:/GitHub/SCU-Work/ELEN_460/ELEN460_Final_Project_Secondary/EWARM/ELEN460_Final_Project_Secondary/Obj/Drivers/STM32G4xx_HAL_Driver/stm32g4xx_hal_pwr_ex.o	2914b23206cc5669
+634	1067	6599581169195292	C:/GitHub/SCU-Work/ELEN_460/ELEN460_Final_Project_Secondary/EWARM/ELEN460_Final_Project_Secondary/Obj/Drivers/STM32G4xx_HAL_Driver/stm32g4xx_hal_rcc_ex.o	6223d54120088419
+654	1102	6599581169535657	C:/GitHub/SCU-Work/ELEN_460/ELEN460_Final_Project_Secondary/EWARM/ELEN460_Final_Project_Secondary/Obj/Drivers/STM32G4xx_HAL_Driver/stm32g4xx_hal_rcc.o	573a42ffeb97a01f
+1108	1190	6599581170458085	C:/GitHub/SCU-Work/ELEN_460/ELEN460_Final_Project_Secondary/EWARM/ELEN460_Final_Project_Secondary/Exe/ELEN460_Final_Project_Secondary.out	9b54286d167fcb72
+1211	1226	6599581170868520	C:/GitHub/SCU-Work/ELEN_460/ELEN460_Final_Project_Secondary/EWARM/ELEN460_Final_Project_Secondary/Exe/ELEN460_Final_Project_Secondary.hex	7d3aec54b8746306

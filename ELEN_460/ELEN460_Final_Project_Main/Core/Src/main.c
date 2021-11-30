@@ -30,12 +30,18 @@
     
 // Button GPIO defined in main.h
 #define COIL_PIN                GPIOB, GPIO_PIN_6
-#define LED_PIN                  GPIOA, GPIO_PIN_11
+#define LED_PIN                 GPIOA, GPIO_PIN_11
 #define GOAL_1_PIN              GPIOB, GPIO_PIN_7
 #define MOTOR_AIN1_PIN          GPIOB, GPIO_PIN_5
 #define MOTOR_AIN2_PIN          GPIOB, GPIO_PIN_4
 #define MOTOR_DIR_PIN           GPIOA, GPIO_PIN_10
 
+// Game Logic
+#define IDLE                    2
+#define RUNNING                 3
+#define END                     4
+
+// Motor
 #define MOTOR_STOP              0
 #define MOTOR_FWD               1
 #define MOTOR_REV               2
@@ -54,7 +60,7 @@
 #define DISPLAY_OFF                     0x80
 #define DISPLAY_ON                      0x81
 #define DISPLAY_COM0_1                  0x00
-#define DISPLAY_COM0_2                 0x01
+#define DISPLAY_COM0_2                  0x01
 #define DISPLAY_COM1_1                  0x02
 #define DISPLAY_COM1_2                  0x03
 #define DISPLAY_COM2_1                  0x04
@@ -77,15 +83,17 @@
 #define D                        (1 << 3)
 #define E                        (1 << 4)
 #define F                        (1 << 5)
-#define G1                         (1 << 6)
-#define G2                        (1 << 7)
+#define G1                       (1 << 6)
+#define G2                       (1 << 7)
 #define H                        (1 << 0)
 #define J                        (1 << 1)
 #define K                        (1 << 2)
 #define L                        (1 << 3)
 #define M                        (1 << 4)
 #define N                        (1 << 5)
-#define DP                         (1 << 6)
+#define DP                       (1 << 6)
+
+#define NUMBER_OF_CHAR          17
 
 /* USER CODE END PTD */
 
@@ -109,6 +117,7 @@ TIM_HandleTypeDef htim17;
 uint8_t keyCode = NO_KEY_PRESSED;
 uint8_t buttonPressed = false;
 uint8_t motorDir = 0;
+uint8_t state = IDLE;
 
 // Display
 uint8_t displayAddr = DISPLAY_1_ADDR;
@@ -117,6 +126,7 @@ uint8_t row8_15 = 0;
 uint8_t ram[4] = {DISPLAY_COM0_1,DISPLAY_COM0_2,DISPLAY_COM1_1,DISPLAY_COM1_2};
 uint8_t buffer[3];
 char arr[] = "hi";
+char displayString[NUMBER_OF_CHAR];
 
 /* USER CODE END PV */
 
@@ -177,6 +187,12 @@ int main(void)
   HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start_IT(&htim17, TIM_CHANNEL_1);
   
+  // Initialize displays
+  Display_Init(DISPLAY_1_ADDR);
+  Display_Init(DISPLAY_2_ADDR);
+  Display_Init(DISPLAY_3_ADDR);
+  Display_Init(DISPLAY_4_ADDR);
+  
   /*
   // Display test
   Display_Init(DISPLAY_1_ADDR);
@@ -233,7 +249,7 @@ int main(void)
       }
       */
       
-      
+      /*
       // Motor test
       keyCode = ScanKeyboard();
       DebounceKeyCode(keyCode);
@@ -253,7 +269,7 @@ int main(void)
       else {
         Motor_Set_State(MOTOR_STOP);
       }
-      
+      */
     }
 
     // 100mS Tasks 
@@ -268,14 +284,18 @@ int main(void)
 
     }
     
-    /* // Goal sensor test
-    if(HAL_GPIO_ReadPin(GOAL_1_PIN)) {
-      HAL_GPIO_WritePin(LED_PIN, GPIO_PIN_SET);
+    switch(state) {
+    case IDLE:
+      
+      break;
+    case RUNNING:
+      
+      break;
+    case END:
+      
+      break;
+      
     }
-    else {
-      HAL_GPIO_WritePin(LED_PIN, GPIO_PIN_RESET);
-    }
-    */
     
     /* USER CODE END WHILE */
 
@@ -799,6 +819,10 @@ void Display_Init(uint8_t addr){
   buf[0] = DISPLAY_COM3_2;
   buf[1] = 0;
   HAL_I2C_Master_Transmit(&hi2c2, addr, buf, 2, HAL_MAX_DELAY);
+}
+
+void Display_Set(char *arr){
+  
 }
 /* USER CODE END 4 */
 
