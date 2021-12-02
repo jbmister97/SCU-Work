@@ -43,8 +43,8 @@
 
 // Motor
 #define MOTOR_STOP              0
-#define MOTOR_FWD               1
-#define MOTOR_REV               2
+#define MOTOR_RIGHT               1
+#define MOTOR_LEFT               2
 #define MOTOR_SPEED             10000
 
 // I2C Device Addresses
@@ -116,8 +116,15 @@ TIM_HandleTypeDef htim17;
 /* USER CODE BEGIN PV */
 uint8_t keyCode = NO_KEY_PRESSED;
 uint8_t buttonPressed = false;
-uint8_t motorDir = 0;
+
 uint8_t state = RUNNING;
+
+// Motor
+uint8_t motorState = MOTOR_STOP;
+uint8_t motorRightRequest = false;
+uint8_t motorLeftRequest = false;
+uint8_t limitRightSwitch = false;
+uint8_t limitLeftSwitch = false; 
 
 // Display
 uint8_t displayAddr = DISPLAY_1_ADDR;
@@ -129,6 +136,7 @@ char arr[] = "hi";
 char displayString[NUMBER_OF_CHAR];
 uint8_t fireRequest = false;
 uint8_t fireBusy = false;
+uint8_t count = 0;
 //uint8_t fireSingle = false;
 
 /* USER CODE END PV */
@@ -152,8 +160,10 @@ void Display_Init(uint8_t addr);
 extern uint8_t ten_mS_Flag;
 extern uint8_t twentyfive_mS_Flag;
 extern uint8_t hundred_mS_Flag;
-extern uint8_t one_S_Flag;
+extern uint8_t twohundred_fifty_mS_Flag;
 extern uint8_t five_hundred_mS_Flag;
+extern uint8_t one_S_Flag;
+
 /* USER CODE END 0 */
 
 /**
@@ -283,6 +293,14 @@ int main(void)
         ProcessKeyCode(keyCode);
       }
       
+      if(motorRightRequest && !limitRightSwitch) {
+        Motor_Set_State(MOTOR_RIGHT);
+      }
+      else if(motorLeftRequest && !limitLeftSwitch) {
+        Motor_Set_State(MOTOR_LEFT);
+      }
+      else {Motor_Set_State(MOTOR_STOP);}
+      
     }
     
     
@@ -290,27 +308,33 @@ int main(void)
     // 100mS Tasks 
     if (hundred_mS_Flag) {
       hundred_mS_Flag = false;
+    }
+    
+    // 250ms Tasks
+    if(twohundred_fifty_mS_Flag) {
+      twohundred_fifty_mS_Flag = false;
       
+      if(fireBusy) {
+        fireBusy = false;
+        HAL_GPIO_WritePin(COIL_PIN, GPIO_PIN_RESET);
+      }
+      
+      if(fireRequest && !firebusy) {
+      //if(fireRequest) {
+        fireRequest = false;
+        fireBusy = true;
+        HAL_GPIO_WritePin(COIL_PIN, GPIO_PIN_SET);
+      }
     }
     
         // 500mS Tasks 
     if (five_hundred_mS_Flag) {
       five_hundred_mS_Flag = false;
       
-      /*
-      if(fireBusy) {
-        fireBusy = false;
-        HAL_GPIO_WritePin(COIL_PIN, GPIO_PIN_RESET);
-      }
       
-      //if(fireRequest && !fireBusy) {
-      if(fireRequest) {
-        fireRequest = false;
-        fireBusy = true;
-        HAL_GPIO_WritePin(COIL_PIN, GPIO_PIN_SET);
-      }
+      
       //else {fireRequest = false;}
-      */
+      
       
       
     } 
@@ -560,16 +584,16 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : PA0 PA1 PA2 PA3
-                           PA4 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3
-                          |GPIO_PIN_4;
+  /*Configure GPIO pins : PA0 PA1 PA3 PA4
+                           PA10 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_3|GPIO_PIN_4
+                          |GPIO_PIN_10;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PB0 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0;
+  /*Configure GPIO pins : PB0 PB3 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_3;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
@@ -592,11 +616,11 @@ void Motor_Set_State(uint8_t state) {
     Motor_Set_AIN1(0);
     Motor_Set_AIN2(0);
     break;
-  case MOTOR_FWD:
+  case MOTOR_RIGHT:
     Motor_Set_AIN1(MOTOR_SPEED);
     Motor_Set_AIN2(0);
     break;
-  case MOTOR_REV:
+  case MOTOR_LEFT:
     Motor_Set_AIN1(0);
     Motor_Set_AIN2(MOTOR_SPEED);
     break;

@@ -37,6 +37,11 @@ uint8_t lastKeyCode = NO_KEY_PRESSED;
 uint8_t firstSend = true;
 
 extern uint8_t buttonPressed;
+extern uint8_t limitRightSwitch;
+extern uint8_t limitLeftSwitch;
+extern uint8_t motorRightRequest;
+extern uint8_t motorLeftRequest;
+
 
 /***********************************************************************************************************************
 module function prototypes
@@ -102,10 +107,11 @@ uint8_t DebounceKeyCode(uint8_t _kcode)
     keyCodeProcessed = false;
     firstSend = true;
     buttonPressed = false;
+    limitLeftSwitch = false;
+    limitRightSwitch = false;
+    motorRightRequest = false;
+    motorLeftRequest = false;
   }
-  
-  
-  
   
   uint8_t debounceDone = false;
   return debounceDone;

@@ -32,6 +32,7 @@
 #define TWENTYFIVE_mS_SEED  25
 #define ONEHUNDRED_mS_SEED  100
 #define FIVEHUNDRED_mS_SEED  500
+#define TWOHUNDRED_FIFTY_mS_SEED        250
 #define ONE_S_SEED          1000
 /* USER CODE END TD */
 

@@ -66,9 +66,9 @@ void Error_Handler(void);
 
 #define BUTTON_PIN      GPIOA, GPIO_PIN_0
 #define JOYSTICK_1_PIN  GPIOA, GPIO_PIN_1
-#define JOYSTICK_2_PIN  GPIOA, GPIO_PIN_2
-#define MOTOR_LIMIT1_PIN        GPIOA, GPIO_PIN_3
-#define MOTOR_LIMIT2_PIN        GPIOA, GPIO_PIN_4
+#define JOYSTICK_2_PIN  GPIOB, GPIO_PIN_3
+#define MOTOR_LIMIT1_PIN        GPIOA, GPIO_PIN_4
+#define MOTOR_LIMIT2_PIN        GPIOA, GPIO_PIN_10
 
 /* USER CODE END Private defines */
 

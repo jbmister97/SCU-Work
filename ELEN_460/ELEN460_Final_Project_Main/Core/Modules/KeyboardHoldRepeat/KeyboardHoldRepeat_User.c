@@ -18,9 +18,9 @@ Includes
 #include <stdint.h>
 
 #define MOTOR_LIMIT1_PRESSED    0x0F
-#define MOTOR_LIMIT2_PRESSED    0x17
+#define MOTOR_LIMIT2_PRESSED    0x1D
 #define JOYSTICK_1_PRESSED      0x1B
-#define JOYSTICK_2_PRESSED      0x1D
+#define JOYSTICK_2_PRESSED      0x17
 #define BUTTON_PRESSED          0x1E
 
 /***********************************************************************************************************************
@@ -36,6 +36,11 @@ extern uint8_t keyCodeProcessed;
 extern uint8_t buttonPressed;
 extern uint8_t fireBusy;
 extern uint8_t fireRequest;
+extern uint8_t count;
+extern uint8_t motorRightRequest;
+extern uint8_t motorLeftRequest;
+extern uint8_t limitRightSwitch;
+extern uint8_t limitLeftSwitch;
 
 //extern UART_HandleTypeDef huart1;
 
@@ -55,28 +60,31 @@ code start
 void ProcessKeyCode(uint8_t _kcode)
 {
   //kbdTest = 27;
-  
+  count++;
   //buttonPressed = true;
-  if(!fireBusy) {fireRequest = true;}
-  /*
+  
+  
   switch (_kcode) {
   case MOTOR_LIMIT1_PRESSED:  // single keys:   1
+    limitRightSwitch = true;
     break;
   case MOTOR_LIMIT2_PRESSED:  // single keys:   1
+    limitLeftSwitch = true;
     break;
   case JOYSTICK_1_PRESSED:  //                2
+    motorRightRequest = true;
     break;
   case JOYSTICK_2_PRESSED:  //                3
+    motorLeftRequest = true;
     break;
   case BUTTON_PRESSED:  // 2-key chords:  1+3
-    //if(!fireBusy) {fireRequest = true;}
-    fireRequest = true;
+    if(!fireBusy) {fireRequest = true;}
     break;
   default:
     break;
  
   }
-  */
+  
   processKeyCode = false;
   keyCodeProcessed = true;
   
@@ -112,7 +120,7 @@ uint8_t ScanKeyboard(void)
 {
   uint8_t keyCode = NO_KEY_PRESSED;
   
-  keyCode = (HAL_GPIO_ReadPin(MOTOR_LIMIT1_PIN) << 4) | (HAL_GPIO_ReadPin(MOTOR_LIMIT2_PIN) << 3) | (HAL_GPIO_ReadPin(JOYSTICK_1_PIN) << 2) | (HAL_GPIO_ReadPin(JOYSTICK_1_PIN) <<  1) | (HAL_GPIO_ReadPin(BUTTON_PIN) << 0);
+  keyCode = (HAL_GPIO_ReadPin(MOTOR_LIMIT1_PIN) << 4) | (HAL_GPIO_ReadPin(MOTOR_LIMIT2_PIN) << 3) | (HAL_GPIO_ReadPin(JOYSTICK_1_PIN) << 2) | (HAL_GPIO_ReadPin(JOYSTICK_2_PIN) <<  1) | (HAL_GPIO_ReadPin(BUTTON_PIN) << 0);
   
   return keyCode;
 }
