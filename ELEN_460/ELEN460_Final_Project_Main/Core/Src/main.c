@@ -117,7 +117,7 @@ TIM_HandleTypeDef htim17;
 uint8_t keyCode = NO_KEY_PRESSED;
 uint8_t buttonPressed = false;
 uint8_t motorDir = 0;
-uint8_t state = IDLE;
+uint8_t state = RUNNING;
 
 // Display
 uint8_t displayAddr = DISPLAY_1_ADDR;
@@ -127,6 +127,9 @@ uint8_t ram[4] = {DISPLAY_COM0_1,DISPLAY_COM0_2,DISPLAY_COM1_1,DISPLAY_COM1_2};
 uint8_t buffer[3];
 char arr[] = "hi";
 char displayString[NUMBER_OF_CHAR];
+uint8_t fireRequest = false;
+uint8_t fireBusy = false;
+//uint8_t fireSingle = false;
 
 /* USER CODE END PV */
 
@@ -150,6 +153,7 @@ extern uint8_t ten_mS_Flag;
 extern uint8_t twentyfive_mS_Flag;
 extern uint8_t hundred_mS_Flag;
 extern uint8_t one_S_Flag;
+extern uint8_t five_hundred_mS_Flag;
 /* USER CODE END 0 */
 
 /**
@@ -270,18 +274,50 @@ int main(void)
         Motor_Set_State(MOTOR_STOP);
       }
       */
+      
+      keyCode = ScanKeyboard();
+      DebounceKeyCode(keyCode);
+      
+      // If we've gotten a valid debounced keyCode, process it
+      if (processKeyCode == true) {
+        ProcessKeyCode(keyCode);
+      }
+      
     }
+    
+    
 
     // 100mS Tasks 
     if (hundred_mS_Flag) {
       hundred_mS_Flag = false;
       
     }
+    
+        // 500mS Tasks 
+    if (five_hundred_mS_Flag) {
+      five_hundred_mS_Flag = false;
+      
+      /*
+      if(fireBusy) {
+        fireBusy = false;
+        HAL_GPIO_WritePin(COIL_PIN, GPIO_PIN_RESET);
+      }
+      
+      //if(fireRequest && !fireBusy) {
+      if(fireRequest) {
+        fireRequest = false;
+        fireBusy = true;
+        HAL_GPIO_WritePin(COIL_PIN, GPIO_PIN_SET);
+      }
+      //else {fireRequest = false;}
+      */
+      
+      
+    } 
 
     // 1 Sec Tasks 
     if (one_S_Flag) {
       one_S_Flag = false;
-
     }
     
     switch(state) {
@@ -518,14 +554,19 @@ static void MX_GPIO_Init(void)
   GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : PA0 PA1 PA2 PA3
+                           PA4 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3
+                          |GPIO_PIN_4;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PB0 */
   GPIO_InitStruct.Pin = GPIO_PIN_0;
@@ -533,30 +574,11 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PA10 */
-  GPIO_InitStruct.Pin = GPIO_PIN_10;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PA11 */
-  GPIO_InitStruct.Pin = GPIO_PIN_11;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
   /*Configure GPIO pin : PB6 */
   GPIO_InitStruct.Pin = GPIO_PIN_6;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PB7 */
-  GPIO_InitStruct.Pin = GPIO_PIN_7;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 }

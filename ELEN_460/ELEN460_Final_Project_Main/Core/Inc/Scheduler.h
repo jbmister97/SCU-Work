@@ -22,8 +22,10 @@ uint8_t hundred_mS_Flag = false;\
 \
 uint16_t one_S_Counter = ONE_S_SEED;\
 uint8_t one_S_Flag = false;\
-
-
+\
+uint16_t five_hundred_mS_Counter = FIVEHUNDRED_mS_SEED;\
+uint8_t five_hundred_mS_Flag = false;\
+\
 
 // in the SysTick Handler "IRQn 1" section: 
 #define SCHEDULER_CODE \
@@ -43,6 +45,11 @@ uint8_t one_S_Flag = false;\
   if (hundred_mS_Counter == 0) {\
     hundred_mS_Flag = true;\
     hundred_mS_Counter = ONEHUNDRED_mS_SEED;\
+  }\
+  five_hundred_mS_Counter--;\
+  if (five_hundred_mS_Counter == 0) {\
+    five_hundred_mS_Flag = true;\
+    five_hundred_mS_Counter = ONE_S_SEED;\
   }\
 \
   one_S_Counter--;\

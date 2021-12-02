@@ -17,7 +17,11 @@ Includes
 #include <string.h>
 #include <stdint.h>
 
-
+#define MOTOR_LIMIT1_PRESSED    0x0F
+#define MOTOR_LIMIT2_PRESSED    0x17
+#define JOYSTICK_1_PRESSED      0x1B
+#define JOYSTICK_2_PRESSED      0x1D
+#define BUTTON_PRESSED          0x1E
 
 /***********************************************************************************************************************
 Pragma directive
@@ -30,6 +34,8 @@ Global/module variables
 extern uint8_t processKeyCode;
 extern uint8_t keyCodeProcessed;
 extern uint8_t buttonPressed;
+extern uint8_t fireBusy;
+extern uint8_t fireRequest;
 
 //extern UART_HandleTypeDef huart1;
 
@@ -50,24 +56,21 @@ void ProcessKeyCode(uint8_t _kcode)
 {
   //kbdTest = 27;
   
-  buttonPressed = true;
-
+  //buttonPressed = true;
+  if(!fireBusy) {fireRequest = true;}
   /*
   switch (_kcode) {
-  case 0x06:  // single keys:   1
-    //kbdTest = 1;
-    //kbdTest++;
-    //HAL_UART_Transmit(&huart1,testChar, 1, 1000);
-    if (++testChar[0] > '}') testChar[0] = '!';
+  case MOTOR_LIMIT1_PRESSED:  // single keys:   1
     break;
-  case 0x05:  //                2
-    kbdTest = 2;
+  case MOTOR_LIMIT2_PRESSED:  // single keys:   1
     break;
-  case 0x03:  //                3
-    kbdTest = 37;
+  case JOYSTICK_1_PRESSED:  //                2
     break;
-  case 0x02:  // 2-key chords:  1+3
-    kbdTest = 4;
+  case JOYSTICK_2_PRESSED:  //                3
+    break;
+  case BUTTON_PRESSED:  // 2-key chords:  1+3
+    //if(!fireBusy) {fireRequest = true;}
+    fireRequest = true;
     break;
   default:
     break;
@@ -88,18 +91,19 @@ uint8_t ValidKeyCode(uint8_t _kcode)
   if(_kcode == 0) {
     validKeyCode = true;
   }
-  /*
+
   switch (_kcode) {
-  case 0x06:  // single keys:   1
-  case 0x05:  //                2
-  case 0x03:  //                3
-  case 0x02:  // 2-key chords:  1+3
+  case MOTOR_LIMIT1_PRESSED:  // single keys:   1
+  case MOTOR_LIMIT2_PRESSED:  // single keys:   1
+  case JOYSTICK_1_PRESSED:  //                2
+  case JOYSTICK_2_PRESSED:  //                3
+  case BUTTON_PRESSED:  // 2-key chords:  1+3
     validKeyCode = true;
     break;
   default:
     break;
   }
-  */
+  
   return validKeyCode;
 }
 
@@ -108,7 +112,7 @@ uint8_t ScanKeyboard(void)
 {
   uint8_t keyCode = NO_KEY_PRESSED;
   
-  keyCode = HAL_GPIO_ReadPin(BUTTON_PIN) << 0;
+  keyCode = (HAL_GPIO_ReadPin(MOTOR_LIMIT1_PIN) << 4) | (HAL_GPIO_ReadPin(MOTOR_LIMIT2_PIN) << 3) | (HAL_GPIO_ReadPin(JOYSTICK_1_PIN) << 2) | (HAL_GPIO_ReadPin(JOYSTICK_1_PIN) <<  1) | (HAL_GPIO_ReadPin(BUTTON_PIN) << 0);
   
   return keyCode;
 }
