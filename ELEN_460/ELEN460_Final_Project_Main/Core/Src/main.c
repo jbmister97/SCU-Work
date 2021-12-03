@@ -130,9 +130,9 @@ uint8_t limitLeftSwitch = false;
 uint8_t displayAddr = DISPLAY_1_ADDR;
 uint8_t row0_7 = 0;
 uint8_t row8_15 = 0;
-uint8_t ram[4] = {DISPLAY_COM0_1,DISPLAY_COM0_2,DISPLAY_COM1_1,DISPLAY_COM1_2};
+uint8_t ram[8] = {DISPLAY_COM0_1,DISPLAY_COM0_2,DISPLAY_COM1_1,DISPLAY_COM1_2,DISPLAY_COM2_1,DISPLAY_COM2_2,DISPLAY_COM3_1,DISPLAY_COM3_2};
 uint8_t buffer[3];
-char arr[] = "hi";
+char arr[16];
 char displayString[NUMBER_OF_CHAR];
 uint8_t fireRequest = false;
 uint8_t fireBusy = false;
@@ -152,6 +152,8 @@ void Motor_Set_State(uint8_t state);
 void Motor_Set_AIN1(uint16_t duty);
 void Motor_Set_AIN2(uint16_t duty);
 void Display_Set_Char(uint8_t *first, uint8_t *second, char character);
+void Display_Set(char *arr, uint8_t displayAddr);
+void Display_Update_All(char *arr);
 void Display_Init(uint8_t addr);
 /* USER CODE END PFP */
 
@@ -245,24 +247,6 @@ int main(void)
     if (twentyfive_mS_Flag) {
       twentyfive_mS_Flag = false;
       
-      /* // DC push-pull coil test
-      keyCode = ScanKeyboard();
-      DebounceKeyCode(keyCode);
-      
-      // If we've gotten a valid debounced keyCode, process it
-      if (processKeyCode == true) {
-        ProcessKeyCode(keyCode);
-      }
-      
-      
-      if(buttonPressed) {
-        HAL_GPIO_WritePin(COIL_PIN, GPIO_PIN_SET);
-      }
-      else {
-        HAL_GPIO_WritePin(COIL_PIN, GPIO_PIN_RESET);
-      }
-      */
-      
       /*
       // Motor test
       keyCode = ScanKeyboard();
@@ -319,7 +303,7 @@ int main(void)
         HAL_GPIO_WritePin(COIL_PIN, GPIO_PIN_RESET);
       }
       
-      if(fireRequest && !firebusy) {
+      if(fireRequest && !fireBusy) {
       //if(fireRequest) {
         fireRequest = false;
         fireBusy = true;
@@ -825,6 +809,11 @@ void Display_Set_Char(uint8_t *first, uint8_t *second, char character){
   case 'Z':
     
     break;
+    
+  default:
+    *first = 0;
+    *second = 0;
+    break;
   }
   
 }
@@ -867,8 +856,31 @@ void Display_Init(uint8_t addr){
   HAL_I2C_Master_Transmit(&hi2c2, addr, buf, 2, HAL_MAX_DELAY);
 }
 
-void Display_Set(char *arr){
+void Display_Set(char *arr, uint8_t displayAddr){
+  for(uint8_t i = 0; i < 4; i++){
+    Display_Set_Char(&row0_7, &row8_15, *(arr + i));
+    // Send first half
+    buffer[0] = ram[i*2];
+    buffer[1] = row0_7;
+    HAL_I2C_Master_Transmit(&hi2c2, displayAddr, buffer, 2, HAL_MAX_DELAY);
+    
+    // Send second half
+    buffer[0] = ram[(i*2)+1];
+    buffer[1] = row8_15;
+    HAL_I2C_Master_Transmit(&hi2c2, displayAddr, buffer, 2, HAL_MAX_DELAY);
+  }
   
+  // Turn on the display
+  buffer[0] = DISPLAY_ON;
+  HAL_I2C_Master_Transmit(&hi2c2, displayAddr, buffer, 1, HAL_MAX_DELAY);
+
+}
+
+void Display_Update_All(char *arr) {
+  Display_Set(arr, DISPLAY_1_ADDR);
+  Display_Set(&arr[4], DISPLAY_2_ADDR);
+  Display_Set(&arr[8], DISPLAY_3_ADDR);
+  Display_Set(&arr[12], DISPLAY_4_ADDR);
 }
 /* USER CODE END 4 */
 
