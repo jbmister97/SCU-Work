@@ -19,8 +19,8 @@ Includes
 
 #define MOTOR_LIMIT1_PRESSED    0x0F
 #define MOTOR_LIMIT2_PRESSED    0x1D
-#define JOYSTICK_1_PRESSED      0x1B
-#define JOYSTICK_2_PRESSED      0x17
+#define JOYSTICK_1_PRESSED      0x17
+#define JOYSTICK_2_PRESSED      0x1B
 #define BUTTON_PRESSED          0x1E
 
 /***********************************************************************************************************************

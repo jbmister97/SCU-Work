@@ -13,7 +13,7 @@
 /***********************************************************************************************************************
 Macro definitions 
 ***********************************************************************************************************************/
-#define NO_KEY_PRESSED 0x01
+#define NO_KEY_PRESSED 0x0F
 #define KEYCODE_DEBOUNCE_TIME 3
 #define KEYCODE_HOLD_TIME 160
 #define KEYCODE_REPEAT_DELAY 40

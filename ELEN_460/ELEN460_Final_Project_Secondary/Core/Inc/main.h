@@ -50,6 +50,8 @@ extern "C" {
 
 /* USER CODE END EM */
 
+void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
+
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
 
@@ -61,6 +63,11 @@ void Error_Handler(void);
 /* USER CODE BEGIN Private defines */
 #define true    1
 #define false   0
+
+#define JOYSTICK_1_PIN  GPIOA, GPIO_PIN_5
+#define JOYSTICK_2_PIN  GPIOB, GPIO_PIN_3
+#define MOTOR_RIGHT_LIMIT_PIN GPIOF, GPIO_PIN_0
+#define MOTOR_LEFT_LIMIT_PIN GPIOF, GPIO_PIN_1
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

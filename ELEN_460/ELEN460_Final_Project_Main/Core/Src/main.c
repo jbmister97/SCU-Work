@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "KeyboardHoldRepeat.h"
+#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -30,7 +31,6 @@
     
 // Button GPIO defined in main.h
 #define COIL_PIN                GPIOB, GPIO_PIN_6
-#define LED_PIN                 GPIOA, GPIO_PIN_11
 #define GOAL_1_PIN              GPIOB, GPIO_PIN_7
 #define MOTOR_AIN1_PIN          GPIOB, GPIO_PIN_5
 #define MOTOR_AIN2_PIN          GPIOB, GPIO_PIN_4
@@ -43,9 +43,9 @@
 
 // Motor
 #define MOTOR_STOP              0
-#define MOTOR_RIGHT               1
-#define MOTOR_LEFT               2
-#define MOTOR_SPEED             10000
+#define MOTOR_RIGHT             1
+#define MOTOR_LEFT              2
+#define MOTOR_SPEED             20000
 
 // I2C Device Addresses
 //#define BOARD_ADDR              0x60
@@ -67,14 +67,6 @@
 #define DISPLAY_COM2_2                  0x05
 #define DISPLAY_COM3_1                  0x06
 #define DISPLAY_COM3_2                  0x07
-#define DISPLAY_COM4_1                  0x08
-#define DISPLAY_COM4_2                  0x09
-#define DISPLAY_COM5_1                  0x0A
-#define DISPLAY_COM5_2                  0x0B
-#define DISPLAY_COM6_1                  0x0C
-#define DISPLAY_COM6_2                  0x0D
-#define DISPLAY_COM7_1                  0x0E
-#define DISPLAY_COM7_2                  0x0F
 
 // Display pins
 #define A                        (1 << 0)
@@ -93,7 +85,7 @@
 #define N                        (1 << 5)
 #define DP                       (1 << 6)
 
-#define NUMBER_OF_CHAR          17
+#define NUMBER_OF_CHAR          16
 
 /* USER CODE END PTD */
 
@@ -203,32 +195,16 @@ int main(void)
   HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start_IT(&htim17, TIM_CHANNEL_1);
   
+  
   // Initialize displays
   Display_Init(DISPLAY_1_ADDR);
   Display_Init(DISPLAY_2_ADDR);
   Display_Init(DISPLAY_3_ADDR);
   Display_Init(DISPLAY_4_ADDR);
   
-  /*
-  // Display test
-  Display_Init(DISPLAY_1_ADDR);
-  for(uint8_t i = 0; i < sizeof(arr) - 1; i++) {
-    Display_Set_Char(&row0_7, &row8_15, arr[i]);
-    // Send first half
-    buffer[0] = ram[i*2];
-    buffer[1] = row0_7;
-    HAL_I2C_Master_Transmit(&hi2c2, DISPLAY_1_ADDR, buffer, 2, HAL_MAX_DELAY);
-    
-    // Send second half
-    buffer[0] = ram[(i*2)+1];
-    buffer[1] = row8_15;
-    HAL_I2C_Master_Transmit(&hi2c2, DISPLAY_1_ADDR, buffer, 2, HAL_MAX_DELAY);
-  }
+  strcpy(displayString, "Insert Coin");
   
-  // Turn on the display
-  buffer[0] = DISPLAY_ON;
-  HAL_I2C_Master_Transmit(&hi2c2, DISPLAY_1_ADDR, buffer, 1, HAL_MAX_DELAY);
-  */
+  Display_Update_All(displayString);
   
   /* USER CODE END 2 */
 
@@ -459,7 +435,7 @@ static void MX_TIM3_Init(void)
 
   /* USER CODE END TIM3_Init 1 */
   htim3.Instance = TIM3;
-  htim3.Init.Prescaler = 6;
+  htim3.Init.Prescaler = 4;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim3.Init.Period = 65535;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -508,7 +484,7 @@ static void MX_TIM17_Init(void)
 
   /* USER CODE END TIM17_Init 1 */
   htim17.Instance = TIM17;
-  htim17.Init.Prescaler = 6;
+  htim17.Init.Prescaler = 4;
   htim17.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim17.Init.Period = 65535;
   htim17.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -705,7 +681,8 @@ void Display_Set_Char(uint8_t *first, uint8_t *second, char character){
     break;
   case 'd':
   case 'D':
-    
+    *first = A | B | C | D;
+    *second = J | M;
     break;
   case 'e':
   case 'E':
@@ -738,7 +715,8 @@ void Display_Set_Char(uint8_t *first, uint8_t *second, char character){
     break;
   case 'k':
   case 'K':
-    
+    *first = E | F | G1;
+    *second = K | N;
     break;
   case 'l':
   case 'L':
