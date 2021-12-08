@@ -133,7 +133,7 @@
                     <item>adcValue</item>
                     <item>speed</item>
                     <item>count</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>

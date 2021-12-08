@@ -35,11 +35,17 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 
-#define LED1_PIN        GPIOB, GPIO_PIN4
-#define LED2_PIN        GPIOB, GPIO_PIN5
-#define LED3_PIN        GPIOA, GPIO_PIN11
+#define LED1_PIN        GPIOB, GPIO_PIN_4
+#define LED2_PIN        GPIOB, GPIO_PIN_5
+#define LED3_PIN        GPIOA, GPIO_PIN_11
+#define RED_LED_PIN     GPIOA, GPIO_PIN_9
+#define GREEN_LED_PIN   GPIOA, GPIO_PIN_10
+#define BLUE_LED_PIN    GPIOA, GPIO_PIN_8
 #define WAVEFORM_SIZE   2048
 #define BUCKET_SIZE     WAVEFORM_SIZE/4
+#define BUCKET_MINIMUM  20000
+#define BUCKET_MAXIMUM  200000
+#define DECAY_COUNT     2
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -51,6 +57,7 @@
 ADC_HandleTypeDef hadc1;
 DMA_HandleTypeDef hdma_adc1;
 
+TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim6;
 
 UART_HandleTypeDef huart2;
@@ -74,18 +81,31 @@ uint32_t binRed;
 uint32_t binGreen;
 uint32_t binBlue;
 
+uint16_t dutyRed;
+uint16_t dutyGreen;
+uint16_t dutyBlue;
+uint16_t lastDutyRed;
+uint16_t lastDutyGreen;
+uint16_t lastDutyBlue;
+uint8_t decayFlag;
+uint16_t decayCount = DECAY_COUNT;
+
 float32_t maxValue;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_DMA_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_USART2_UART_Init(void);
-static void MX_DMA_Init(void);
 static void MX_TIM6_Init(void);
+static void MX_TIM1_Init(void);
 /* USER CODE BEGIN PFP */
 void RGB_Process(float32_t *array);
+void SetRedLedLevel(uint16_t r_level);
+void SetGreenLedLevel(uint16_t g_level);
+void SetBlueLedLevel(uint16_t b_level);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -129,9 +149,19 @@ int main(void)
   MX_ADC1_Init();
   MX_USART2_UART_Init();
   MX_TIM6_Init();
+  MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
+  // Start timer for  DMA
   HAL_TIM_Base_Start(&htim6);
   
+  // Start timer for Blue LED
+  HAL_TIM_PWM_Start_IT(&htim1, TIM_CHANNEL_1);
+  
+  // Start timer for Red LED
+  HAL_TIM_PWM_Start_IT(&htim1, TIM_CHANNEL_2);
+  
+  // Start timer for Green LED
+  HAL_TIM_PWM_Start_IT(&htim1, TIM_CHANNEL_3);
 
   /* USER CODE END 2 */
 
@@ -154,7 +184,32 @@ int main(void)
         subCount = 0;
         HAL_ADC_Start_DMA(&hadc1, (uint32_t *) waveformInput, WAVEFORM_SIZE);
       }
-
+      
+      if(binRed < BUCKET_MINIMUM) {dutyRed = 0;}
+      else if(binRed > BUCKET_MAXIMUM) {dutyRed = 65535;}
+      else {dutyRed = binRed / 3;}
+      if(dutyRed > lastDutyRed) {
+        SetRedLedLevel(dutyRed);
+        lastDutyRed = dutyRed;
+      }
+      
+      // Set green LED value
+      if(binGreen < BUCKET_MINIMUM) {dutyGreen = 0;}
+      else if(binGreen > BUCKET_MAXIMUM) {dutyGreen = 65535;}
+      else {dutyGreen = binGreen / 3;}
+      if(dutyGreen > lastDutyGreen) {
+        SetGreenLedLevel(dutyGreen);
+        lastDutyGreen = dutyGreen;
+      }
+      
+      // Set Blue LED value
+      if(binBlue < BUCKET_MINIMUM) {dutyBlue = 0;}
+      else if(binBlue > BUCKET_MAXIMUM) {dutyBlue = 65535;}
+      else {dutyBlue = binBlue / 3;}
+      if(dutyBlue > lastDutyBlue) {
+        SetBlueLedLevel(dutyBlue);
+        lastDutyBlue = dutyBlue;
+      }
     }
     
     
@@ -183,13 +238,25 @@ int main(void)
     
     if(hundred_mS_Flag) {
       hundred_mS_Flag = false;
-      
+
     }
     
     if(one_S_Flag) {
       one_S_Flag = false;
       
     }
+    
+    decayCount--;
+    if(decayCount == 0) {
+      decayCount = DECAY_COUNT;
+      if(dutyRed > 0) {dutyRed--;}
+      if(lastDutyRed > 0) {lastDutyRed--;}
+      if(dutyBlue > 0) {dutyBlue--;}
+      if(lastDutyBlue > 0) {lastDutyBlue--;}
+      if(dutyGreen > 0) {dutyGreen--;}
+      if(lastDutyGreen > 0) {lastDutyGreen--;}
+    }
+    
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -300,6 +367,84 @@ static void MX_ADC1_Init(void)
   /* USER CODE BEGIN ADC1_Init 2 */
 
   /* USER CODE END ADC1_Init 2 */
+
+}
+
+/**
+  * @brief TIM1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM1_Init(void)
+{
+
+  /* USER CODE BEGIN TIM1_Init 0 */
+
+  /* USER CODE END TIM1_Init 0 */
+
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+  TIM_OC_InitTypeDef sConfigOC = {0};
+  TIM_BreakDeadTimeConfigTypeDef sBreakDeadTimeConfig = {0};
+
+  /* USER CODE BEGIN TIM1_Init 1 */
+
+  /* USER CODE END TIM1_Init 1 */
+  htim1.Instance = TIM1;
+  htim1.Init.Prescaler = 0;
+  htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim1.Init.Period = 65535;
+  htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim1.Init.RepetitionCounter = 0;
+  htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_PWM_Init(&htim1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterOutputTrigger2 = TIM_TRGO2_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim1, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = 0;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
+  sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
+  if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sBreakDeadTimeConfig.OffStateRunMode = TIM_OSSR_DISABLE;
+  sBreakDeadTimeConfig.OffStateIDLEMode = TIM_OSSI_DISABLE;
+  sBreakDeadTimeConfig.LockLevel = TIM_LOCKLEVEL_OFF;
+  sBreakDeadTimeConfig.DeadTime = 0;
+  sBreakDeadTimeConfig.BreakState = TIM_BREAK_DISABLE;
+  sBreakDeadTimeConfig.BreakPolarity = TIM_BREAKPOLARITY_HIGH;
+  sBreakDeadTimeConfig.BreakFilter = 0;
+  sBreakDeadTimeConfig.Break2State = TIM_BREAK2_DISABLE;
+  sBreakDeadTimeConfig.Break2Polarity = TIM_BREAK2POLARITY_HIGH;
+  sBreakDeadTimeConfig.Break2Filter = 0;
+  sBreakDeadTimeConfig.AutomaticOutput = TIM_AUTOMATICOUTPUT_DISABLE;
+  if (HAL_TIMEx_ConfigBreakDeadTime(&htim1, &sBreakDeadTimeConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM1_Init 2 */
+
+  /* USER CODE END TIM1_Init 2 */
+  HAL_TIM_MspPostInit(&htim1);
 
 }
 
@@ -447,6 +592,57 @@ void RGB_Process(float32_t *array) {
   for(i = (BUCKET_SIZE-(BUCKET_SIZE/4)); i < BUCKET_SIZE; i++ ) {
     binBlue += array[i];
   }
+}
+
+void SetRedLedLevel(uint16_t r_level)
+{
+  TIM_OC_InitTypeDef sConfigOC = {0};
+  //redValue = r_level;
+
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = r_level;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
+  sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
+
+  HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_2);
+  HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_2);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
+}
+
+void SetBlueLedLevel(uint16_t b_level)
+{
+  TIM_OC_InitTypeDef sConfigOC = {0};
+  //blueValue = b_level;
+ 
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = b_level;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
+  sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
+ 
+  HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
+  HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+}
+
+void SetGreenLedLevel(uint16_t g_level)
+{
+  TIM_OC_InitTypeDef sConfigOC = {0};
+  //greenValue = g_level;
+ 
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = g_level;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+
+  HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_3);
+  HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_3);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
 }
 /* USER CODE END 4 */
 
