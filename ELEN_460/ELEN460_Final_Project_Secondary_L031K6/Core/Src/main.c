@@ -67,6 +67,8 @@ uint8_t reset = 0;
 uint8_t ballCount = 0;
 uint8_t lastValue = 0;
 uint8_t count = 0;
+uint8_t winFlag = false;
+uint8_t allFiredFlag = false;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -123,6 +125,8 @@ int main(void)
       goals = 0;
       lastValue = 0;
       ballCount = 0;
+      winFlag = false;
+      allFiredFlag = false;
       HAL_GPIO_WritePin(WIN_PIN, GPIO_PIN_RESET);
       HAL_GPIO_WritePin(ALL_BALLS_PIN, GPIO_PIN_RESET);
     }
@@ -132,21 +136,24 @@ int main(void)
     
     leds |= goals;
     LED_Process(leds);
+
+    // Check if player won
+    if(leds == 0x3F) {
+      winFlag = true;
+      HAL_GPIO_WritePin(WIN_PIN, GPIO_PIN_SET);
+    }
     
-    // Increment ball counter when ball passes through goal
+        // Increment ball counter when ball passes through goal
     if(goals) {
       if(goals != lastValue) {
         ballCount++;
         lastValue = goals;
       }
     }
+    else {lastValue = 0;}
     if(ballCount >= NUMBER_OF_BALLS) {
+      allFiredFlag = true;
       HAL_GPIO_WritePin(ALL_BALLS_PIN, GPIO_PIN_SET);
-    }
-    
-    // Check if player won
-    if(leds == 0x3F) {
-      HAL_GPIO_WritePin(WIN_PIN, GPIO_PIN_SET);
     }
     /* USER CODE END WHILE */
 

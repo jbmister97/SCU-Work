@@ -64,23 +64,23 @@ void ProcessKeyCode(uint8_t _kcode)
   //buttonPressed = true;
   
   // Check if user buttton is pressed
-  if(!((_kcode >> 0) 0x1)){fireRequest = true;}
+  if(!((_kcode >> 0) & 0x1)){fireRequest = true;}
   //else {fireRequest = false;}
   
   // Check if joystick 1 is pressed
-  if(!((_kcode >> 2) 0x1)){motorRightRequest = true;}
+  if(!((_kcode >> 2) & 0x1)){motorRightRequest = true;}
   else {motorRightRequest = false;}
   
   // Check if joystick 2 is pressed
-  if(!((_kcode >> 1) 0x1)){motorLeftRequest = true;}
+  if(!((_kcode >> 1) & 0x1)){motorLeftRequest = true;}
   else {motorLeftRequest = false;}
   
   // Check if motor limit 1 is pressed
-  if(!((_kcode >> 4) 0x1)){limitRightSwitch = true;}
+  if(!((_kcode >> 4) & 0x1)){limitRightSwitch = true;}
   else {limitRightSwitch = false;}
   
   // Check if motor limit 2 is pressed
-  if(!((_kcode >> 3) 0x1)){limitLeftSwitch = true;}
+  if(!((_kcode >> 3) & 0x1)){limitLeftSwitch = true;}
   else {limitLeftSwitch = false;}
   
   /*

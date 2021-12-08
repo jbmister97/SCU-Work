@@ -41,6 +41,7 @@ extern uint8_t limitRightSwitch;
 extern uint8_t limitLeftSwitch;
 extern uint8_t motorRightRequest;
 extern uint8_t motorLeftRequest;
+extern uint8_t fireRequest;
 
 
 /***********************************************************************************************************************
@@ -107,6 +108,7 @@ uint8_t DebounceKeyCode(uint8_t _kcode)
     keyCodeProcessed = false;
     firstSend = true;
     buttonPressed = false;
+    fireRequest = false;
     limitLeftSwitch = false;
     limitRightSwitch = false;
     motorRightRequest = false;

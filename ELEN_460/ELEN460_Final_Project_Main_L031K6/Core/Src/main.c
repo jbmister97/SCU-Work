@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "KeyboardHoldRepeat.h"
+#include <stdlib.h>
 #include <string.h>
 /* USER CODE END Includes */
 
@@ -46,7 +47,7 @@
 #define IDLE                    2
 #define RUNNING                 3
 #define END                     4
-#define NUM_OF_SHOTS            9
+#define NUM_OF_SHOTS            10
 #define MESSAGE_TIME            5
 
 // Motor
@@ -64,7 +65,7 @@
 
 // Display system setup
 //#define DISPLAY_OSC_OFF                 0x20
-//#define DISPLAY_OSC_ON                  0x21
+#define DISPLAY_OSC_ON                  0x21
 #define DISPLAY_OFF                     0x80
 #define DISPLAY_ON                      0x81
 #define DISPLAY_COM0_1                  0x00
@@ -136,6 +137,7 @@ uint8_t count = 0;
 uint8_t msgTimerCount = 0;
 uint8_t msgTimerEn = false;
 uint8_t msgTimerFinished = false;
+char strShots[2];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -152,6 +154,7 @@ void Display_Set_Char(uint8_t *first, uint8_t *second, char character);
 void Display_Set(char *arr, uint8_t displayAddr);
 void Display_Update_All(char *arr);
 void Display_Init(uint8_t addr);
+void Display_Shot_Convert(uint8_t shots, char *str);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -226,27 +229,7 @@ int main(void)
     if (twentyfive_mS_Flag) {
       twentyfive_mS_Flag = false;
       
-      /*
-      keyCode = ScanKeyboard();
-      DebounceKeyCode(keyCode);
-      
-      // If we've gotten a valid debounced keyCode, process it
-      if (processKeyCode == true) {
-        ProcessKeyCode(keyCode);
-      }
-      
-      
-      if(motorRightRequest && !limitRightSwitch) {
-        Motor_Set_State(MOTOR_RIGHT);
-      }
-      else if(motorLeftRequest && !limitLeftSwitch) {
-        Motor_Set_State(MOTOR_LEFT);
-      }
-      else {Motor_Set_State(MOTOR_STOP);}
-      */
     }
-    
-    
 
     // 100mS Tasks 
     if (hundred_mS_Flag) {
@@ -263,7 +246,11 @@ int main(void)
         shots--;
         
         // Update shot counter
-        
+        //itoa(shots,strShots,10);
+        Display_Shot_Convert(shots,strShots);
+        strcpy(displayString, "Shots left ");
+        strcat(displayString,strShots);
+        Display_Update_All(displayString);
       }
       
       if(fireRequest && !fireBusy && (shots != 0)) {
@@ -289,6 +276,7 @@ int main(void)
           msgTimerEn = false;
           msgTimerFinished = true;
         }
+      }
       
     }
     
@@ -297,6 +285,13 @@ int main(void)
       if(HAL_GPIO_ReadPin(COIN_SENSOR_PIN)) {
         state = RUNNING;
         
+        // Prepare secondary microcontroller
+        HAL_GPIO_WritePin(RESET_CTRL_PIN, GPIO_PIN_RESET);
+        
+        Display_Shot_Convert(NUM_OF_SHOTS, strShots);
+        strcpy(displayString, "Shots left ");
+        strcat(displayString, strShots);
+        Display_Update_All(displayString);
       }
       else {
         
@@ -330,14 +325,26 @@ int main(void)
           }
           else {
             // Player lost
+            strcpy(displayString, "Nice try");
+            Display_Update_All(displayString);
           }
+          state = END;
         }
       }
       break;
     case END:
       shots = NUM_OF_SHOTS;
+      motorLeftRequest = false;
+      motorRightRequest = false;
+      limitLeftSwitch = false;
+      limitRightSwitch = false;
+      fireRequest = false;
+      fireBusy = false;
+      
+      // Reset secondary microcontroller
+      HAL_GPIO_WritePin(RESET_CTRL_PIN, GPIO_PIN_SET);
+      
       strcpy(displayString, "Insert Coin");
-  
       Display_Update_All(displayString);
       state = IDLE;
       break;
@@ -891,6 +898,56 @@ void Display_Update_All(char *arr) {
   Display_Set(&arr[4], DISPLAY_2_ADDR);
   Display_Set(&arr[8], DISPLAY_3_ADDR);
   Display_Set(&arr[12], DISPLAY_4_ADDR);
+}
+
+void Display_Shot_Convert(uint8_t shots, char *str){
+  
+  switch(shots){
+  case 0:
+    *str = '0';
+    *(str+1) = '0';
+    break;
+  case 1:
+    *str = '0';
+    *(str+1) = '1';
+    break;
+  case 2:
+    *str = '0';
+    *(str+1) = '2';
+    break;
+  case 3:
+    *str = '0';
+    *(str+1) = '3';
+    break;
+  case 4:
+    *str = '0';
+    *(str+1) = '4';
+    break;
+  case 5:
+    *str = '0';
+    *(str+1) = '5';
+    break;
+  case 6:
+    *str = '0';
+    *(str+1) = '6';
+    break;
+  case 7:
+    *str = '0';
+    *(str+1) = '7';
+    break;
+  case 8:
+    *str = '0';
+    *(str+1) = '8';
+    break;
+  case 9:
+    *str = '0';
+    *(str+1) = '9';
+    break;
+  case 10:
+    *str = '1';
+    *(str+1) = '0';
+    break;
+  }
 }
 /* USER CODE END 4 */
 
