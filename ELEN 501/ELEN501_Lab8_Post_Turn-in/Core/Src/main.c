@@ -34,18 +34,15 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
-#define LED1_PIN        GPIOB, GPIO_PIN_4
-#define LED2_PIN        GPIOB, GPIO_PIN_5
-#define LED3_PIN        GPIOA, GPIO_PIN_11
 #define RED_LED_PIN     GPIOA, GPIO_PIN_9
 #define GREEN_LED_PIN   GPIOA, GPIO_PIN_10
 #define BLUE_LED_PIN    GPIOA, GPIO_PIN_8
 #define WAVEFORM_SIZE   2048
 #define BUCKET_SIZE     WAVEFORM_SIZE/4
-#define BUCKET_MINIMUM  20000
+#define BUCKET_MINIMUM  30000
 #define BUCKET_MAXIMUM  200000
 #define DECAY_COUNT     2
+#define DECAY_STEP      25
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -59,8 +56,6 @@ DMA_HandleTypeDef hdma_adc1;
 
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim6;
-
-UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 
@@ -96,9 +91,8 @@ float32_t maxValue;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_DMA_Init(void);
 static void MX_ADC1_Init(void);
-static void MX_USART2_UART_Init(void);
+static void MX_DMA_Init(void);
 static void MX_TIM6_Init(void);
 static void MX_TIM1_Init(void);
 /* USER CODE BEGIN PFP */
@@ -147,7 +141,6 @@ int main(void)
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_ADC1_Init();
-  MX_USART2_UART_Init();
   MX_TIM6_Init();
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
@@ -188,31 +181,30 @@ int main(void)
       if(binRed < BUCKET_MINIMUM) {dutyRed = 0;}
       else if(binRed > BUCKET_MAXIMUM) {dutyRed = 65535;}
       else {dutyRed = binRed / 3;}
-      if(dutyRed > lastDutyRed) {
-        SetRedLedLevel(dutyRed);
-        lastDutyRed = dutyRed;
-      }
+      
+      // Only update the pwm if the new value is higher than the previous
+      if(dutyRed > lastDutyRed) {lastDutyRed = dutyRed;}
+      
       
       // Set green LED value
       if(binGreen < BUCKET_MINIMUM) {dutyGreen = 0;}
       else if(binGreen > BUCKET_MAXIMUM) {dutyGreen = 65535;}
       else {dutyGreen = binGreen / 3;}
-      if(dutyGreen > lastDutyGreen) {
-        SetGreenLedLevel(dutyGreen);
-        lastDutyGreen = dutyGreen;
-      }
+      
+      // Only update the pwm if the new value is higher than the previous
+      if(dutyGreen > lastDutyGreen) {lastDutyGreen = dutyGreen;}
       
       // Set Blue LED value
       if(binBlue < BUCKET_MINIMUM) {dutyBlue = 0;}
       else if(binBlue > BUCKET_MAXIMUM) {dutyBlue = 65535;}
       else {dutyBlue = binBlue / 3;}
-      if(dutyBlue > lastDutyBlue) {
-        SetBlueLedLevel(dutyBlue);
-        lastDutyBlue = dutyBlue;
-      }
+      
+      // Only update the pwm if the new value is higher than the previous
+      if(dutyBlue > lastDutyBlue) {lastDutyBlue = dutyBlue;}
+      
     }
     
-    
+    // Process the first half of the DMA capture
     if(firstHalfCaptured) {
       firstHalfCaptured = false;
 
@@ -220,18 +212,18 @@ int main(void)
       
       arm_cfft_f32(&arm_cfft_sR_f32_len512, waveformCapture, ifftFlag, doBitReverse);
       arm_cmplx_mag_f32(waveformCapture, waveformProcessed, fftSize);
-      arm_max_f32(waveformProcessed, fftSize, &maxValue, &binIndex);
       
       RGB_Process(waveformProcessed);
     }
-    else if(secondHalfCaptured) {
+    
+    // Process the first half of the DMA capture
+    if(secondHalfCaptured) {
       secondHalfCaptured = false;
 
       for(uint16_t i = WAVEFORM_SIZE/2; i < WAVEFORM_SIZE; i++) {waveformCapture[i-(WAVEFORM_SIZE/2)] = waveformInput[i] - 1980;}
       
       arm_cfft_f32(&arm_cfft_sR_f32_len512, waveformCapture, ifftFlag, doBitReverse);
       arm_cmplx_mag_f32(waveformCapture, waveformProcessed, fftSize);
-      arm_max_f32(waveformProcessed, fftSize, &maxValue, &binIndex);
       
       RGB_Process(waveformProcessed);
     }
@@ -246,17 +238,18 @@ int main(void)
       
     }
     
-    decayCount--;
-    if(decayCount == 0) {
-      decayCount = DECAY_COUNT;
-      if(dutyRed > 0) {dutyRed--;}
-      if(lastDutyRed > 0) {lastDutyRed--;}
-      if(dutyBlue > 0) {dutyBlue--;}
-      if(lastDutyBlue > 0) {lastDutyBlue--;}
-      if(dutyGreen > 0) {dutyGreen--;}
-      if(lastDutyGreen > 0) {lastDutyGreen--;}
-    }
+    // Decay the current PWM values
+    if(lastDutyRed > DECAY_STEP) {lastDutyRed -= DECAY_STEP;}
+    else {lastDutyRed = 0;}
+    if(lastDutyBlue > DECAY_STEP) {lastDutyBlue -= DECAY_STEP;}
+    else {lastDutyBlue = 0;}
+    if(lastDutyGreen > DECAY_STEP) {lastDutyGreen -= DECAY_STEP;}
+    else {lastDutyGreen = 0;}
     
+    // Update the LED PWMs
+    SetRedLedLevel(lastDutyRed);
+    SetGreenLedLevel(lastDutyGreen);
+    SetBlueLedLevel(lastDutyBlue);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -468,7 +461,7 @@ static void MX_TIM6_Init(void)
   htim6.Instance = TIM6;
   htim6.Init.Prescaler = 0;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 100;
+  htim6.Init.Period = 150;
   htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
   {
@@ -483,41 +476,6 @@ static void MX_TIM6_Init(void)
   /* USER CODE BEGIN TIM6_Init 2 */
 
   /* USER CODE END TIM6_Init 2 */
-
-}
-
-/**
-  * @brief USART2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_USART2_UART_Init(void)
-{
-
-  /* USER CODE BEGIN USART2_Init 0 */
-
-  /* USER CODE END USART2_Init 0 */
-
-  /* USER CODE BEGIN USART2_Init 1 */
-
-  /* USER CODE END USART2_Init 1 */
-  huart2.Instance = USART2;
-  huart2.Init.BaudRate = 115200;
-  huart2.Init.WordLength = UART_WORDLENGTH_8B;
-  huart2.Init.StopBits = UART_STOPBITS_1;
-  huart2.Init.Parity = UART_PARITY_NONE;
-  huart2.Init.Mode = UART_MODE_TX_RX;
-  huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
-  huart2.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
-  huart2.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
-  if (HAL_UART_Init(&huart2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN USART2_Init 2 */
-
-  /* USER CODE END USART2_Init 2 */
 
 }
 
@@ -544,31 +502,9 @@ static void MX_DMA_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4|GPIO_PIN_5, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin : PA11 */
-  GPIO_InitStruct.Pin = GPIO_PIN_11;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : PB4 PB5 */
-  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 }
 

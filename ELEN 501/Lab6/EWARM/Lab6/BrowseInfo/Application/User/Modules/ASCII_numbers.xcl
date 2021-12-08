@@ -31,6 +31,8 @@ C:\GitHub\SCU-Work\ELEN 501\Lab6\EWARM\..\Core\Modules\Serial\
 -I
 C:\GitHub\SCU-Work\ELEN 501\Lab6\EWARM\..\Core\Modules\UX\
 -I
+C:\GitHub\SCU-Work\ELEN 501\Lab6\Core\Modules\Thermocouple\
+-I
 C:\Program Files\IAR Systems\Embedded Workbench 9.0\arm\inc\c\aarch32
 -I
 C:\Program Files\IAR Systems\Embedded Workbench 9.0\arm\inc
@@ -56,6 +58,8 @@ C:\GitHub\SCU-Work\ELEN 501\Lab6\Core\Modules\KeyboardHoldRepeat
 C:\GitHub\SCU-Work\ELEN 501\Lab6\Core\Modules\Serial
 -I
 C:\GitHub\SCU-Work\ELEN 501\Lab6\Core\Modules\UX
+-I
+C:\GitHub\SCU-Work\ELEN 501\Lab6\Core\Modules\Thermocouple
 -D__CHAR_BITS__=8
 -D__CHAR_MAX__=0xff
 -D__CHAR_MIN__=0

@@ -29,6 +29,7 @@
 #include "fonts.h"
 #include "ssd1306.h"
 #include "ux_manager.h"
+#include "thermocouple.h"
 
 /* USER CODE END Includes */
 
@@ -48,6 +49,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
+DMA_HandleTypeDef hdma_adc1;
 
 I2C_HandleTypeDef hi2c1;
 
@@ -120,6 +122,9 @@ uint16_t screenTime = 0;
 #define SCREEN_TIMEOUT_COUNT     15
 extern ui_screen currentScreen;
 
+// ADC
+uint16_t dmaBuffer[3];
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -130,6 +135,7 @@ static void MX_TIM1_Init(void);
 static void MX_TIM3_Init(void);
 static void MX_TIM15_Init(void);
 static void MX_USART1_UART_Init(void);
+static void MX_DMA_Init(void);
 static void MX_I2C1_Init(void);
 /* USER CODE BEGIN PFP */
 void InitValuesPWM(void);
@@ -171,6 +177,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_ADC1_Init();
   MX_TIM1_Init();
   MX_TIM3_Init();
@@ -178,6 +185,9 @@ int main(void)
   MX_USART1_UART_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
+  
+  // Start ADC DMA
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&dmaBuffer, 3);
   
   // UART related init
   HAL_UART_Transmit(&huart1,"Mornin'!\r\n", 10, 1000); // this tests the UART functionalit
@@ -187,11 +197,11 @@ int main(void)
   SendString("\r\nBongiorno!\r\n", 14, StripZeros, AddCRLF);  // this function cal tests the transmit UART interrupt.
 
   // PWM realted init
-  void InitValuesPWM(void);
+  //void InitValuesPWM(void);
   
-  HAL_TIM_PWM_Start_IT(&htim15, TIM_CHANNEL_1);
-  HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_1);
-  HAL_TIM_PWM_Start_IT(&htim1, TIM_CHANNEL_2);
+  //HAL_TIM_PWM_Start_IT(&htim15, TIM_CHANNEL_1);
+  //HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_1);
+  //HAL_TIM_PWM_Start_IT(&htim1, TIM_CHANNEL_2);
 
   // Display related init
   SSD1306_Init();  // initialise  
@@ -235,7 +245,8 @@ int main(void)
         //ProcessKeyCode(keyCode);
         ProcessKeyCodeInContext(keyCode);
       }
-
+      
+      
     }  // end of 25mS Tasks
     //---------------------------------
 
@@ -262,7 +273,7 @@ int main(void)
         bIndex += skipNumber;
       }
 
-      
+      HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&dmaBuffer, 3);
     }  // end of 100mS Tasks
     //---------------------------------
 
@@ -390,7 +401,7 @@ static void MX_ADC1_Init(void)
   hadc1.Init.LowPowerAutoWait = DISABLE;
   hadc1.Init.LowPowerAutoPowerOff = DISABLE;
   hadc1.Init.ContinuousConvMode = DISABLE;
-  hadc1.Init.NbrOfConversion = 1;
+  hadc1.Init.NbrOfConversion = 3;
   hadc1.Init.DiscontinuousConvMode = DISABLE;
   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
@@ -409,6 +420,22 @@ static void MX_ADC1_Init(void)
   sConfig.Channel = ADC_CHANNEL_4;
   sConfig.Rank = ADC_REGULAR_RANK_1;
   sConfig.SamplingTime = ADC_SAMPLINGTIME_COMMON_1;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Configure Regular Channel
+  */
+  sConfig.Channel = ADC_CHANNEL_1;
+  sConfig.Rank = ADC_REGULAR_RANK_2;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Configure Regular Channel
+  */
+  sConfig.Channel = ADC_CHANNEL_0;
+  sConfig.Rank = ADC_REGULAR_RANK_3;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
@@ -727,6 +754,22 @@ static void MX_USART1_UART_Init(void)
   /* USER CODE BEGIN USART1_Init 2 */
 
   /* USER CODE END USART1_Init 2 */
+
+}
+
+/**
+  * Enable DMA controller clock
+  */
+static void MX_DMA_Init(void)
+{
+
+  /* DMA controller clock enable */
+  __HAL_RCC_DMA1_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA1_Channel1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
 
 }
 
