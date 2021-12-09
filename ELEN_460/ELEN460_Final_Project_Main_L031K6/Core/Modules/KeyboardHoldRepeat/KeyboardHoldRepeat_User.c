@@ -41,6 +41,7 @@ extern uint8_t motorRightRequest;
 extern uint8_t motorLeftRequest;
 extern uint8_t limitRightSwitch;
 extern uint8_t limitLeftSwitch;
+uint8_t singleShot = false;
 
 //extern UART_HandleTypeDef huart1;
 
@@ -62,25 +63,35 @@ void ProcessKeyCode(uint8_t _kcode)
   //kbdTest = 27;
   count++;
   //buttonPressed = true;
-  
+  uint8_t temp = _kcode;
   // Check if user buttton is pressed
-  if(!((_kcode >> 0) & 0x1)){fireRequest = true;}
+  if(!((temp >> 0) & 0x1)){
+    if(!singleShot) {
+      singleShot = true;
+      fireRequest = true;
+    }
+  }
+  else {singleShot = false;}
   //else {fireRequest = false;}
   
+  temp = _kcode;
   // Check if joystick 1 is pressed
-  if(!((_kcode >> 2) & 0x1)){motorRightRequest = true;}
+  if(!((temp >> 2) & 0x1)){motorRightRequest = true;}
   else {motorRightRequest = false;}
   
+  temp = _kcode;
   // Check if joystick 2 is pressed
-  if(!((_kcode >> 1) & 0x1)){motorLeftRequest = true;}
+  if(!((temp >> 1) & 0x1)){motorLeftRequest = true;}
   else {motorLeftRequest = false;}
   
+  temp = _kcode;
   // Check if motor limit 1 is pressed
-  if(!((_kcode >> 4) & 0x1)){limitRightSwitch = true;}
+  if(!((temp >> 4) & 0x1)){limitRightSwitch = true;}
   else {limitRightSwitch = false;}
   
+  temp = _kcode;
   // Check if motor limit 2 is pressed
-  if(!((_kcode >> 3) & 0x1)){limitLeftSwitch = true;}
+  if(!((temp >> 3) & 0x1)){limitLeftSwitch = true;}
   else {limitLeftSwitch = false;}
   
   /*

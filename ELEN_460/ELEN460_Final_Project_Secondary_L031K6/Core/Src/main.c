@@ -119,7 +119,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    reset = HAL_GPIO_ReadPin(RESET_PIN);
+    reset = !(HAL_GPIO_ReadPin(RESET_PIN));
     if(reset) {
       leds = 0;
       goals = 0;
@@ -127,8 +127,8 @@ int main(void)
       ballCount = 0;
       winFlag = false;
       allFiredFlag = false;
-      HAL_GPIO_WritePin(WIN_PIN, GPIO_PIN_RESET);
-      HAL_GPIO_WritePin(ALL_BALLS_PIN, GPIO_PIN_RESET);
+      HAL_GPIO_WritePin(WIN_PIN, GPIO_PIN_SET);
+      HAL_GPIO_WritePin(ALL_BALLS_PIN, GPIO_PIN_SET);
     }
     else {
       goals = (HAL_GPIO_ReadPin(GOAL_6_PIN) << 5) | (HAL_GPIO_ReadPin(GOAL_5_PIN) << 4) | (HAL_GPIO_ReadPin(GOAL_4_PIN) << 3) | (HAL_GPIO_ReadPin(GOAL_3_PIN) << 2) | (HAL_GPIO_ReadPin(GOAL_2_PIN) << 1) | (HAL_GPIO_ReadPin(GOAL_1_PIN) << 0);
@@ -140,7 +140,7 @@ int main(void)
     // Check if player won
     if(leds == 0x3F) {
       winFlag = true;
-      HAL_GPIO_WritePin(WIN_PIN, GPIO_PIN_SET);
+      HAL_GPIO_WritePin(WIN_PIN, GPIO_PIN_RESET);
     }
     
         // Increment ball counter when ball passes through goal
@@ -153,7 +153,7 @@ int main(void)
     else {lastValue = 0;}
     if(ballCount >= NUMBER_OF_BALLS) {
       allFiredFlag = true;
-      HAL_GPIO_WritePin(ALL_BALLS_PIN, GPIO_PIN_SET);
+      HAL_GPIO_WritePin(ALL_BALLS_PIN, GPIO_PIN_RESET);
     }
     /* USER CODE END WHILE */
 
@@ -216,24 +216,27 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3
-                          |GPIO_PIN_4|GPIO_PIN_7|GPIO_PIN_9, GPIO_PIN_RESET);
+                          |GPIO_PIN_4|GPIO_PIN_7, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
 
   /*Configure GPIO pins : PA0 PA1 PA2 PA3
-                           PA4 PA7 PA9 */
+                           PA4 PA7 */
   GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3
-                          |GPIO_PIN_4|GPIO_PIN_7|GPIO_PIN_9;
+                          |GPIO_PIN_4|GPIO_PIN_7;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PB0 */
   GPIO_InitStruct.Pin = GPIO_PIN_0;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
@@ -243,10 +246,17 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : PA9 */
+  GPIO_InitStruct.Pin = GPIO_PIN_9;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
   /*Configure GPIO pin : PA10 */
   GPIO_InitStruct.Pin = GPIO_PIN_10;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PA11 PA12 */

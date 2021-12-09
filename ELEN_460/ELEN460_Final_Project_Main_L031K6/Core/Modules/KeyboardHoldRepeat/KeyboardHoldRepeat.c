@@ -42,6 +42,7 @@ extern uint8_t limitLeftSwitch;
 extern uint8_t motorRightRequest;
 extern uint8_t motorLeftRequest;
 extern uint8_t fireRequest;
+extern uint8_t singleShot;
 
 
 /***********************************************************************************************************************
@@ -63,7 +64,7 @@ uint8_t DebounceKeyCode(uint8_t _kcode)
           if (keyCodeProcessed == false) {
               processKeyCode = true;
             }
-          /*
+          
           if (useHoldRepeat) {
             if (firstSend == true) {
               processKeyCode = true;
@@ -87,7 +88,7 @@ uint8_t DebounceKeyCode(uint8_t _kcode)
               processKeyCode = true;
             }
           }
-          */
+          
         }
       }
       else {
@@ -113,6 +114,7 @@ uint8_t DebounceKeyCode(uint8_t _kcode)
     limitRightSwitch = false;
     motorRightRequest = false;
     motorLeftRequest = false;
+    singleShot = false;
   }
   
   uint8_t debounceDone = false;

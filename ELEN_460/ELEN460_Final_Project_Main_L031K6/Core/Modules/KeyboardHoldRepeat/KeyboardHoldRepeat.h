@@ -16,7 +16,7 @@ Macro definitions
 #define NO_KEY_PRESSED 0x1F
 #define KEYCODE_DEBOUNCE_TIME 3
 #define KEYCODE_HOLD_TIME 160
-#define KEYCODE_REPEAT_DELAY 40
+#define KEYCODE_REPEAT_DELAY 0
 #define USE_HOLD_REPEAT true
 
 

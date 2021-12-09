@@ -39,7 +39,7 @@
 #define MOTOR_AIN1_PIN          GPIOB, GPIO_PIN_5
 #define MOTOR_AIN2_PIN          GPIOB, GPIO_PIN_4
 #define MOTOR_DIR_PIN           GPIOA, GPIO_PIN_10
-#define ALL_BALLS_FIRED_PIN     GPIOA, GPIO_PIN_5
+#define ALL_BALLS_FIRED_PIN     GPIOA, GPIO_PIN_12
 #define WIN_PIN                 GPIOA, GPIO_PIN_6
 #define RESET_CTRL_PIN          GPIOA, GPIO_PIN_7
 
@@ -49,6 +49,7 @@
 #define END                     4
 #define NUM_OF_SHOTS            10
 #define MESSAGE_TIME            5
+#define END_TIME                4
 
 // Motor
 #define MOTOR_STOP              0
@@ -64,7 +65,7 @@
 #define DISPLAY_4_ADDR          (0x73 << 1)
 
 // Display system setup
-//#define DISPLAY_OSC_OFF                 0x20
+#define DISPLAY_OSC_OFF                 0x20
 #define DISPLAY_OSC_ON                  0x21
 #define DISPLAY_OFF                     0x80
 #define DISPLAY_ON                      0x81
@@ -112,7 +113,7 @@ TIM_HandleTypeDef htim22;
 uint8_t keyCode = NO_KEY_PRESSED;
 uint8_t buttonPressed = false;
 
-uint8_t state = RUNNING;
+uint8_t state = IDLE;
 uint8_t shots = NUM_OF_SHOTS;
 uint8_t timeoutFlag = false;
 
@@ -137,6 +138,9 @@ uint8_t count = 0;
 uint8_t msgTimerCount = 0;
 uint8_t msgTimerEn = false;
 uint8_t msgTimerFinished = false;
+uint8_t endDelayEn = false;
+uint8_t endDelayFinished = false;
+uint8_t endDelayCount = 0;
 char strShots[2];
 /* USER CODE END PV */
 
@@ -171,6 +175,7 @@ extern uint8_t one_S_Flag;
   * @brief  The application entry point.
   * @retval int
   */
+
 int main(void)
 {
   /* USER CODE BEGIN 1 */
@@ -208,7 +213,6 @@ int main(void)
   Display_Init(DISPLAY_3_ADDR);
   Display_Init(DISPLAY_4_ADDR);
   
-  
   strcpy(displayString, "Insert Coin");
   
   Display_Update_All(displayString);
@@ -219,53 +223,29 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    // 10mS Tasks 
-    if (ten_mS_Flag) {
-      ten_mS_Flag = false;
-
-    } 
-
-    // 25mS Tasks 
-    if (twentyfive_mS_Flag) {
-      twentyfive_mS_Flag = false;
-      
-    }
 
     // 100mS Tasks 
     if (hundred_mS_Flag) {
       hundred_mS_Flag = false;
-    }
-    
-    // 250ms Tasks
-    if(twohundred_fifty_mS_Flag) {
-      twohundred_fifty_mS_Flag = false;
       
-      if(fireBusy) {
+      if(fireRequest && !fireBusy && (shots != 0)) {
+        fireRequest = false;
+        fireBusy = true;
+        HAL_GPIO_WritePin(COIL_PIN, GPIO_PIN_SET);
+      }
+      //else {fireRequest = false;}
+      else if(fireBusy) {
         fireBusy = false;
         HAL_GPIO_WritePin(COIL_PIN, GPIO_PIN_RESET);
         shots--;
         
         // Update shot counter
-        //itoa(shots,strShots,10);
         Display_Shot_Convert(shots,strShots);
         strcpy(displayString, "Shots left ");
         strcat(displayString,strShots);
         Display_Update_All(displayString);
       }
-      
-      if(fireRequest && !fireBusy && (shots != 0)) {
-      //if(fireRequest) {
-        fireRequest = false;
-        fireBusy = true;
-        HAL_GPIO_WritePin(COIL_PIN, GPIO_PIN_SET);
-      }
     }
-    
-        // 500mS Tasks 
-    if (five_hundred_mS_Flag) {
-      five_hundred_mS_Flag = false;
-      
-    } 
 
     // 1 Sec Tasks 
     if (one_S_Flag) {
@@ -275,6 +255,16 @@ int main(void)
         if(msgTimerCount == MESSAGE_TIME) {
           msgTimerEn = false;
           msgTimerFinished = true;
+          msgTimerCount = 0;
+        }
+      }
+      
+      if(endDelayEn) {
+        endDelayCount++;
+        if(endDelayCount == END_TIME) {
+          endDelayEn = false;
+          endDelayCount = 0;
+          endDelayFinished = true;
         }
       }
       
@@ -286,7 +276,7 @@ int main(void)
         state = RUNNING;
         
         // Prepare secondary microcontroller
-        HAL_GPIO_WritePin(RESET_CTRL_PIN, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(RESET_CTRL_PIN, GPIO_PIN_SET);
         
         Display_Shot_Convert(NUM_OF_SHOTS, strShots);
         strcpy(displayString, "Shots left ");
@@ -307,28 +297,55 @@ int main(void)
         ProcessKeyCode(keyCode);
       }
       
+      // Move to the right if not at the right end
       if(motorRightRequest && !limitRightSwitch) {
         Motor_Set_State(MOTOR_RIGHT);
       }
+      // Move to the left if not at the left end
       else if(motorLeftRequest && !limitLeftSwitch) {
         Motor_Set_State(MOTOR_LEFT);
       }
       else {Motor_Set_State(MOTOR_STOP);}
       
-      if(shots == 0) {
-        if(HAL_GPIO_ReadPin(ALL_BALLS_FIRED_PIN)){
-          // Check if player won
-          if(HAL_GPIO_ReadPin(WIN_PIN)) {
-            // Player won
+      
+      // If player won before balls used up
+      if(!(HAL_GPIO_ReadPin(WIN_PIN))) {
             strcpy(displayString, "Awesome you won");
             Display_Update_All(displayString);
-          }
-          else {
-            // Player lost
-            strcpy(displayString, "Nice try");
+            if(!msgTimerFinished) {msgTimerEn = true;}
             Display_Update_All(displayString);
+            if(msgTimerFinished) {
+              msgTimerFinished = false;
+              state = END;
+            }
+            
+      }
+      
+      // If all balls used up
+      if(shots == 0) {
+        if(!endDelayFinished) {endDelayEn = true;}
+        if(endDelayFinished) {
+          if(!(HAL_GPIO_ReadPin(ALL_BALLS_FIRED_PIN))){
+            // Check if player won
+            if(!(HAL_GPIO_ReadPin(WIN_PIN))) {
+              // Player won
+              strcpy(displayString, "Awesome you won");
+              Display_Update_All(displayString);
+              if(!msgTimerFinished) {msgTimerEn = true;}
+              Display_Update_All(displayString);
+            }
+            else {
+              // Player lost
+              strcpy(displayString, "Nice try        ");
+              if(!msgTimerFinished) {msgTimerEn = true;}
+              Display_Update_All(displayString);
+            }
+            if(msgTimerFinished) {
+              msgTimerFinished = false;
+              endDelayFinished = false;
+              state = END;
+            }
           }
-          state = END;
         }
       }
       break;
@@ -342,9 +359,9 @@ int main(void)
       fireBusy = false;
       
       // Reset secondary microcontroller
-      HAL_GPIO_WritePin(RESET_CTRL_PIN, GPIO_PIN_SET);
+      HAL_GPIO_WritePin(RESET_CTRL_PIN, GPIO_PIN_RESET);
       
-      strcpy(displayString, "Insert Coin");
+      strcpy(displayString, "Insert Coin     ");
       Display_Update_All(displayString);
       state = IDLE;
       break;
@@ -470,7 +487,7 @@ static void MX_TIM21_Init(void)
   htim21.Instance = TIM21;
   htim21.Init.Prescaler = 0;
   htim21.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim21.Init.Period = 65535;
+  htim21.Init.Period = 20000;
   htim21.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim21.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_PWM_Init(&htim21) != HAL_OK)
@@ -519,7 +536,7 @@ static void MX_TIM22_Init(void)
   htim22.Instance = TIM22;
   htim22.Init.Prescaler = 0;
   htim22.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim22.Init.Period = 65535;
+  htim22.Init.Period = 20000;
   htim22.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim22.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_PWM_Init(&htim22) != HAL_OK)
@@ -561,27 +578,27 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : PA0 PA1 PA4 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_4;
+  /*Configure GPIO pins : PA0 PA1 PA3 PA4 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_3|GPIO_PIN_4;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PA3 PA5 PA6 */
-  GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_5|GPIO_PIN_6;
+  /*Configure GPIO pins : PA6 PA12 */
+  GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_12;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PA7 */
   GPIO_InitStruct.Pin = GPIO_PIN_7;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
@@ -632,10 +649,7 @@ void Motor_Set_AIN1(uint16_t duty) {
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
   sConfigOC.Pulse = duty;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  //sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
- //sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
-  //sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
  
   HAL_TIM_PWM_Stop(&htim21, TIM_CHANNEL_2);
   HAL_TIM_PWM_ConfigChannel(&htim21, &sConfigOC, TIM_CHANNEL_2);
@@ -649,10 +663,7 @@ void Motor_Set_AIN2(uint16_t duty) {
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
   sConfigOC.Pulse = duty;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  //sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-  //sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
-  //sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
  
   HAL_TIM_PWM_Stop(&htim22, TIM_CHANNEL_1);
   HAL_TIM_PWM_ConfigChannel(&htim22, &sConfigOC, TIM_CHANNEL_1);
@@ -812,7 +823,8 @@ void Display_Set_Char(uint8_t *first, uint8_t *second, char character){
     break;
   case 'w':
   case 'W':
-    
+    *first = B | C | E | F;
+    *second = L | N;
     break;
   case 'x':
   case 'X':
@@ -820,7 +832,8 @@ void Display_Set_Char(uint8_t *first, uint8_t *second, char character){
     break;
   case 'y':
   case 'Y':
-    
+    *first = B | F | G1 | G2;
+    *second = M;
     break;
   case 'z':
   case 'Z':
