@@ -1,5 +1,5 @@
 
-#include "main.h"
+#include "thermocouple.h"
 
 const uint16_t TCData[] = {
   -168,-163,-158,-154,-149,-144,                                // -30s
