@@ -93,6 +93,7 @@ uint8_t timeout_flag = 0;
 uint8_t timeout_count = 0;
 uint8_t count_flag = 0;
 
+
 // Keyboard
 uint8_t keyCode = NO_KEY_PRESSED;
 
@@ -113,9 +114,12 @@ uint8_t errcode = 0;
 
 // Display
 DWfloat temperature = {"%4.1f", "----", 0, 0, true, 72.2};
+DWfloat target = {"%4.1f", "----", 0, 0, true, 72.2};
 extern DWfloat humidity;
 DWuint8_t count = {"%3d", "----", 0, 0, true, 0};
 DWstring units = {"%s", "----", 0, 0, true, "DegF"};
+DWstring type = {"%s", "----", 0, 0, true, "None"};
+DWstring cook = {"%s", "----", 0, 0, true, "None"};
 DWstring message = {"%s", "----", 0, 0, true, "None"};
 uint8_t unitChoices[2][5] = {"DegF", "DegC"};
 uint16_t screenTime = 0;
@@ -124,6 +128,15 @@ extern ui_screen currentScreen;
 
 // ADC
 uint16_t dmaBuffer[3];
+
+// Thermometer
+float thermTempInC = 0.0;
+float tempTCInC = 0.0;
+float finalTempInC = 0.0;
+
+// ADC Channel 0 , rank 3, is for CJ temp
+// ADC Channel 1 , rank 2, is for TC offset
+// ADC Channel 4 , rank 1, is for TC Output
 
 /* USER CODE END PV */
 
@@ -142,6 +155,8 @@ void InitValuesPWM(void);
 void SetRedLedLevel(uint16_t r_level);
 void SetGreenLedLevel(uint16_t g_level);
 void SetBlueLedLevel(uint16_t b_level);
+float Temp_Cold_Junction(uint16_t counts);
+float Temp_TC(uint16_t counts);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -185,6 +200,8 @@ int main(void)
   MX_USART1_UART_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
+  
+  HAL_SYSCFG_StrobeDBattpinsConfig(SYSCFG_UCPD1_STROBE);
   
   // Start ADC DMA
   HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&dmaBuffer, 3);
@@ -246,7 +263,9 @@ int main(void)
         ProcessKeyCodeInContext(keyCode);
       }
       
-      
+      thermTempInC = Temp_Cold_Junction(dmaBuffer[2]);
+      tempTCInC = Temp_TC(dmaBuffer[0]);
+      finalTempInC = thermTempInC + tempTCInC;
     }  // end of 25mS Tasks
     //---------------------------------
 
@@ -258,6 +277,7 @@ int main(void)
 
       HAL_ADC_Start_IT(&hadc1);
       
+      /*
       if (rampRed == true) {
         SetRedLedLevel(LED_RAMP_TABLE[rIndex]);
         rIndex += skipNumber;
@@ -272,6 +292,7 @@ int main(void)
         SetBlueLedLevel(LED_RAMP_TABLE[bIndex]);
         bIndex += skipNumber;
       }
+      */
 
       HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&dmaBuffer, 3);
     }  // end of 100mS Tasks
@@ -896,6 +917,61 @@ void SetBlueLedLevel(uint16_t b_level)
   HAL_TIM_PWM_Stop(&htim15, TIM_CHANNEL_1);
   HAL_TIM_PWM_ConfigChannel(&htim15, &sConfigOC, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_1);
+}
+
+// Function to calculate cold junction temp in C
+float Temp_Cold_Junction(uint16_t counts) {
+  float lastValue;
+  float Rmin;
+  float Rmax;
+  float Tmin;
+  float resistance;
+  float thermTemp = 0.0;
+  // Formula is based on 0C to 40C range
+  resistance = (10000*counts)/(4096-counts);
+  for(uint8_t i = 0; i < (sizeof(ThermData))/(sizeof(uint32_t)); i++) {
+    if(resistance > ThermData[i]) {
+      //Break if temperature is too low
+      if(i == 0) {break;}
+      
+      //Setup for temp calculation
+      Rmax = ThermData[i];
+      Rmin = lastValue;
+      Tmin = (i*10) - 10;
+      thermTemp = (((resistance-Rmin)*10.0)/(Rmax-Rmin)) + Tmin;
+      break;
+    }
+    else {lastValue = ThermData[i];}
+  }
+  
+  return thermTemp;
+}
+
+// Function to calculate thermocouple temp in C
+float Temp_TC(uint16_t counts) {
+  float countsAdjusted = counts - dmaBuffer[1];
+  
+  float lastValue;
+  float countsMin;
+  float countsMax;
+  float Tmin;
+  float tempTC = 0.0;
+  
+  for(uint8_t i = 0; i < (sizeof(TCData))/(sizeof(uint16_t)); i++) {
+    if(countsAdjusted < TCData[i]) {
+      //Break if temperature is too low
+      if(i == 0) {break;}
+      
+      //Setup for temp calculation
+      countsMax = TCData[i];
+      countsMin = lastValue;
+      Tmin = i-35.0;
+      tempTC = (((countsAdjusted-countsMin)*1.0)/(countsMax-countsMin)) + Tmin;
+      break;
+    }
+    else {lastValue = TCData[i];}
+  }
+  return tempTC;
 }
 
 /* USER CODE END 4 */

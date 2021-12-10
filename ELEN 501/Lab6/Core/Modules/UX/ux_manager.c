@@ -34,6 +34,9 @@ extern DWfloat temperature;
 extern DWuint8_t count;
 extern DWstring units;
 extern DWstring message;
+extern DWstring target;
+extern DWstring type;
+extern DWstring cook;
 extern uint8_t unitChoices[2][5];
 // format seq (string): {<format string>,  <error message>, <Xpos>, <Ypos>, <valid?>, "<init value>"
 
@@ -70,13 +73,23 @@ void SwitchScreens(ui_screen screen_no)
   case HOME:
     // clear the screen from the previos dispayed data
     SSD1306_Clear();
-    // Put up the "persistant" info (like data labels)
+    // Set creen ltitle
     SSD1306_GotoXY (0,0);
-    SSD1306_Puts ("Home Screen", &Font_11x18, SSD1306_COLOR_WHITE);
-    // Set u X/Y coordinates for "live" data to be displayed on this screen
+    SSD1306_Puts ("Temperature", &Font_11x18, SSD1306_COLOR_WHITE);
     
-    temperature.xPos = 31;
-    temperature.yPos = 30;
+    // Set temperature reading
+    SSD1306_GotoXY (0, 20);
+    SSD1306_Puts ("Temp:", &Font_11x18, SSD1306_COLOR_WHITE);
+    //temperature.xPos = 31;
+    //temperature.yPos = 30;
+    temperature.xPos = 55;
+    temperature.yPos = 20;
+    
+    // Set target temperature
+    SSD1306_GotoXY (0, 40);
+    SSD1306_Puts ("Target:", &Font_11x18, SSD1306_COLOR_WHITE);
+    target.xPos = 77;
+    target.yPos = 40;
     
     if(units.data[3] == 'C') {
       for(uint8_t i = 0; i < 4; i++) {units.data[i] = unitChoices[1][i];}
@@ -90,36 +103,35 @@ void SwitchScreens(ui_screen screen_no)
     break;
   case DETAIL:
     SSD1306_Clear();
+    
+    // Set screen title
     SSD1306_GotoXY (0,0);
-    SSD1306_Puts ("Details", &Font_11x18, SSD1306_COLOR_WHITE);
+    SSD1306_Puts ("Target", &Font_11x18, SSD1306_COLOR_WHITE);
+    
+    // Set food type
     SSD1306_GotoXY (0, 20);
-    SSD1306_Puts ("Temp: ", &Font_11x18, SSD1306_COLOR_WHITE);
+    SSD1306_Puts ("Type:", &Font_11x18, SSD1306_COLOR_WHITE);
+    type.xPos = 55;
+    type.yPos = 20;
+    
+    // Set target temperature
     SSD1306_GotoXY (0, 40);
-    SSD1306_Puts ("Hum: ", &Font_11x18, SSD1306_COLOR_WHITE);
-    temperature.xPos = 55;
-    temperature.yPos = 20;
-    humidity.xPos = 45;
-    humidity.yPos = 40;
+    SSD1306_Puts ("Target:", &Font_11x18, SSD1306_COLOR_WHITE);
+    temperature.xPos = 77;
+    temperature.yPos = 40;
+    
     break;
   case SETTINGS:
     SSD1306_Clear();
+    // Set screen title
     SSD1306_GotoXY (0,0);
     SSD1306_Puts ("Settings", &Font_11x18, SSD1306_COLOR_WHITE);
+    
+    // Update units
     SSD1306_GotoXY (0, 30);
     SSD1306_Puts ("Units: ", &Font_11x18, SSD1306_COLOR_WHITE);
     units.xPos = 65;
     units.yPos = 30;
-    break;
-  case MESSAGE:
-    SSD1306_Clear();
-    SSD1306_GotoXY (0,0);
-    SSD1306_Puts ("Messages", &Font_11x18, SSD1306_COLOR_WHITE);
-    SSD1306_GotoXY (0, 40);
-    SSD1306_Puts ("Count: ", &Font_11x18, SSD1306_COLOR_WHITE);
-    count.xPos = 60;
-    count.yPos = 40;
-    message.xPos = 14;
-    message.yPos = 20;
     break;
   }
   
@@ -201,44 +213,6 @@ uint8_t ProcessKeyCodeInContext (uint16_t key_code)
       break;
     }
     break;
-  case  MESSAGE:
-    switch (key_code) {
-    case 0:
-      SwitchScreens(HOME);
-      break;
-    case 1:
-      break;
-    case 2:
-      break;
-    case 3:
-      break;
-    }
-    break;
-  case  SET_HUM:
-    switch (key_code) {
-    case 0:
-      SwitchScreens(HOME);
-      break;
-    case 1:
-      break;
-    case 2:
-      break;
-    case 3:
-      break;
-    }
-    break;
-  case  SET_TIME:   
-    switch (key_code) {
-    case 0:
-      break;
-    case 1:
-      break;
-    case 2:
-      break;
-    case 3:
-      break;
-    }
-    break;
   }
   
   return true;
@@ -265,6 +239,7 @@ void UpdateScreenValues(void)
 //      degOffset = 55;
 //      temperature.xPos = 20;
 //    }
+    // Update temperature value
     SSD1306_GotoXY (temperature.xPos, temperature.yPos);
     if (temperature.valid) {
       sprintf(displayString, temperature.format, temperature.data);
@@ -274,29 +249,48 @@ void UpdateScreenValues(void)
       SSD1306_Puts(temperature.invalidMsg, &Font_11x18, SSD1306_COLOR_WHITE);
     
     SSD1306_GotoXY ((temperature.xPos + 44), temperature.yPos);
+    if (units.data[3] == 'C') {SSD1306_Puts(endC, &Font_11x18, SSD1306_COLOR_WHITE);}
+    else {SSD1306_Puts(endF, &Font_11x18, SSD1306_COLOR_WHITE);}
+    
+    // Update target temperature
+    SSD1306_GotoXY (target.xPos, target.yPos);
+    if (target.valid) {
+      sprintf(displayString, target.format, target.data);
+      SSD1306_Puts(displayString, &Font_11x18, SSD1306_COLOR_WHITE);
+    }
+    else 
+      SSD1306_Puts(target.invalidMsg, &Font_11x18, SSD1306_COLOR_WHITE);
+    
+    SSD1306_GotoXY ((target.xPos + 44), target.yPos);
     if (units.data[3] == 'C') {SSD1306_Puts(endC, &Font_11x18, SSD1306_COLOR_WHITE);}
     else {SSD1306_Puts(endF, &Font_11x18, SSD1306_COLOR_WHITE);}
     break;
+
   case DETAIL:
-    SSD1306_GotoXY (temperature.xPos, temperature.yPos);
-    if (temperature.valid) {
-      sprintf(displayString, temperature.format, temperature.data);
-      SSD1306_Puts(displayString, &Font_11x18, SSD1306_COLOR_WHITE);
-    }
-    else 
-      SSD1306_Puts(temperature.invalidMsg, &Font_11x18, SSD1306_COLOR_WHITE);
     
-    SSD1306_GotoXY ((temperature.xPos + 44), temperature.yPos);
-    if (units.data[3] == 'C') {SSD1306_Puts(endC, &Font_11x18, SSD1306_COLOR_WHITE);}
-    else {SSD1306_Puts(endF, &Font_11x18, SSD1306_COLOR_WHITE);}
-    
-    SSD1306_GotoXY (humidity.xPos, humidity.yPos);
-    if (humidity.valid) {
-      sprintf(displayString, humidity.format, humidity.data);
+    // Update food type
+    SSD1306_GotoXY (type.xPos, type.yPos);
+    if (type.valid) {
+      sprintf(displayString, type.format, type.data);
       SSD1306_Puts(displayString, &Font_11x18, SSD1306_COLOR_WHITE);
     }
     else
-      SSD1306_Puts(humidity.invalidMsg, &Font_11x18, SSD1306_COLOR_WHITE);
+      SSD1306_Puts(type.invalidMsg, &Font_11x18, SSD1306_COLOR_WHITE);
+    break;
+    
+    // Update target value
+    SSD1306_GotoXY (target.xPos, target.yPos);
+    if (target.valid) {
+      sprintf(displayString, target.format, target.data);
+      SSD1306_Puts(displayString, &Font_11x18, SSD1306_COLOR_WHITE);
+    }
+    else 
+      SSD1306_Puts(target.invalidMsg, &Font_11x18, SSD1306_COLOR_WHITE);
+    
+    SSD1306_GotoXY ((target.xPos + 44), target.yPos);
+    if (units.data[3] == 'C') {SSD1306_Puts(endC, &Font_11x18, SSD1306_COLOR_WHITE);}
+    else {SSD1306_Puts(endF, &Font_11x18, SSD1306_COLOR_WHITE);}
+
     break;
   case SETTINGS:
     SSD1306_GotoXY (units.xPos, units.yPos);
@@ -307,27 +301,7 @@ void UpdateScreenValues(void)
     else 
       SSD1306_Puts(units.invalidMsg, &Font_11x18, SSD1306_COLOR_WHITE);
     break;
-  case MESSAGE:
-    SSD1306_GotoXY (message.xPos, message.yPos);
-    if (message.valid) {
-      sprintf(displayString, message.format, message.data);
-      SSD1306_Puts(displayString, &Font_11x18, SSD1306_COLOR_WHITE);
-    }
-    else 
-      SSD1306_Puts(count.invalidMsg, &Font_11x18, SSD1306_COLOR_WHITE);
-    
-    SSD1306_GotoXY (count.xPos, count.yPos);
-    if (count.valid) {
-      sprintf(displayString, count.format, count.data);
-      SSD1306_Puts(displayString, &Font_11x18, SSD1306_COLOR_WHITE);
-    }
-    else 
-      SSD1306_Puts(count.invalidMsg, &Font_11x18, SSD1306_COLOR_WHITE);
-    break;
-  case SET_HUM:
-    break;
-  case SET_TIME:
-    break;
+
   }
   SSD1306_UpdateScreen(); //display
 }
