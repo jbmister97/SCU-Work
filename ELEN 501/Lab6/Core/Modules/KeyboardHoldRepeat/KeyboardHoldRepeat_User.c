@@ -22,7 +22,10 @@ Includes
 /***********************************************************************************************************************
 Pragma directive
 ***********************************************************************************************************************/
-
+#define SW1_BTN_PIN     GPIOB, GPIO_PIN_5
+#define SW2_BTN_PIN     GPIOA, GPIO_PIN_8
+#define SW3_BTN_PIN     GPIOB, GPIO_PIN_0
+#define SW4_BTN_PIN     GPIOA, GPIO_PIN_10
 
 /***********************************************************************************************************************
 Global/module variables
@@ -98,6 +101,7 @@ uint8_t ValidKeyCode(uint8_t _kcode)
   case 0x01:  //                2
   case 0x02:  //                3
   case 0x03:  // 2-key chords:  1+3
+  case 0x04:
     validKeyCode = true;
     break;
   default:
@@ -111,21 +115,24 @@ uint8_t ScanKeyboard(void)
 {
   uint8_t keyCode = NO_KEY_PRESSED;
   
-  keyCode = (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8) << 2) | (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9) << 1) | (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) << 0);
+  keyCode = (HAL_GPIO_ReadPin(SW4_BTN_PIN) << 4) | (HAL_GPIO_ReadPin(SW1_BTN_PIN) << 3) | (HAL_GPIO_ReadPin(SW2_BTN_PIN) << 2) | (HAL_GPIO_ReadPin(SW3_BTN_PIN) << 1) | (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) << 0);
   
   if (keyCode != NO_KEY_PRESSED) {
     switch (keyCode) {
-    case 6:
+    case 0x1E:
       keyCode = 0;
       break;
-    case 5:
+    case 0x1D:
       keyCode = 1;
       break;
-    case 3:
+    case 0x1B:
       keyCode = 2;
       break;
-    case 2:
+    case 0x17:
       keyCode = 3;
+      break;
+    case 0x0F:
+      keyCode = 4;
       break;
     }      
   }

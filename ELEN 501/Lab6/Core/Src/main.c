@@ -40,6 +40,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -133,6 +134,15 @@ uint16_t dmaBuffer[3];
 float thermTempInC = 0.0;
 float tempTCInC = 0.0;
 float finalTempInC = 0.0;
+uint8_t typeState = 0;
+float tempCustomInF = 150.0;
+float tempCustomInC = 65.0;
+uint8_t tempCustomUseC = false;
+float tempFinalInC = 0.0;
+uint32_t countsAdjusted;
+uint32_t countsCJ;
+
+
 
 // ADC Channel 0 , rank 3, is for CJ temp
 // ADC Channel 1 , rank 2, is for TC offset
@@ -157,6 +167,8 @@ void SetGreenLedLevel(uint16_t g_level);
 void SetBlueLedLevel(uint16_t b_level);
 float Temp_Cold_Junction(uint16_t counts);
 float Temp_TC(uint16_t counts);
+uint32_t Temp_Cold_Counts(float tempRaw);
+float Temp_Final(uint16_t counts);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -198,6 +210,7 @@ int main(void)
   MX_TIM3_Init();
   MX_TIM15_Init();
   MX_USART1_UART_Init();
+ 
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
   
@@ -230,7 +243,7 @@ int main(void)
 //  SSD1306_Puts ("22.3", &Font_16x26, SSD1306_COLOR_WHITE);
   SSD1306_UpdateScreen(); 
   
-  HAL_Delay (4500);
+  //HAL_Delay (4500);
   
   SwitchScreens(HOME);
   
@@ -265,7 +278,40 @@ int main(void)
       
       thermTempInC = Temp_Cold_Junction(dmaBuffer[2]);
       tempTCInC = Temp_TC(dmaBuffer[0]);
-      finalTempInC = thermTempInC + tempTCInC;
+      tempFinalInC = Temp_Final(dmaBuffer[0]);
+         
+      // If units are F then convert to F, otherwise temp is C
+      if(units.data[3] == 'F') {temperature.data = (tempFinalInC*(9.0/5.0)) + 32;}
+      else {temperature.data = tempFinalInC;}
+      
+      switch(typeState) {
+      case BEEF:
+        strcpy(type.data, "Beef       ");
+        if(units.data[3] == 'F') {target.data = 135.0;} // in F
+        else {target.data = 57.2222;} // in C
+        break;
+      case PORK:
+        strcpy(type.data, "Pork       ");
+        if(units.data[3] == 'F') {target.data = 145.0;} // in F
+        else {target.data = 62.7778;} // in C
+        break;
+      case CHICKEN:
+        strcpy(type.data, "Chicken       ");
+        if(units.data[3] == 'F') {target.data = 165.0;} // in F
+        else {target.data = 73.8889;} // in C
+        break;
+      case CUSTOM:
+        strcpy(type.data, "Custom       ");
+        if(tempCustomUseC) {
+          if(units.data[3] == 'F') {target.data = (tempCustomInC*(9.0/5.0)) + 32;}
+          else {target.data = tempCustomInC;}
+        }
+        else {
+          if(units.data[3] == 'C') {target.data = (tempCustomInF-32)*(5.0/9.0);}
+          else {target.data = tempCustomInF;}
+        }
+        break;
+      }
     }  // end of 25mS Tasks
     //---------------------------------
 
@@ -827,8 +873,14 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PA8 PA9 */
-  GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9;
+  /*Configure GPIO pins : PB0 PB5 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_5;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PA8 PA10 */
+  GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_10;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -949,16 +1001,17 @@ float Temp_Cold_Junction(uint16_t counts) {
 
 // Function to calculate thermocouple temp in C
 float Temp_TC(uint16_t counts) {
-  float countsAdjusted = counts - dmaBuffer[1];
-  
   float lastValue;
   float countsMin;
   float countsMax;
   float Tmin;
   float tempTC = 0.0;
   
+  // Account for TC offset
+  uint32_t countsAdjusted = counts - dmaBuffer[1];
+  
   for(uint8_t i = 0; i < (sizeof(TCData))/(sizeof(uint16_t)); i++) {
-    if(countsAdjusted < TCData[i]) {
+    if(countsAdjusted > TCData[i]) {
       //Break if temperature is too low
       if(i == 0) {break;}
       
@@ -972,6 +1025,62 @@ float Temp_TC(uint16_t counts) {
     else {lastValue = TCData[i];}
   }
   return tempTC;
+}
+
+float Temp_Final(uint16_t counts) {
+  float lastValue;
+  float countsMin;
+  float countsMax;
+  float Tmin;
+  float tempTC = 0.0;
+  
+  // Account for TC offset
+   countsAdjusted= counts - dmaBuffer[1];
+  
+  // Account for cold junction temperature
+  countsCJ = Temp_Cold_Counts(thermTempInC);
+  countsAdjusted += countsCJ;
+  
+  for(uint8_t i = 0; i < (sizeof(TCData))/(sizeof(uint16_t)); i++) {
+    if(countsAdjusted > TCData[i]) {
+      //Break if temperature is too low
+      if(i == 0) {break;}
+      
+      //Setup for temp calculation
+      countsMax = TCData[i];
+      countsMin = lastValue;
+      Tmin = i-35.0;
+      tempTC = (((countsAdjusted-countsMin)*1.0)/(countsMax-countsMin)) + Tmin;
+      break;
+    }
+    else {lastValue = TCData[i];}
+  }
+  return tempTC;
+}
+
+uint32_t Temp_Cold_Counts(float tempRaw) {
+  int32_t lastCJValue;
+  uint32_t tempCJMin;
+  uint32_t countsCJMin;
+  uint32_t countsCJMax;
+  uint32_t countsCold = 0;
+  
+  for(uint8_t i = 0; i < (sizeof(TCData))/(sizeof(uint16_t)); i++) {
+    if(tempRaw < (i-35)) {
+      //Break if temperature is too low
+      if(i == 0) {break;}
+      
+      //Setup for temp calculation
+      tempCJMin = lastCJValue;
+      countsCJMin = TCData[lastCJValue+35];
+      countsCJMax = TCData[i];
+      countsCold = ((tempRaw - tempCJMin)*(countsCJMax-countsCJMin)) + countsCJMin;
+      break;
+    }
+    else {lastCJValue = i-35;}
+  }
+  
+  return countsCold;
 }
 
 /* USER CODE END 4 */

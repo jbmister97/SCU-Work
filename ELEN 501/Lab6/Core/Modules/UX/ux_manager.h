@@ -16,8 +16,7 @@ typedef enum  Screens_{
   DETAIL,
   SETTINGS,
   MESSAGE,
-  SET_HUM,
-  SET_TIME,
+  SET_TEMP,
 //  NUMBER_OF_SCREENS
 } ui_screen;
 

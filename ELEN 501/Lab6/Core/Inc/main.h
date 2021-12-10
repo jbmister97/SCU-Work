@@ -49,7 +49,10 @@ extern "C" {
 /* USER CODE BEGIN EM */
 #define true 1
 #define false 0
-
+#define BEEF    0
+#define PORK    1
+#define CHICKEN 2
+#define CUSTOM  3
 /* USER CODE END EM */
 
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);

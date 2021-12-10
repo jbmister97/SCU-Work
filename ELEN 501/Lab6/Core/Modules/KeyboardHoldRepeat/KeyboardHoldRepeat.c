@@ -97,9 +97,6 @@ uint8_t DebounceKeyCode(uint8_t _kcode)
     firstSend = true;
   }
   
-  
-  
-  
   uint8_t debounceDone = false;
   return debounceDone;
 }
