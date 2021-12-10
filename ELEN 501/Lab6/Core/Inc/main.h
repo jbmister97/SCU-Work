@@ -47,15 +47,8 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-#define true 1
-#define false 0
-#define BEEF    0
-#define PORK    1
-#define CHICKEN 2
-#define CUSTOM  3
-/* USER CODE END EM */
 
-void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
+/* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
@@ -66,7 +59,20 @@ void Error_Handler(void);
 
 /* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN Private defines */
+typedef union _my_union {
+  uint8_t arr[8];
+    struct _myStruct{
+      float tcCalOffset;
+      float tcCalSlope;
+    }calData;
+} cal_constants;
 
+#define true 1
+#define false 0
+#define BEEF    0
+#define PORK    1
+#define CHICKEN 2
+#define CUSTOM  3
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

@@ -1,5 +1,8 @@
 C:\GitHub\SCU-Work\ELEN\ 501\Lab4\EWARM\Lab4\BrowseInfo\Application\User\Core\main.pbi: \
   C:\GitHub\SCU-Work\ELEN\ 501\Lab4\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_ll_usart.h \
+  C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN\ 501\Lab4\Core\Modules\Conversions\ASCII_numbers.h \
+  C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN\ 501\Lab4\Core\Modules\Serial\serial_user.h \
+  C:\Users\Justin\Documents\GitKraken\SCU-Work\ELEN\ 501\Lab4\Core\Modules\Serial\serial.h \
   C:\GitHub\SCU-Work\ELEN\ 501\Lab4\EWARM\..\Core\Inc\waveform_16.h \
   C:\GitHub\SCU-Work\ELEN\ 501\Lab4\EWARM\..\Core\Modules\KeyboardHoldRepeat\KeyboardHoldRepeat.h \
   C:\GitHub\SCU-Work\ELEN\ 501\Lab4\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_uart_ex.h \

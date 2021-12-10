@@ -40,7 +40,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define EEPROM_ADDR     0xA0
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -69,31 +69,9 @@ extern uint8_t one_S_Flag;
 #define FIVE_SEC_SEED 5
 uint8_t five_S_Counter = FIVE_SEC_SEED;
 
-
-// LED Control
-TIM_OC_InitTypeDef rConfigOC = {0}; // timer 1
-TIM_OC_InitTypeDef gConfigOC = {0}; // timer 3
-TIM_OC_InitTypeDef bConfigOC = {0}; // timer 15
-
-#define LED_RAMP_TABLE half_sine_table_16_256
-//#define LED_RAMP_TABLE linear_ramp_table_16_256
-//#define LED_RAMP_TABLE triangle_wave_table_16_256
-#define R_INDEX_START 0
-#define G_INDEX_START 86
-#define B_INDEX_START 172
-uint8_t rIndex = R_INDEX_START;
-uint8_t gIndex = G_INDEX_START;
-uint8_t bIndex = B_INDEX_START;
-uint8_t rampRed = true;
-uint8_t rampGreen = true;
-uint8_t rampBlue = true;
-uint16_t ledLevel = 0;
-uint8_t changeLeds = false;
-uint8_t skipNumber = 8;
 uint8_t timeout_flag = 0;
 uint8_t timeout_count = 0;
 uint8_t count_flag = 0;
-
 
 // Keyboard
 uint8_t keyCode = NO_KEY_PRESSED;
@@ -137,10 +115,15 @@ float finalTempInC = 0.0;
 uint8_t typeState = 0;
 float tempCustomInF = 150.0;
 float tempCustomInC = 65.0;
+float lastCustomInC = 0.0;
 uint8_t tempCustomUseC = false;
 float tempFinalInC = 0.0;
-uint32_t countsAdjusted;
+int32_t countsAdjusted;
 uint32_t countsCJ;
+cal_constants myCal;
+cal_constants testCal;
+uint8_t updateCalFlag = false;
+uint8_t calCount;
 
 
 
@@ -169,6 +152,7 @@ float Temp_Cold_Junction(uint16_t counts);
 float Temp_TC(uint16_t counts);
 uint32_t Temp_Cold_Counts(float tempRaw);
 float Temp_Final(uint16_t counts);
+float Temp_Calibrate(float temp);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -210,10 +194,9 @@ int main(void)
   MX_TIM3_Init();
   MX_TIM15_Init();
   MX_USART1_UART_Init();
- 
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-  
+  // Add this line because of bugs. Yay!
   HAL_SYSCFG_StrobeDBattpinsConfig(SYSCFG_UCPD1_STROBE);
   
   // Start ADC DMA
@@ -225,25 +208,22 @@ int main(void)
   LL_USART_EnableIT_RXNE_RXFNE(USART1); // this line turns on the UART receive interrupt. 
   
   SendString("\r\nBongiorno!\r\n", 14, StripZeros, AddCRLF);  // this function cal tests the transmit UART interrupt.
-
-  // PWM realted init
-  //void InitValuesPWM(void);
   
-  //HAL_TIM_PWM_Start_IT(&htim15, TIM_CHANNEL_1);
-  //HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_1);
-  //HAL_TIM_PWM_Start_IT(&htim1, TIM_CHANNEL_2);
+  // Get calibration constants from memory
+  HAL_I2C_Mem_Read(&hi2c1, EEPROM_ADDR, 0, I2C_MEMADD_SIZE_8BIT, myCal.arr, 8, HAL_MAX_DELAY);
 
   // Display related init
   SSD1306_Init();  // initialise  
   SSD1306_Clear();
   SSD1306_GotoXY (0,0);
-  SSD1306_Puts ("Good Moring!", &Font_11x18, SSD1306_COLOR_WHITE);
-  
-//  SSD1306_GotoXY (0,20);
-//  SSD1306_Puts ("22.3", &Font_16x26, SSD1306_COLOR_WHITE);
+  SSD1306_Puts ("Welcome to", &Font_11x18, SSD1306_COLOR_WHITE);
+  SSD1306_GotoXY (0,20);
+  SSD1306_Puts ("The Grill", &Font_11x18, SSD1306_COLOR_WHITE);
+  SSD1306_GotoXY (0,40);
+  SSD1306_Puts ("Thermometer!", &Font_11x18, SSD1306_COLOR_WHITE);
   SSD1306_UpdateScreen(); 
   
-  //HAL_Delay (4500);
+  HAL_Delay (3000);
   
   SwitchScreens(HOME);
   
@@ -322,25 +302,14 @@ int main(void)
       hundred_mS_Flag = false;
 
       HAL_ADC_Start_IT(&hadc1);
-      
-      /*
-      if (rampRed == true) {
-        SetRedLedLevel(LED_RAMP_TABLE[rIndex]);
-        rIndex += skipNumber;
-      }
-      
-      if (rampGreen == true) {
-        SetGreenLedLevel(LED_RAMP_TABLE[gIndex]);
-        gIndex += skipNumber;
-      }
-
-      if (rampBlue == true) {
-        SetBlueLedLevel(LED_RAMP_TABLE[bIndex]);
-        bIndex += skipNumber;
-      }
-      */
 
       HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&dmaBuffer, 3);
+      
+      if(updateCalFlag) {
+        updateCalFlag = false;
+        calCount++;
+        HAL_I2C_Mem_Write(&hi2c1, EEPROM_ADDR, 0, I2C_MEMADD_SIZE_8BIT, myCal.arr, 8, HAL_MAX_DELAY);
+      }
     }  // end of 100mS Tasks
     //---------------------------------
 
@@ -573,8 +542,6 @@ static void MX_TIM1_Init(void)
 
   TIM_ClockConfigTypeDef sClockSourceConfig = {0};
   TIM_MasterConfigTypeDef sMasterConfig = {0};
-  TIM_OC_InitTypeDef sConfigOC = {0};
-  TIM_BreakDeadTimeConfigTypeDef sBreakDeadTimeConfig = {0};
 
   /* USER CODE BEGIN TIM1_Init 1 */
 
@@ -595,10 +562,6 @@ static void MX_TIM1_Init(void)
   {
     Error_Handler();
   }
-  if (HAL_TIM_PWM_Init(&htim1) != HAL_OK)
-  {
-    Error_Handler();
-  }
   sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
   sMasterConfig.MasterOutputTrigger2 = TIM_TRGO2_RESET;
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
@@ -606,38 +569,9 @@ static void MX_TIM1_Init(void)
   {
     Error_Handler();
   }
-  sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 0;
-  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
-  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-  sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
-  sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
-  if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sBreakDeadTimeConfig.OffStateRunMode = TIM_OSSR_DISABLE;
-  sBreakDeadTimeConfig.OffStateIDLEMode = TIM_OSSI_DISABLE;
-  sBreakDeadTimeConfig.LockLevel = TIM_LOCKLEVEL_OFF;
-  sBreakDeadTimeConfig.DeadTime = 0;
-  sBreakDeadTimeConfig.BreakState = TIM_BREAK_DISABLE;
-  sBreakDeadTimeConfig.BreakPolarity = TIM_BREAKPOLARITY_HIGH;
-  sBreakDeadTimeConfig.BreakFilter = 0;
-  sBreakDeadTimeConfig.BreakAFMode = TIM_BREAK_AFMODE_INPUT;
-  sBreakDeadTimeConfig.Break2State = TIM_BREAK2_DISABLE;
-  sBreakDeadTimeConfig.Break2Polarity = TIM_BREAK2POLARITY_HIGH;
-  sBreakDeadTimeConfig.Break2Filter = 0;
-  sBreakDeadTimeConfig.Break2AFMode = TIM_BREAK_AFMODE_INPUT;
-  sBreakDeadTimeConfig.AutomaticOutput = TIM_AUTOMATICOUTPUT_DISABLE;
-  if (HAL_TIMEx_ConfigBreakDeadTime(&htim1, &sBreakDeadTimeConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
   /* USER CODE BEGIN TIM1_Init 2 */
 
   /* USER CODE END TIM1_Init 2 */
-  HAL_TIM_MspPostInit(&htim1);
 
 }
 
@@ -655,7 +589,6 @@ static void MX_TIM3_Init(void)
 
   TIM_ClockConfigTypeDef sClockSourceConfig = {0};
   TIM_MasterConfigTypeDef sMasterConfig = {0};
-  TIM_OC_InitTypeDef sConfigOC = {0};
 
   /* USER CODE BEGIN TIM3_Init 1 */
 
@@ -675,28 +608,15 @@ static void MX_TIM3_Init(void)
   {
     Error_Handler();
   }
-  if (HAL_TIM_PWM_Init(&htim3) != HAL_OK)
-  {
-    Error_Handler();
-  }
   sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
   if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 0;
-  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-  if (HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
-  {
-    Error_Handler();
-  }
   /* USER CODE BEGIN TIM3_Init 2 */
 
   /* USER CODE END TIM3_Init 2 */
-  HAL_TIM_MspPostInit(&htim3);
 
 }
 
@@ -714,8 +634,6 @@ static void MX_TIM15_Init(void)
 
   TIM_ClockConfigTypeDef sClockSourceConfig = {0};
   TIM_MasterConfigTypeDef sMasterConfig = {0};
-  TIM_OC_InitTypeDef sConfigOC = {0};
-  TIM_BreakDeadTimeConfigTypeDef sBreakDeadTimeConfig = {0};
 
   /* USER CODE BEGIN TIM15_Init 1 */
 
@@ -736,43 +654,15 @@ static void MX_TIM15_Init(void)
   {
     Error_Handler();
   }
-  if (HAL_TIM_PWM_Init(&htim15) != HAL_OK)
-  {
-    Error_Handler();
-  }
   sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
   if (HAL_TIMEx_MasterConfigSynchronization(&htim15, &sMasterConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 0;
-  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
-  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-  sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
-  sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
-  if (HAL_TIM_PWM_ConfigChannel(&htim15, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sBreakDeadTimeConfig.OffStateRunMode = TIM_OSSR_DISABLE;
-  sBreakDeadTimeConfig.OffStateIDLEMode = TIM_OSSI_DISABLE;
-  sBreakDeadTimeConfig.LockLevel = TIM_LOCKLEVEL_OFF;
-  sBreakDeadTimeConfig.DeadTime = 0;
-  sBreakDeadTimeConfig.BreakState = TIM_BREAK_DISABLE;
-  sBreakDeadTimeConfig.BreakPolarity = TIM_BREAKPOLARITY_HIGH;
-  sBreakDeadTimeConfig.BreakFilter = 0;
-  sBreakDeadTimeConfig.AutomaticOutput = TIM_AUTOMATICOUTPUT_DISABLE;
-  if (HAL_TIMEx_ConfigBreakDeadTime(&htim15, &sBreakDeadTimeConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
   /* USER CODE BEGIN TIM15_Init 2 */
 
   /* USER CODE END TIM15_Init 2 */
-  HAL_TIM_MspPostInit(&htim15);
 
 }
 
@@ -854,24 +744,11 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_RESET);
-
   /*Configure GPIO pin : PC13 */
   GPIO_InitStruct.Pin = GPIO_PIN_13;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PA5 */
-  GPIO_InitStruct.Pin = GPIO_PIN_5;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PB0 PB5 */
   GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_5;
@@ -885,92 +762,9 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PC7 */
-  GPIO_InitStruct.Pin = GPIO_PIN_7;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
 }
 
 /* USER CODE BEGIN 4 */
-void InitValuesPWM(void)
-{
-  // timer 1
-  rConfigOC.OCMode = TIM_OCMODE_PWM1;
-  rConfigOC.Pulse = 0;
-  rConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  rConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
-  rConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-  rConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
-  rConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
-  
-  // timer 3
-  gConfigOC.OCMode = TIM_OCMODE_PWM1;
-  gConfigOC.Pulse = 0;
-  gConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  gConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-  
-  // timer 15
-  bConfigOC.OCMode = TIM_OCMODE_PWM1;
-  bConfigOC.Pulse = 0;
-  bConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  bConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
-  bConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-  bConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
-  bConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
-  
-}
-
-void SetRedLedLevel(uint16_t r_level)
-{
-  TIM_OC_InitTypeDef sConfigOC = {0};
- 
-  sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = r_level;
-  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
-  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-  sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
-  sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
- 
-  HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_2);
-  HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_2);
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
-}
-
-void SetGreenLedLevel(uint16_t g_level)
-{
-  TIM_OC_InitTypeDef sConfigOC = {0};
- 
-  sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = g_level;
-  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-
-  HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
-  HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_1);
-  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
-}
-
-void SetBlueLedLevel(uint16_t b_level)
-{
-  TIM_OC_InitTypeDef sConfigOC = {0};
-
-  sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = b_level;
-  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
-  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-  sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
-  sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
-
-  HAL_TIM_PWM_Stop(&htim15, TIM_CHANNEL_1);
-  HAL_TIM_PWM_ConfigChannel(&htim15, &sConfigOC, TIM_CHANNEL_1);
-  HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_1);
-}
-
 // Function to calculate cold junction temp in C
 float Temp_Cold_Junction(uint16_t counts) {
   float lastValue;
@@ -1008,10 +802,10 @@ float Temp_TC(uint16_t counts) {
   float tempTC = 0.0;
   
   // Account for TC offset
-  uint32_t countsAdjusted = counts - dmaBuffer[1];
+  int32_t countsAdjusted = counts - dmaBuffer[1];
   
   for(uint8_t i = 0; i < (sizeof(TCData))/(sizeof(uint16_t)); i++) {
-    if(countsAdjusted > TCData[i]) {
+      if(countsAdjusted < TCData[i]) {
       //Break if temperature is too low
       if(i == 0) {break;}
       
@@ -1022,18 +816,17 @@ float Temp_TC(uint16_t counts) {
       tempTC = (((countsAdjusted-countsMin)*1.0)/(countsMax-countsMin)) + Tmin;
       break;
     }
-    else {lastValue = TCData[i];}
+      else {lastValue = TCData[i];}
   }
   return tempTC;
 }
 
 float Temp_Final(uint16_t counts) {
-  float lastValue;
-  float countsMin;
-  float countsMax;
-  float Tmin;
-  float tempTC = 0.0;
-  
+  float lastTFValue;
+  float countsTFMin;
+  float countsTFMax;
+  float TTFmin;
+  float tempFinal = 0.0;
   // Account for TC offset
    countsAdjusted= counts - dmaBuffer[1];
   
@@ -1042,20 +835,23 @@ float Temp_Final(uint16_t counts) {
   countsAdjusted += countsCJ;
   
   for(uint8_t i = 0; i < (sizeof(TCData))/(sizeof(uint16_t)); i++) {
-    if(countsAdjusted > TCData[i]) {
+    if(countsAdjusted < TCData[i]) {
       //Break if temperature is too low
       if(i == 0) {break;}
       
       //Setup for temp calculation
-      countsMax = TCData[i];
-      countsMin = lastValue;
-      Tmin = i-35.0;
-      tempTC = (((countsAdjusted-countsMin)*1.0)/(countsMax-countsMin)) + Tmin;
+      countsTFMax = TCData[i];
+      countsTFMin = lastTFValue;
+      TTFmin = i-35.0;
+      tempFinal = (((countsAdjusted-countsTFMin)*1.0)/(countsTFMax-countsTFMin)) + TTFmin;
       break;
     }
-    else {lastValue = TCData[i];}
+    else {lastTFValue = TCData[i];}
   }
-  return tempTC;
+  
+  tempFinal = Temp_Calibrate(tempFinal);
+  
+  return tempFinal;
 }
 
 uint32_t Temp_Cold_Counts(float tempRaw) {
@@ -1081,6 +877,12 @@ uint32_t Temp_Cold_Counts(float tempRaw) {
   }
   
   return countsCold;
+}
+
+float Temp_Calibrate(float temp) {
+  float tempCal;
+  tempCal = (myCal.calData.tcCalSlope*temp) + myCal.calData.tcCalOffset;
+  return tempCal;
 }
 
 /* USER CODE END 4 */

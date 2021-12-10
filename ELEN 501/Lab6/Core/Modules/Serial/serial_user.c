@@ -28,6 +28,8 @@ extern uint16_t serialValue;
 extern DWfloat temperature;
 extern DWstring message;
 extern DWstring units;
+extern cal_constants myCal;
+extern uint8_t updateCalFlag;
 
 // function to process the input buffer
 uint8_t ProcessReceiveBuffer(void)
@@ -72,18 +74,15 @@ uint8_t ProcessPacket(void)
   switch (packetBuffer[1]) {
   // list of commands
   // each command has intentional fallthru for upper/lower case
-  case 'r':     // r = Change the temperature to given value
-  case 'R':     
-    temperature.data = atof(&packetBuffer[2]);
+  case 'o':     // o = Update offset
+  case 'O':     
+    myCal.calData.tcCalOffset = atof(&packetBuffer[2]);
+    updateCalFlag = true;
     break;
-  case 's':     // s = Report humidity number
+  case 's':     // s = Update slope
   case 'S':
-    for(uint8_t i = 0; i < sizeof(textOut); i++){textOut[i] = '\0';}
-    for(uint8_t i = 0; i < sizeof(hum_str); i++){hum_str[i] = '\0';}
-    sprintf((char *)textOut, humidity.format, humidity.data);
-    strcat(hum_str, "Humidity: ");
-    strcat(hum_str,textOut);
-    SendString(hum_str, sizeof(hum_str), StripZeros, AddCRLF);
+    myCal.calData.tcCalSlope = atof(&packetBuffer[2]);
+    updateCalFlag = true;
   break;
   case 't':     // t = Receive and display message
   case 'T':
