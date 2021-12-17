@@ -1,0 +1,924 @@
+/* USER CODE BEGIN Header */
+/**
+  ******************************************************************************
+  * @file           : main.c
+  * @brief          : Main program body
+  ******************************************************************************
+  * @attention
+  *
+  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                        opensource.org/licenses/BSD-3-Clause
+  *
+  ******************************************************************************
+  */
+/* USER CODE END Header */
+/* Includes ------------------------------------------------------------------*/
+#include "main.h"
+
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
+#include "KeyboardHoldRepeat.h"
+#include "waveform_16.h"
+#include "serial.h"
+#include "serial_user.h"
+#include "fonts.h"
+#include "ssd1306.h"
+#include "ux_manager.h"
+#include "thermocouple.h"
+
+/* USER CODE END Includes */
+
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
+
+/* USER CODE END PTD */
+
+/* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+#define EEPROM_ADDR     0xA0
+/* USER CODE END PD */
+
+/* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
+/* Private variables ---------------------------------------------------------*/
+ADC_HandleTypeDef hadc1;
+DMA_HandleTypeDef hdma_adc1;
+
+I2C_HandleTypeDef hi2c1;
+
+TIM_HandleTypeDef htim1;
+TIM_HandleTypeDef htim3;
+TIM_HandleTypeDef htim15;
+
+UART_HandleTypeDef huart1;
+
+/* USER CODE BEGIN PV */
+// scheduler stuff
+extern uint8_t ten_mS_Flag;
+extern uint8_t twentyfive_mS_Flag;
+extern uint8_t hundred_mS_Flag;
+extern uint8_t one_S_Flag;
+#define FIVE_SEC_SEED 5
+uint8_t five_S_Counter = FIVE_SEC_SEED;
+
+uint8_t timeout_flag = 0;
+uint8_t timeout_count = 0;
+uint8_t count_flag = 0;
+
+// Keyboard
+uint8_t keyCode = NO_KEY_PRESSED;
+
+// Comm
+extern uint8_t processPacket;
+
+// system variables
+volatile uint16_t serialValue = 23;
+
+// UI
+uint8_t flashLED = false;
+uint8_t buttonPushed = false;
+uint16_t flashDelay = 1000;
+uint16_t flashDelaySeed = 1000;
+uint8_t flashAtSpeed = false;
+uint16_t number = 43;
+uint8_t errcode = 0;
+
+// Display
+DWfloat temperature = {"%4.1f", "----", 0, 0, true, 72.2};
+DWfloat target = {"%4.1f", "----", 0, 0, true, 72.2};
+extern DWfloat humidity;
+DWuint8_t count = {"%3d", "----", 0, 0, true, 0};
+DWstring units = {"%s", "----", 0, 0, true, "DegF"};
+DWstring type = {"%s", "----", 0, 0, true, "None"};
+DWstring cook = {"%s", "----", 0, 0, true, "None"};
+DWstring message = {"%s", "----", 0, 0, true, "None"};
+uint8_t unitChoices[2][5] = {"DegF", "DegC"};
+uint16_t screenTime = 0;
+#define SCREEN_TIMEOUT_COUNT     15
+extern ui_screen currentScreen;
+
+// ADC
+uint16_t dmaBuffer[3];
+
+// Thermometer
+float thermTempInC = 0.0;
+float tempTCInC = 0.0;
+float finalTempInC = 0.0;
+uint8_t typeState = 0;
+float tempCustomInF = 150.0;
+float tempCustomInC = 65.0;
+float lastCustomInC = 0.0;
+uint8_t tempCustomUseC = false;
+float tempFinalInC = 0.0;
+int32_t countsAdjusted;
+uint32_t countsCJ;
+cal_constants myCal;
+cal_constants testCal;
+uint8_t updateCalFlag = false;
+uint8_t calCount;
+
+
+
+// ADC Channel 0 , rank 3, is for CJ temp
+// ADC Channel 1 , rank 2, is for TC offset
+// ADC Channel 4 , rank 1, is for TC Output
+
+/* USER CODE END PV */
+
+/* Private function prototypes -----------------------------------------------*/
+void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
+static void MX_ADC1_Init(void);
+static void MX_TIM1_Init(void);
+static void MX_TIM3_Init(void);
+static void MX_TIM15_Init(void);
+static void MX_USART1_UART_Init(void);
+static void MX_DMA_Init(void);
+static void MX_I2C1_Init(void);
+/* USER CODE BEGIN PFP */
+void InitValuesPWM(void);
+void SetRedLedLevel(uint16_t r_level);
+void SetGreenLedLevel(uint16_t g_level);
+void SetBlueLedLevel(uint16_t b_level);
+float Temp_Cold_Junction(uint16_t counts);
+float Temp_TC(uint16_t counts);
+uint32_t Temp_Cold_Counts(float tempRaw);
+float Temp_Final(uint16_t counts);
+float Temp_Calibrate(float temp);
+/* USER CODE END PFP */
+
+/* Private user code ---------------------------------------------------------*/
+/* USER CODE BEGIN 0 */
+
+/* USER CODE END 0 */
+
+/**
+  * @brief  The application entry point.
+  * @retval int
+  */
+int main(void)
+{
+  /* USER CODE BEGIN 1 */
+
+  /* USER CODE END 1 */
+
+  /* MCU Configuration--------------------------------------------------------*/
+
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  HAL_Init();
+
+  /* USER CODE BEGIN Init */
+
+  /* USER CODE END Init */
+
+  /* Configure the system clock */
+  SystemClock_Config();
+
+  /* USER CODE BEGIN SysInit */
+
+  /* USER CODE END SysInit */
+
+  /* Initialize all configured peripherals */
+  MX_GPIO_Init();
+  MX_DMA_Init();
+  MX_ADC1_Init();
+  MX_TIM1_Init();
+  MX_TIM3_Init();
+  MX_TIM15_Init();
+  MX_USART1_UART_Init();
+  MX_I2C1_Init();
+  /* USER CODE BEGIN 2 */
+  // Add this line because of bugs. Yay!
+  HAL_SYSCFG_StrobeDBattpinsConfig(SYSCFG_UCPD1_STROBE);
+  
+  // Start ADC DMA
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&dmaBuffer, 3);
+  
+  // UART related init
+  HAL_UART_Transmit(&huart1,"Mornin'!\r\n", 10, 1000); // this tests the UART functionalit
+  
+  LL_USART_EnableIT_RXNE_RXFNE(USART1); // this line turns on the UART receive interrupt. 
+  
+  SendString("\r\nBongiorno!\r\n", 14, StripZeros, AddCRLF);  // this function cal tests the transmit UART interrupt.
+  
+  // Get calibration constants from memory
+  HAL_I2C_Mem_Read(&hi2c1, EEPROM_ADDR, 0, I2C_MEMADD_SIZE_8BIT, myCal.arr, 8, HAL_MAX_DELAY);
+
+  // Display related init
+  SSD1306_Init();  // initialise  
+  SSD1306_Clear();
+  SSD1306_GotoXY (0,0);
+  SSD1306_Puts ("Welcome to", &Font_11x18, SSD1306_COLOR_WHITE);
+  SSD1306_GotoXY (0,20);
+  SSD1306_Puts ("The Grill", &Font_11x18, SSD1306_COLOR_WHITE);
+  SSD1306_GotoXY (0,40);
+  SSD1306_Puts ("Thermometer!", &Font_11x18, SSD1306_COLOR_WHITE);
+  SSD1306_UpdateScreen(); 
+  
+  HAL_Delay (3000);
+  
+  SwitchScreens(HOME);
+  
+  /* USER CODE END 2 */
+
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
+  while (1)
+  {
+    //---------------------------------
+    // 10mS Tasks 
+    if (ten_mS_Flag) {
+      ten_mS_Flag = false;
+
+    }  // end of 10mS Tasks
+    //---------------------------------
+
+    
+    //---------------------------------
+    // 25mS Tasks 
+    if (twentyfive_mS_Flag) {
+      twentyfive_mS_Flag = false;
+
+      keyCode = ScanKeyboard();
+      DebounceKeyCode(keyCode);
+      
+      // If we've gotten a valid debounced keyCode, process it
+      if (processKeyCode == true) {
+        //ProcessKeyCode(keyCode);
+        ProcessKeyCodeInContext(keyCode);
+      }
+      
+      thermTempInC = Temp_Cold_Junction(dmaBuffer[2]);
+      tempTCInC = Temp_TC(dmaBuffer[0]);
+      tempFinalInC = Temp_Final(dmaBuffer[0]);
+         
+      // If units are F then convert to F, otherwise temp is C
+      if(units.data[3] == 'F') {temperature.data = (tempFinalInC*(9.0/5.0)) + 32;}
+      else {temperature.data = tempFinalInC;}
+      
+      switch(typeState) {
+      case BEEF:
+        strcpy(type.data, "Beef       ");
+        if(units.data[3] == 'F') {target.data = 135.0;} // in F
+        else {target.data = 57.2222;} // in C
+        break;
+      case PORK:
+        strcpy(type.data, "Pork       ");
+        if(units.data[3] == 'F') {target.data = 145.0;} // in F
+        else {target.data = 62.7778;} // in C
+        break;
+      case CHICKEN:
+        strcpy(type.data, "Chicken       ");
+        if(units.data[3] == 'F') {target.data = 165.0;} // in F
+        else {target.data = 73.8889;} // in C
+        break;
+      case CUSTOM:
+        strcpy(type.data, "Custom       ");
+        if(tempCustomUseC) {
+          if(units.data[3] == 'F') {target.data = (tempCustomInC*(9.0/5.0)) + 32;}
+          else {target.data = tempCustomInC;}
+        }
+        else {
+          if(units.data[3] == 'C') {target.data = (tempCustomInF-32)*(5.0/9.0);}
+          else {target.data = tempCustomInF;}
+        }
+        break;
+      }
+    }  // end of 25mS Tasks
+    //---------------------------------
+
+    
+    //---------------------------------
+    // 100mS Tasks 
+    if (hundred_mS_Flag) {
+      hundred_mS_Flag = false;
+
+      //HAL_ADC_Start_IT(&hadc1);
+
+      HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&dmaBuffer, 3);
+      
+      if(updateCalFlag) {
+        updateCalFlag = false;
+        calCount++;
+        HAL_I2C_Mem_Write(&hi2c1, EEPROM_ADDR, 0, I2C_MEMADD_SIZE_8BIT, myCal.arr, 8, HAL_MAX_DELAY);
+      }
+    }  // end of 100mS Tasks
+    //---------------------------------
+
+    
+    //---------------------------------
+    // 1 Sec Tasks 
+    if (one_S_Flag) {
+      one_S_Flag = false;
+      UpdateScreenValues();
+      count.data++;
+      
+      if(timeout_flag) {
+        timeout_flag = 0;
+        timeout_count = 0;
+        count_flag = 1;
+      }
+      else if(count_flag) {
+        if(timeout_count >= SCREEN_TIMEOUT_COUNT){
+          count_flag = 0;
+          if(currentScreen != HOME) {SwitchScreens(HOME);}
+        }
+        else {timeout_count++;}
+      }
+     
+    } // end of 1Sec Tasks
+    //---------------------------------
+
+    
+    //---------------------------------
+    // Every time through the loop
+    if (nextSerialRxIn != nextSerialRx2Proc) {
+      ProcessReceiveBuffer();
+    }
+    
+    if (processPacket == true) {
+      processPacket = false;
+      timeout_flag = 1;
+      ProcessPacket();
+    }
+    // end Every time through the loop
+    //---------------------------------
+        
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
+  }
+  /* USER CODE END 3 */
+}
+
+/**
+  * @brief System Clock Configuration
+  * @retval None
+  */
+void SystemClock_Config(void)
+{
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
+
+  /** Configure the main internal regulator output voltage
+  */
+  HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1);
+  /** Initializes the RCC Oscillators according to the specified parameters
+  * in the RCC_OscInitTypeDef structure.
+  */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV1;
+  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Initializes the CPU, AHB and APB buses clocks
+  */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Initializes the peripherals clocks
+  */
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART1|RCC_PERIPHCLK_I2C1
+                              |RCC_PERIPHCLK_ADC;
+  PeriphClkInit.Usart1ClockSelection = RCC_USART1CLKSOURCE_PCLK1;
+  PeriphClkInit.I2c1ClockSelection = RCC_I2C1CLKSOURCE_PCLK1;
+  PeriphClkInit.AdcClockSelection = RCC_ADCCLKSOURCE_SYSCLK;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
+
+/**
+  * @brief ADC1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_ADC1_Init(void)
+{
+
+  /* USER CODE BEGIN ADC1_Init 0 */
+
+  /* USER CODE END ADC1_Init 0 */
+
+  ADC_ChannelConfTypeDef sConfig = {0};
+
+  /* USER CODE BEGIN ADC1_Init 1 */
+
+  /* USER CODE END ADC1_Init 1 */
+  /** Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion)
+  */
+  hadc1.Instance = ADC1;
+  hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;
+  hadc1.Init.Resolution = ADC_RESOLUTION_12B;
+  hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+  hadc1.Init.ScanConvMode = ADC_SCAN_DISABLE;
+  hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
+  hadc1.Init.LowPowerAutoWait = DISABLE;
+  hadc1.Init.LowPowerAutoPowerOff = DISABLE;
+  hadc1.Init.ContinuousConvMode = DISABLE;
+  hadc1.Init.NbrOfConversion = 3;
+  hadc1.Init.DiscontinuousConvMode = DISABLE;
+  hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+  hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
+  hadc1.Init.DMAContinuousRequests = DISABLE;
+  hadc1.Init.Overrun = ADC_OVR_DATA_PRESERVED;
+  hadc1.Init.SamplingTimeCommon1 = ADC_SAMPLETIME_1CYCLE_5;
+  hadc1.Init.SamplingTimeCommon2 = ADC_SAMPLETIME_1CYCLE_5;
+  hadc1.Init.OversamplingMode = DISABLE;
+  hadc1.Init.TriggerFrequencyMode = ADC_TRIGGER_FREQ_HIGH;
+  if (HAL_ADC_Init(&hadc1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Configure Regular Channel
+  */
+  sConfig.Channel = ADC_CHANNEL_4;
+  sConfig.Rank = ADC_REGULAR_RANK_1;
+  sConfig.SamplingTime = ADC_SAMPLINGTIME_COMMON_1;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Configure Regular Channel
+  */
+  sConfig.Channel = ADC_CHANNEL_1;
+  sConfig.Rank = ADC_REGULAR_RANK_2;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Configure Regular Channel
+  */
+  sConfig.Channel = ADC_CHANNEL_0;
+  sConfig.Rank = ADC_REGULAR_RANK_3;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN ADC1_Init 2 */
+
+  /* USER CODE END ADC1_Init 2 */
+
+}
+
+/**
+  * @brief I2C1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_I2C1_Init(void)
+{
+
+  /* USER CODE BEGIN I2C1_Init 0 */
+
+  /* USER CODE END I2C1_Init 0 */
+
+  /* USER CODE BEGIN I2C1_Init 1 */
+
+  /* USER CODE END I2C1_Init 1 */
+  hi2c1.Instance = I2C1;
+  hi2c1.Init.Timing = 0x00303D5B;
+  hi2c1.Init.OwnAddress1 = 0;
+  hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+  hi2c1.Init.OwnAddress2 = 0;
+  hi2c1.Init.OwnAddress2Masks = I2C_OA2_NOMASK;
+  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+  if (HAL_I2C_Init(&hi2c1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Configure Analogue filter
+  */
+  if (HAL_I2CEx_ConfigAnalogFilter(&hi2c1, I2C_ANALOGFILTER_ENABLE) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Configure Digital filter
+  */
+  if (HAL_I2CEx_ConfigDigitalFilter(&hi2c1, 0) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN I2C1_Init 2 */
+
+  /* USER CODE END I2C1_Init 2 */
+
+}
+
+/**
+  * @brief TIM1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM1_Init(void)
+{
+
+  /* USER CODE BEGIN TIM1_Init 0 */
+
+  /* USER CODE END TIM1_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM1_Init 1 */
+
+  /* USER CODE END TIM1_Init 1 */
+  htim1.Instance = TIM1;
+  htim1.Init.Prescaler = 0;
+  htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim1.Init.Period = 65535;
+  htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim1.Init.RepetitionCounter = 0;
+  htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim1, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterOutputTrigger2 = TIM_TRGO2_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim1, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM1_Init 2 */
+
+  /* USER CODE END TIM1_Init 2 */
+
+}
+
+/**
+  * @brief TIM3 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM3_Init(void)
+{
+
+  /* USER CODE BEGIN TIM3_Init 0 */
+
+  /* USER CODE END TIM3_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM3_Init 1 */
+
+  /* USER CODE END TIM3_Init 1 */
+  htim3.Instance = TIM3;
+  htim3.Init.Prescaler = 0;
+  htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim3.Init.Period = 65535;
+  htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim3, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM3_Init 2 */
+
+  /* USER CODE END TIM3_Init 2 */
+
+}
+
+/**
+  * @brief TIM15 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM15_Init(void)
+{
+
+  /* USER CODE BEGIN TIM15_Init 0 */
+
+  /* USER CODE END TIM15_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM15_Init 1 */
+
+  /* USER CODE END TIM15_Init 1 */
+  htim15.Instance = TIM15;
+  htim15.Init.Prescaler = 0;
+  htim15.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim15.Init.Period = 65535;
+  htim15.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim15.Init.RepetitionCounter = 0;
+  htim15.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim15) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim15, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim15, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM15_Init 2 */
+
+  /* USER CODE END TIM15_Init 2 */
+
+}
+
+/**
+  * @brief USART1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART1_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART1_Init 0 */
+
+  /* USER CODE END USART1_Init 0 */
+
+  /* USER CODE BEGIN USART1_Init 1 */
+
+  /* USER CODE END USART1_Init 1 */
+  huart1.Instance = USART1;
+  huart1.Init.BaudRate = 9600;
+  huart1.Init.WordLength = UART_WORDLENGTH_8B;
+  huart1.Init.StopBits = UART_STOPBITS_1;
+  huart1.Init.Parity = UART_PARITY_NONE;
+  huart1.Init.Mode = UART_MODE_TX_RX;
+  huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart1.Init.OverSampling = UART_OVERSAMPLING_16;
+  huart1.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+  huart1.Init.ClockPrescaler = UART_PRESCALER_DIV1;
+  huart1.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+  if (HAL_UART_Init(&huart1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_UARTEx_SetTxFifoThreshold(&huart1, UART_TXFIFO_THRESHOLD_1_8) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_UARTEx_SetRxFifoThreshold(&huart1, UART_RXFIFO_THRESHOLD_1_8) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_UARTEx_DisableFifoMode(&huart1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART1_Init 2 */
+
+  /* USER CODE END USART1_Init 2 */
+
+}
+
+/**
+  * Enable DMA controller clock
+  */
+static void MX_DMA_Init(void)
+{
+
+  /* DMA controller clock enable */
+  __HAL_RCC_DMA1_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA1_Channel1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
+
+}
+
+/**
+  * @brief GPIO Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_GPIO_Init(void)
+{
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+
+  /*Configure GPIO pin : PC13 */
+  GPIO_InitStruct.Pin = GPIO_PIN_13;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PB0 PB5 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_5;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PA8 PA10 */
+  GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_10;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+}
+
+/* USER CODE BEGIN 4 */
+// Function to calculate cold junction temp in C
+float Temp_Cold_Junction(uint16_t counts) {
+  float lastValue;
+  float Rmin;
+  float Rmax;
+  float Tmin;
+  float resistance;
+  float thermTemp = 0.0;
+  // Calculate the resistance of the thermistor
+  resistance = (10000*counts)/(4096-counts);
+  for(uint8_t i = 0; i < (sizeof(ThermData))/(sizeof(uint32_t)); i++) {
+    if(resistance > ThermData[i]) {
+      //Break if temperature is too low
+      if(i == 0) {break;}
+      
+      //Setup for temp calculation
+      Rmax = ThermData[i];
+      Rmin = lastValue;
+      Tmin = (i*10) - 10;
+      thermTemp = (((resistance-Rmin)*10.0)/(Rmax-Rmin)) + Tmin;
+      break;
+    }
+    else {lastValue = ThermData[i];}
+  }
+  
+  return thermTemp;
+}
+
+// Function to calculate thermocouple temp in C
+float Temp_TC(uint16_t counts) {
+  float lastValue;
+  float countsMin;
+  float countsMax;
+  float Tmin;
+  float tempTC = 0.0;
+  
+  // Account for TC offset
+  int32_t countsAdjusted = counts - dmaBuffer[1];
+  
+  for(uint8_t i = 0; i < (sizeof(TCData))/(sizeof(uint16_t)); i++) {
+      if(countsAdjusted < TCData[i]) {
+      //Break if temperature is too low
+      if(i == 0) {break;}
+      
+      //Setup for temp calculation
+      countsMax = TCData[i];
+      countsMin = lastValue;
+      Tmin = i-35.0;
+      tempTC = (((countsAdjusted-countsMin)*1.0)/(countsMax-countsMin)) + Tmin;
+      break;
+    }
+      else {lastValue = TCData[i];}
+  }
+  return tempTC;
+}
+
+float Temp_Final(uint16_t counts) {
+  float lastTFValue;
+  float countsTFMin;
+  float countsTFMax;
+  float TTFmin;
+  float tempFinal = 0.0;
+  // Account for TC offset
+   countsAdjusted= counts - dmaBuffer[1];
+  
+  // Account for cold junction temperature
+  countsCJ = Temp_Cold_Counts(thermTempInC);
+  countsAdjusted += countsCJ;
+  
+  for(uint8_t i = 0; i < (sizeof(TCData))/(sizeof(uint16_t)); i++) {
+    if(countsAdjusted < TCData[i]) {
+      //Break if temperature is too low
+      if(i == 0) {break;}
+      
+      //Setup for temp calculation
+      countsTFMax = TCData[i];
+      countsTFMin = lastTFValue;
+      TTFmin = i-35.0;
+      tempFinal = (((countsAdjusted-countsTFMin)*1.0)/(countsTFMax-countsTFMin)) + TTFmin;
+      break;
+    }
+    else {lastTFValue = TCData[i];}
+  }
+  
+  // Account for calibration
+  tempFinal = Temp_Calibrate(tempFinal);
+  
+  return tempFinal;
+}
+
+uint32_t Temp_Cold_Counts(float tempRaw) {
+  int32_t lastCJValue;
+  uint32_t tempCJMin;
+  uint32_t countsCJMin;
+  uint32_t countsCJMax;
+  uint32_t countsCold = 0;
+  
+  for(uint8_t i = 0; i < (sizeof(TCData))/(sizeof(uint16_t)); i++) {
+    if(tempRaw < (i-35)) {
+      //Break if temperature is too low
+      if(i == 0) {break;}
+      
+      //Setup for temp calculation
+      tempCJMin = lastCJValue;
+      countsCJMin = TCData[lastCJValue+35];
+      countsCJMax = TCData[i];
+      countsCold = ((tempRaw - tempCJMin)*(countsCJMax-countsCJMin)) + countsCJMin;
+      break;
+    }
+    else {lastCJValue = i-35;}
+  }
+  
+  return countsCold;
+}
+
+float Temp_Calibrate(float temp) {
+  float tempCal;
+  tempCal = (myCal.calData.tcCalSlope*temp) + myCal.calData.tcCalOffset;
+  return tempCal;
+}
+
+/* USER CODE END 4 */
+
+/**
+  * @brief  This function is executed in case of error occurrence.
+  * @retval None
+  */
+void Error_Handler(void)
+{
+  /* USER CODE BEGIN Error_Handler_Debug */
+  /* User can add his own implementation to report the HAL error return state */
+  __disable_irq();  
+
+  while (1)
+  {
+  }
+  /* USER CODE END Error_Handler_Debug */
+}
+
+#ifdef  USE_FULL_ASSERT
+/**
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
+void assert_failed(uint8_t *file, uint32_t line)
+{
+  /* USER CODE BEGIN 6 */
+  /* User can add his own implementation to report the file name and line number,
+     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  /* USER CODE END 6 */
+}
+#endif /* USE_FULL_ASSERT */
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

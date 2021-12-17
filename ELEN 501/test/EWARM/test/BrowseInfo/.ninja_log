@@ -1,0 +1,203 @@
+# ninja log v5
+2	108	6547174930000000	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_cortex.xcl	e772478a67d5e71
+7	119	6547174930000000	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal.xcl	ea23264f3d3ab639
+12	129	6547174930000000	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_dma.xcl	36286d21bbebd899
+31	138	6547174930000000	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_dma_ex.xcl	506350dd2babd8bf
+17	150	6547174930000000	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc.xcl	b70234abbf8bd051
+22	160	6547174930000000	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc_ex.xcl	8998fa2f39fe6863
+36	171	6547174930000000	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_exti.xcl	375563377358147b
+27	186	6547174930000000	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/CMSIS/system_stm32g0xx.xcl	2bdd46296b1e06f7
+114	198	6547174930000000	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_gpio.xcl	8faa713dbb8c75dd
+134	233	6547174930000000	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_flash_ex.xcl	be7b9d995d2928c8
+145	245	6547174930000000	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_rcc_ex.xcl	f38143156fe044a6
+125	256	6547174930000000	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_flash.xcl	c01ee59991813993
+156	267	6547174930000000	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pwr_ex.xcl	4c7b23d1a8f587cb
+166	278	6547174930000000	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pwr.xcl	423e8d5b1092ccf4
+178	288	6547174930000000	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_rcc.xcl	4646b83e2e1181b4
+193	300	6547174930000000	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_tim_ex.xcl	62759540e76284cc
+205	312	6547174930000000	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_tim.xcl	fb38b97be7019653
+240	322	6547174930000000	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_adc.xcl	cdcfd6e38960b029
+251	346	6547174930000000	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_dma.xcl	bd097592d83c7c42
+262	358	6547174930000000	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_rcc.xcl	6141dcb5325dd9de
+284	384	6547174930000000	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Application/User/Core/main.xcl	d4a36c1063bacc4b
+306	393	6547174930000000	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Application/User/Core/stm32g0xx_it.xcl	bd910e39d77da1ec
+295	408	6547174930000000	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Application/User/Core/stm32g0xx_hal_msp.xcl	1000c9602443757c
+273	542	6547174941004791	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/CMSIS/system_stm32g0xx.pbi	733873d4bc980694
+318	583	6547174941405164	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_dma_ex.pbi	d7959d15066b1bf1
+330	612	6547174941695429	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc.pbi	2b15ddaff30c423f
+353	624	6547174941815539	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal.pbi	31daab1d34a58356
+364	630	6547174941815539	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_cortex.pbi	c1782e21b02fdce2
+389	662	6547174942195874	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Application/User/Core/main.pbi	3c24a3b15ca8ef98
+413	675	6547174942326001	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Application/User/Core/stm32g0xx_hal_msp.pbi	f36fd0b57918ea49
+399	683	6547174942346008	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Application/User/Core/stm32g0xx_it.pbi	bc3aac753046b686
+545	821	6547174943777315	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_dma.pbi	88982b843d2b9318
+586	864	6547174944227716	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_exti.pbi	41191ad55db32ccc
+615	875	6547174944327816	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc_ex.pbi	4e25e05cdb38b9f3
+626	897	6547174944548012	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pwr_ex.pbi	6bc78f621bbfd225
+633	905	6547174944608062	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_rcc_ex.pbi	1976934363b10199
+878	912	6547174944708154	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_adc.pbi	d7c2e279a216bf04
+900	935	6547174944928359	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_dma.pbi	57e25b9300a4f610
+664	942	6547174944928359	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_flash_ex.pbi	98981caefac69c8a
+678	955	6547174945128538	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_gpio.pbi	115f5c72c1043b5
+685	963	6547174945168574	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_flash.pbi	2d03d9851a05d577
+937	976	6547174945338728	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_rcc.pbi	4031a3675ff76941
+978	990	6547174945488873	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test_part4.pbi	d23a6d0d2a4e6e1f
+824	1098	6547174946559834	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pwr.pbi	baf7cabb08464db7
+867	1140	6547174946980246	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_rcc.pbi	6034d3832e2a4626
+907	1161	6547174947190411	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_tim.pbi	82164e2e8d07d364
+914	1165	6547174947240459	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_tim_ex.pbi	9a9df62b6650c27
+945	1193	6547174947510705	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test_part0.pbi	db4e478326c79635
+958	1200	6547174947590777	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test_part1.pbi	4bdcce56ef771ec3
+1100	1307	6547174948651739	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test_part2.pbi	4b3d6b079ad3f8bb
+1168	1368	6547174949272304	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test_part3.pbi	513a282b22196a9e
+1372	1515	6547174950733631	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test.pbd	c2972e68f0404c26
+1518	2572	6547174960963723	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test.pbw	abc96f2d72327a39
+3	211	6547175970439535	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Application/User/Core/main.pbi	3c24a3b15ca8ef98
+212	405	6547175972391306	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test_part0.pbi	db4e478326c79635
+3	146	6547176025449774	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test.pbd	c2972e68f0404c26
+150	1135	6547176034993726	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test.pbw	abc96f2d72327a39
+3	212	6547177698755105	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Application/User/Core/main.pbi	3c24a3b15ca8ef98
+214	410	6547177700746907	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test_part0.pbi	db4e478326c79635
+414	555	6547177702198223	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test.pbd	c2972e68f0404c26
+558	1548	6547177711784414	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test.pbw	abc96f2d72327a39
+3	210	6547181439778818	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Application/User/Core/stm32g0xx_it.pbi	bc3aac753046b686
+212	415	6547181441825999	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test_part0.pbi	db4e478326c79635
+419	560	6547181443287672	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test.pbd	c2972e68f0404c26
+563	1587	6547181453100323	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test.pbw	abc96f2d72327a39
+6	216	6547183771764110	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Application/User/Core/stm32g0xx_it.pbi	bc3aac753046b686
+3	218	6547183771784135	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Application/User/Core/main.pbi	3c24a3b15ca8ef98
+220	410	6547183773706222	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test_part0.pbi	db4e478326c79635
+413	554	6547183775147555	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test.pbd	c2972e68f0404c26
+557	1570	6547183784830412	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test.pbw	abc96f2d72327a39
+2	206	6547184039397381	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Application/User/Core/stm32g0xx_it.pbi	bc3aac753046b686
+208	400	6547184041349635	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test_part0.pbi	db4e478326c79635
+404	547	6547184042821335	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test.pbd	c2972e68f0404c26
+550	1539	6547184052369364	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test.pbw	abc96f2d72327a39
+3	213	6547184709598772	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Application/User/Core/main.pbi	3c24a3b15ca8ef98
+215	407	6547184711540534	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test_part0.pbi	db4e478326c79635
+411	553	6547184713001863	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test.pbd	c2972e68f0404c26
+556	1538	6547184722515644	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test.pbw	abc96f2d72327a39
+3	219	6547185430197350	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Application/User/Core/main.pbi	3c24a3b15ca8ef98
+221	415	6547185432159145	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test_part0.pbi	db4e478326c79635
+420	561	6547185433620495	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test.pbd	c2972e68f0404c26
+566	1547	6547185443136035	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test.pbw	abc96f2d72327a39
+3	226	6547187963357961	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Application/User/Core/stm32g0xx_hal_msp.pbi	f36fd0b57918ea49
+8	228	6547187963377981	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Application/User/Core/stm32g0xx_it.pbi	bc3aac753046b686
+6	230	6547187963377981	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Application/User/Core/main.pbi	3c24a3b15ca8ef98
+232	427	6547187965369791	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test_part0.pbi	db4e478326c79635
+430	574	6547187966831118	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test.pbd	c2972e68f0404c26
+577	1591	6547187976536532	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test.pbw	abc96f2d72327a39
+3	208	6547189338471524	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Application/User/Core/stm32g0xx_it.pbi	bc3aac753046b686
+210	403	6547189340423297	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test_part0.pbi	db4e478326c79635
+407	551	6547189341904558	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test.pbd	c2972e68f0404c26
+554	1545	6547189351502438	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test.pbw	abc96f2d72327a39
+2	211	6547202040693359	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/Application/User/Core/stm32g0xx_it.pbi	bc3aac753046b686
+213	409	6547202042677321	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test_part0.pbi	db4e478326c79635
+413	554	6547202044128642	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test.pbd	c2972e68f0404c26
+557	1542	6547202053670525	C:/Users/Justin/Documents/GitKraken/SCU Work/test/EWARM/test/BrowseInfo/test.pbw	abc96f2d72327a39
+13	112	6549112820000000	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Application/User/Core/stm32g0xx_hal_msp.xcl	f81ef77a036bf3c7
+23	122	6549112820000000	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/CMSIS/system_stm32g0xx.xcl	b7844a5efb2874ba
+9	131	6549112820000000	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Application/User/Core/main.xcl	e5fbb7a9e25c6aad
+28	141	6549112820000000	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal.xcl	ed01e237da6f79ad
+37	150	6549112820000000	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_cortex.xcl	49f577da44a1aa8c
+33	159	6549112820000000	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc_ex.xcl	ddc6439150af664e
+2	173	6549112830000000	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Application/User/Core/stm32g0xx_it.xcl	ed0bfed0a65b5433
+18	205	6549112830000000	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc.xcl	62a5c5390b89cd39
+118	224	6549112830000000	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_flash_ex.xcl	7827ce8bd82113e
+127	239	6549112830000000	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_flash.xcl	2739fd386323b41d
+136	251	6549112830000000	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_gpio.xcl	5d839d874e0d5365
+145	263	6549112830000000	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_dma.xcl	48f4c9a003717eed
+154	275	6549112830000000	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_exti.xcl	79ccebccf2100160
+165	285	6549112830000000	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_dma_ex.xcl	90249422574692a
+180	296	6549112830000000	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_rcc_ex.xcl	3e51c5f1eec6013a
+213	307	6549112830000000	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_tim.xcl	8448ee45cfd3a4c9
+232	319	6549112830000000	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pwr_ex.xcl	63f180242f0f7b7c
+245	341	6549112830000000	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pwr.xcl	a8ba92272472b7b7
+258	355	6549112830000000	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_rcc.xcl	68e4fccad5ca323e
+270	367	6549112830000000	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_tim_ex.xcl	a05356df5ae5d9bb
+302	381	6549112830000000	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_adc.xcl	97542e02f1a1b3a4
+314	392	6549112830000000	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_rcc.xcl	3ae60fd9837c078c
+347	420	6549112830000000	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_dma.xcl	3ca7d7bcac434330
+426	459	6549112832923750	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_adc.pbi	6f28d8865255a7c5
+291	585	6549112834179698	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Application/User/Core/stm32g0xx_hal_msp.pbi	87baeb5847851d43
+280	595	6549112834209700	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Application/User/Core/main.pbi	9e69b8006da7b87a
+325	621	6549112834539923	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Application/User/Core/stm32g0xx_it.pbi	5ff4f83c992e9583
+360	661	6549112834930195	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_cortex.pbi	b4607b96b55d605
+398	688	6549112835200374	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc_ex.pbi	771db78d9af94a91
+373	697	6549112835240414	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc.pbi	12eb5fe519c460a4
+387	705	6549112835230405	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_dma.pbi	c947261e908c7173
+462	763	6549112835960892	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal.pbi	faf9a36386eb4e90
+623	903	6549112837351857	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_dma_ex.pbi	c32a3097c0d37870
+663	962	6549112837947298	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_flash.pbi	72a60b8594ece9f5
+691	984	6549112838167455	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pwr.pbi	31bc8f6e4ad8ba6b
+589	999	6549112838307546	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/CMSIS/system_stm32g0xx.pbi	f50f1556f4362e9b
+699	1007	6549112838337568	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_flash_ex.pbi	6a77445a5eb73a91
+707	1015	6549112838377603	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_gpio.pbi	6a0f284d0a5f6494
+599	1023	6549112838397619	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_exti.pbi	f6dec8a5f403267f
+1010	1045	6549112838777866	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_dma.pbi	76f4a2fc3e31f137
+766	1060	6549112838927970	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_tim.pbi	7e9b9eecbfeaac2b
+1047	1083	6549112839158124	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_rcc.pbi	7927f94019fe539a
+1085	1099	6549112839318234	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/test_part4.pbi	c3d4172581bb29e7
+965	1261	6549112840929332	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_tim_ex.pbi	a3a70ac8fed59001
+987	1289	6549112841219526	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_rcc.pbi	1efefb77d929bf95
+906	1293	6549112841249546	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pwr_ex.pbi	444a62b25c5b0208
+1001	1295	6549112841259554	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_rcc_ex.pbi	d79dcc6536e8b5ad
+1018	1311	6549112841439680	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/test_part1.pbi	5bee4756716e27cd
+1026	1316	6549112841489709	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/test_part2.pbi	bc8a6efa8ece3225
+1063	1339	6549112841729877	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/test_part0.pbi	f6c065e858c06bbf
+1297	1522	6549112843551121	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/test_part3.pbi	78ae7c2ed710f1bd
+1525	1676	6549112845092164	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/test.pbd	bfa8bc38ea1981a3
+1679	2714	6549112855116161	C:/Users/Justin/Documents/Test/test/EWARM/test/BrowseInfo/test.pbw	dfe6e5c27423a730
+13	109	6549129320000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_cortex.xcl	4e6a2af9e773adb0
+3	123	6549129320000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc.xcl	14b3a4fb1f3d373b
+9	136	6549129320000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc_ex.xcl	b36c37e07239d778
+22	149	6549129320000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal.xcl	30f364f95447fbb9
+18	163	6549129320000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_dma.xcl	24bd2e4a0d1b651a
+31	176	6549129320000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_flash.xcl	cb1fe3a5b80c9dbe
+36	190	6549129320000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_exti.xcl	5269299ef01754c5
+118	202	6549129320000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_dma_ex.xcl	2d61d0bf14d68e0b
+27	215	6549129320000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/CMSIS/system_stm32g0xx.xcl	eac60c29f787a815
+131	263	6549129320000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_gpio.xcl	5f553b604e95aef2
+143	277	6549129320000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_flash_ex.xcl	a94814e2baf81d8f
+171	302	6549129320000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_rcc_ex.xcl	c227e7890b91529b
+198	314	6549129320000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pwr_ex.xcl	9a047c864052d012
+210	327	6549129320000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_tim.xcl	3f037cc74b53f
+222	340	6549129320000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_tim_ex.xcl	2af80f8238ab97e0
+185	353	6549129320000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pwr.xcl	8e037c908cf0cf90
+285	365	6549129320000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Application/User/Core/stm32g0xx_it.xcl	cc3131c885430079
+157	376	6549129320000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_rcc.xcl	cd589ef3f68f553c
+271	389	6549129320000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Application/User/Core/main.xcl	cb0eeb2d7d5aeb12
+321	436	6549129320000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_adc.xcl	4442c34ef646ecec
+309	450	6549129320000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Application/User/Core/stm32g0xx_hal_msp.xcl	62e2cce89da92b4
+335	462	6549129320000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_rcc.xcl	13a375631587b22c
+348	475	6549129320000000	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_dma.xcl	bf516c586591cc8a
+361	647	6549129327471082	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal.pbi	3ed9578b78ec3a96
+372	656	6549129327511110	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Application/User/Core/stm32g0xx_it.pbi	417eec9c0d031003
+384	675	6549129327751302	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc_ex.pbi	abd6df118a6dde0f
+397	692	6549129327921420	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Application/User/Core/main.pbi	f7fcb5329c6f9790
+470	752	6549129328521865	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/CMSIS/system_stm32g0xx.pbi	75e25cb9e03ab852
+457	760	6549129328551891	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Application/User/Core/stm32g0xx_hal_msp.pbi	511d29350ce6bada
+484	769	6549129328651967	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_dma_ex.pbi	8f9ca027fd0c9a58
+444	840	6549129329392515	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_cortex.pbi	b072754b55f90adc
+651	944	6549129330433291	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_dma.pbi	2054d73e8a9845a3
+679	954	6549129330538440	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_flash.pbi	5073f675135edab9
+659	968	6549129330678542	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc.pbi	9a172c41b76ca600
+694	977	6549129330768612	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_rcc.pbi	93460d132c3aa180
+957	992	6549129330918734	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_rcc.pbi	1f567a89240de0d2
+972	1005	6549129331048822	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_adc.pbi	dba6af6063e4ad9f
+980	1014	6549129331138894	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_dma.pbi	28e004cdac4b1cd7
+763	1048	6549129331479150	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pwr_ex.pbi	526cd82a256ebeb
+755	1058	6549129331519172	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_gpio.pbi	a5307f0454973d1c
+772	1067	6549129331579228	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_exti.pbi	ff315520f941674d
+1062	1078	6549129331769371	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/test_part4.pbi	45e7fbc4b0bc9141
+843	1125	6549129332249716	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_flash_ex.pbi	ee749468e667329a
+947	1216	6549129333160398	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pwr.pbi	74091b220264d02f
+1007	1256	6549129333560692	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_tim_ex.pbi	38c5111e5dffdc24
+1017	1275	6549129333750836	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_rcc_ex.pbi	cbcc1f45b1089187
+1051	1285	6549129333850918	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/test_part0.pbi	abc1d13dfacb0c9f
+1071	1296	6549129333971001	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/test_part1.pbi	a89cf31f76660445
+994	1331	6549129334321262	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_tim.pbi	634fadfccb3f24ee
+1219	1426	6549129335261966	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/test_part2.pbi	ad5353267c1b5e50
+1334	1537	6549129336382807	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/test_part3.pbi	7feee45f0be19504
+1542	1688	6549129337883925	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/test.pbd	30acdba660cb8dd0
+1693	2706	6549129347713705	C:/Users/Justin/Documents/GitKraken/SCU-Work/ELEN 501/test/EWARM/test/BrowseInfo/test.pbw	f133b1eb24f1a154
