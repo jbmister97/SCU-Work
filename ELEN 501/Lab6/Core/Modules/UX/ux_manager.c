@@ -76,7 +76,7 @@ void SwitchScreens(ui_screen screen_no)
   
   // Switch the screens
   switch (screen_no) {
-  case HOME:
+  case HOME:            // Temperature screen
     // clear the screen from the previos dispayed data
     SSD1306_Clear();
     // Set screen ltitle
@@ -107,7 +107,7 @@ void SwitchScreens(ui_screen screen_no)
     }
     // Send a screen update (note this does not update the live data)
     break;
-  case DETAIL:
+  case DETAIL:          // Target screen
     SSD1306_Clear();
     
     // Set screen title
@@ -127,7 +127,7 @@ void SwitchScreens(ui_screen screen_no)
     target.yPos = 40;
     
     break;
-  case SETTINGS:
+  case SETTINGS:        // Settings screen
     SSD1306_Clear();
     // Set screen title
     SSD1306_GotoXY (0,0);
@@ -139,7 +139,7 @@ void SwitchScreens(ui_screen screen_no)
     units.xPos = 65;
     units.yPos = 30;
     break;
-  case SET_TEMP:
+  case SET_TEMP:        // Set custom temperature screen
     SSD1306_Clear();
     
     // Set screen title
@@ -169,7 +169,7 @@ void SwitchScreens(ui_screen screen_no)
 uint8_t ProcessKeyCodeInContext (uint16_t key_code)
 {
   switch (currentScreen) {
-  case  HOME:
+  case  HOME:           // Temperature screen
     switch (key_code) {
     case 0:
       SwitchScreens(HOME);
@@ -185,7 +185,7 @@ uint8_t ProcessKeyCodeInContext (uint16_t key_code)
       break;
     }
     break;
-  case  DETAIL:
+  case  DETAIL:         // Target screen
     switch (key_code) {
     case 0:
       SwitchScreens(HOME);
@@ -213,7 +213,7 @@ uint8_t ProcessKeyCodeInContext (uint16_t key_code)
       break;
     }
     break;
-  case  SETTINGS:
+  case  SETTINGS:       // Settings screen
     switch (key_code) {
     case 0:
       SwitchScreens(HOME);
@@ -233,7 +233,7 @@ uint8_t ProcessKeyCodeInContext (uint16_t key_code)
       break;
     }
     break;
-  case  SET_TEMP:
+  case  SET_TEMP:       // Custom temperature screen
     // Reset temps to custom base values
     
     switch (key_code) {
@@ -271,7 +271,7 @@ void UpdateScreenValues(void)
   
   
   switch (currentScreen) {
-  case HOME:
+  case HOME:            // Update temperature screen values
 //    if(temperature.data >= 0) {
 //      temperature.xPos = 31;
 //      SSD1306_GotoXY (20, temperature.yPos); // to clear negative sign location
@@ -310,7 +310,7 @@ void UpdateScreenValues(void)
     else {SSD1306_Puts(endF, &Font_7x10, SSD1306_COLOR_WHITE);}
     break;
 
-  case DETAIL:
+  case DETAIL:          // Update target screen values
     
     // Update food type
     SSD1306_GotoXY (type.xPos, type.yPos);
@@ -335,7 +335,7 @@ void UpdateScreenValues(void)
     else {SSD1306_Puts(endF, &Font_7x10, SSD1306_COLOR_WHITE);}
 
     break;
-  case SETTINGS:
+  case SETTINGS:        // Update setting screen values
     // Update degree units
     SSD1306_GotoXY (units.xPos, units.yPos);
     if (units.valid) {
@@ -345,7 +345,7 @@ void UpdateScreenValues(void)
     else 
       SSD1306_Puts(units.invalidMsg, &Font_11x18, SSD1306_COLOR_WHITE);
     break;
-  case SET_TEMP:
+  case SET_TEMP:        // Update set custom temperature screen values
     // Update target temperature
     SSD1306_GotoXY (target.xPos, target.yPos);
     if (target.valid) {

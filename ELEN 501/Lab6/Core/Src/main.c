@@ -301,7 +301,7 @@ int main(void)
     if (hundred_mS_Flag) {
       hundred_mS_Flag = false;
 
-      HAL_ADC_Start_IT(&hadc1);
+      //HAL_ADC_Start_IT(&hadc1);
 
       HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&dmaBuffer, 3);
       
@@ -773,7 +773,7 @@ float Temp_Cold_Junction(uint16_t counts) {
   float Tmin;
   float resistance;
   float thermTemp = 0.0;
-  // Formula is based on 0C to 40C range
+  // Calculate the resistance of the thermistor
   resistance = (10000*counts)/(4096-counts);
   for(uint8_t i = 0; i < (sizeof(ThermData))/(sizeof(uint32_t)); i++) {
     if(resistance > ThermData[i]) {
@@ -849,6 +849,7 @@ float Temp_Final(uint16_t counts) {
     else {lastTFValue = TCData[i];}
   }
   
+  // Account for calibration
   tempFinal = Temp_Calibrate(tempFinal);
   
   return tempFinal;
