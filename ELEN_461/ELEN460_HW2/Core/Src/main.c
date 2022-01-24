@@ -22,7 +22,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "fonts.h"
+#include "ssd1306.h"
+#include "ux_manager.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -32,6 +34,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define ADC_BUFFER_SIZE         50
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -43,7 +46,28 @@
 ADC_HandleTypeDef hadc;
 DMA_HandleTypeDef hdma_adc;
 
+I2C_HandleTypeDef hi2c1;
+
 /* USER CODE BEGIN PV */
+// Scheduler Variables
+extern uint8_t ten_mS_Flag;
+extern uint8_t twentyfive_mS_Flag;
+extern uint8_t hundred_mS_Flag;
+extern uint8_t one_S_Flag;
+extern uint8_t five_hundred_mS_Flag;
+
+// ADC Variables
+const uint8_t gain = 2;
+uint16_t adcValue;
+uint16_t adcBuffer[ADC_BUFFER_SIZE];
+uint16_t adcAvg;
+float tempInC;
+float voltageInmV;
+
+// Display Varaibles
+DWfloat temperature = {"%4.1f ", "----", 0, 0, true, 25.0};
+DWstring units = {"%s", "----", 0, 0, true, "DegC"};
+uint8_t unitChoices[2][5] = {"DegF", "DegC"};
 
 /* USER CODE END PV */
 
@@ -52,8 +76,10 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_DMA_Init(void);
 static void MX_ADC_Init(void);
+static void MX_I2C1_Init(void);
 /* USER CODE BEGIN PFP */
-
+void Update_TempC(void);
+void Update_ADCBuff(uint16_t value);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -91,14 +117,71 @@ int main(void)
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_ADC_Init();
+  MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
+  
+    // Start ADC DMA
+  //HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&dmaBuffer, 3);
+  
+  SSD1306_Init();  // initialise  
+  
+  adcBuffer[0] = 0;
+  adcBuffer[1] = 0;
+  adcBuffer[2] = 0;
+  
+  // Splash Screen
+  SSD1306_Clear();
+  SSD1306_GotoXY (0,0);
+  SSD1306_Puts ("Welcome to", &Font_11x18, SSD1306_COLOR_WHITE);
+  SSD1306_GotoXY (0,20);
+  SSD1306_Puts ("The Thermal", &Font_11x18, SSD1306_COLOR_WHITE);
+  SSD1306_GotoXY (0,40);
+  SSD1306_Puts ("Chamber!", &Font_11x18, SSD1306_COLOR_WHITE);
+  SSD1306_UpdateScreen(); 
+  
+  HAL_Delay (3000);
 
+  SwitchScreens(HOME);
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    
+    // 10 ms scheduler
+    if(ten_mS_Flag) {
+      ten_mS_Flag = false;
+      
+      // Read ADC and update buffer
+      HAL_ADC_Start_DMA(&hadc, (uint32_t *) &adcValue, 1);
+      Update_ADCBuff(adcValue);
+    
+    }
+    
+    // 25 ms scheduler
+    if(twentyfive_mS_Flag) {
+      twentyfive_mS_Flag = false;
+      
+      
+      
+    }
+    
+    // 500 ms scheduler
+    if(five_hundred_mS_Flag){
+      five_hundred_mS_Flag = false;
+      
+      // Update Temp value in C
+      Update_TempC();
+      // convert temp to F
+      temperature.data = tempInC*(9.0/5.0) + 32.0;
+      // Change units to F
+      units.data[3] = 'F';
+      
+      // Update display;
+      UpdateScreenValues();
+    }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -114,6 +197,7 @@ void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
   /** Configure the main internal regulator output voltage
   */
@@ -143,6 +227,12 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_I2C1;
+  PeriphClkInit.I2c1ClockSelection = RCC_I2C1CLKSOURCE_PCLK1;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+  {
+    Error_Handler();
+  }
 }
 
 /**
@@ -168,7 +258,7 @@ static void MX_ADC_Init(void)
   hadc.Init.OversamplingMode = DISABLE;
   hadc.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV1;
   hadc.Init.Resolution = ADC_RESOLUTION_12B;
-  hadc.Init.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
+  hadc.Init.SamplingTime = ADC_SAMPLETIME_3CYCLES_5;
   hadc.Init.ScanConvMode = ADC_SCAN_DIRECTION_FORWARD;
   hadc.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc.Init.ContinuousConvMode = DISABLE;
@@ -196,6 +286,52 @@ static void MX_ADC_Init(void)
   /* USER CODE BEGIN ADC_Init 2 */
 
   /* USER CODE END ADC_Init 2 */
+
+}
+
+/**
+  * @brief I2C1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_I2C1_Init(void)
+{
+
+  /* USER CODE BEGIN I2C1_Init 0 */
+
+  /* USER CODE END I2C1_Init 0 */
+
+  /* USER CODE BEGIN I2C1_Init 1 */
+
+  /* USER CODE END I2C1_Init 1 */
+  hi2c1.Instance = I2C1;
+  hi2c1.Init.Timing = 0x00000708;
+  hi2c1.Init.OwnAddress1 = 0;
+  hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+  hi2c1.Init.OwnAddress2 = 0;
+  hi2c1.Init.OwnAddress2Masks = I2C_OA2_NOMASK;
+  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+  if (HAL_I2C_Init(&hi2c1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Configure Analogue filter
+  */
+  if (HAL_I2CEx_ConfigAnalogFilter(&hi2c1, I2C_ANALOGFILTER_ENABLE) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Configure Digital filter
+  */
+  if (HAL_I2CEx_ConfigDigitalFilter(&hi2c1, 0) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN I2C1_Init 2 */
+
+  /* USER CODE END I2C1_Init 2 */
 
 }
 
@@ -228,8 +364,31 @@ static void MX_GPIO_Init(void)
 
 }
 
-/* USER CODE BEGIN 4 */
+void Update_ADCBuff(uint16_t value){
 
+  // Shift values of the buffer
+  for(uint8_t i = 1; i < ADC_BUFFER_SIZE; i++) {
+    adcBuffer[i-1] = adcBuffer[i];
+  }
+    
+  // Place new value at end of ADC buffer;
+  adcBuffer[ADC_BUFFER_SIZE-1] = value;
+}
+
+/* USER CODE BEGIN 4 */
+void Update_TempC(void) {
+  uint32_t temp;
+  for(uint8_t i = 0; i < ADC_BUFFER_SIZE; i++) {
+    temp += adcBuffer[i];
+  }
+  adcAvg = temp / ADC_BUFFER_SIZE;
+  
+  voltageInmV = (adcAvg/4096.0)*3300.0;
+  
+  // Based on 0C-100C range
+  tempInC = (voltageInmV-1567.0)/(-8.2);
+  
+}
 /* USER CODE END 4 */
 
 /**

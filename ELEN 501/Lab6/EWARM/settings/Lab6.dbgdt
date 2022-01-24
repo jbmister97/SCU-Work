@@ -144,7 +144,7 @@
                     <item>countsCJ</item>
                     <item>myCal</item>
                     <item>calCount</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>

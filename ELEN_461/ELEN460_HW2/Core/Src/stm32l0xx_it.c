@@ -23,6 +23,7 @@
 #include "stm32l0xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "Scheduler.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -32,7 +33,11 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define TEN_mS_SEED             10
+#define TWENTYFIVE_mS_SEED      25
+#define ONEHUNDRED_mS_SEED      100
+#define FIVEHUNDRED_mS_SEED     500
+#define ONE_S_SEED              1000
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -42,7 +47,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
+SCHEDULER_VAR
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -57,6 +62,7 @@
 
 /* External variables --------------------------------------------------------*/
 extern DMA_HandleTypeDef hdma_adc;
+extern ADC_HandleTypeDef hadc;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -130,7 +136,7 @@ void SysTick_Handler(void)
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
   /* USER CODE BEGIN SysTick_IRQn 1 */
-
+  SCHEDULER_CODE
   /* USER CODE END SysTick_IRQn 1 */
 }
 
@@ -153,6 +159,20 @@ void DMA1_Channel1_IRQHandler(void)
   /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
 
   /* USER CODE END DMA1_Channel1_IRQn 1 */
+}
+
+/**
+  * @brief This function handles ADC, COMP1 and COMP2 interrupts (COMP interrupts through EXTI lines 21 and 22).
+  */
+void ADC1_COMP_IRQHandler(void)
+{
+  /* USER CODE BEGIN ADC1_COMP_IRQn 0 */
+
+  /* USER CODE END ADC1_COMP_IRQn 0 */
+  HAL_ADC_IRQHandler(&hadc);
+  /* USER CODE BEGIN ADC1_COMP_IRQn 1 */
+
+  /* USER CODE END ADC1_COMP_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
