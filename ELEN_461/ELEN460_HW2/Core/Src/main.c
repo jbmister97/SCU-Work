@@ -34,7 +34,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define ADC_BUFFER_SIZE         50
+#define ADC_BUFFER_SIZE         100
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -62,6 +62,7 @@ uint16_t adcValue;
 uint16_t adcBuffer[ADC_BUFFER_SIZE];
 uint16_t adcAvg;
 float tempInC;
+float tempF;
 float voltageInmV;
 
 // Display Varaibles
@@ -168,19 +169,36 @@ int main(void)
       
     }
     
+    // 100 ms scheduler
+    
+    if(hundred_mS_Flag) {
+      hundred_mS_Flag = false;
+      
+      // Update Temp value in C
+      Update_TempC();
+    }
+    
     // 500 ms scheduler
     if(five_hundred_mS_Flag){
       five_hundred_mS_Flag = false;
       
-      // Update Temp value in C
-      Update_TempC();
       // convert temp to F
-      temperature.data = tempInC*(9.0/5.0) + 32.0;
+      tempF = tempInC*(9.0/5.0) + 32.0;
+      temperature.data = tempF;
       // Change units to F
       units.data[3] = 'F';
       
       // Update display;
       UpdateScreenValues();
+    }
+    
+    
+    // 1 second scheduler
+    if(one_S_Flag) {
+      one_S_Flag = false;
+      
+      
+      
     }
     /* USER CODE END WHILE */
 

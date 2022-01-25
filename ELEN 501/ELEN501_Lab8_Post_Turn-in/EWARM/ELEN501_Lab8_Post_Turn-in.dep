@@ -5,345 +5,165 @@
     <configuration>
         <name>ELEN501_Lab8_Post_Turn-in</name>
         <outputs>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal.c</file>
             <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_i2c.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_i2c_ex.c</file>
             <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_rcc.c</file>
             <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_rcc_ex.c</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\ComplexMathFunctions\arm_cmplx_mag_f32.c</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\CommonTables\arm_common_tables.c</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\CommonTables\arm_const_structs.c</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\StatisticsFunctions\arm_max_f32.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_i2c_ex.c</file>
             <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\TransformFunctions.c</file>
-            <file>$PROJ_DIR$\startup_stm32l412xx.s</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\CommonTables\arm_const_structs.c</file>
             <file>$PROJ_DIR$\..\Core\Src\main.c</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\StatisticsFunctions\arm_max_f32.c</file>
             <file>$PROJ_DIR$\..\Core\Src\stm32l4xx_hal_msp.c</file>
             <file>$PROJ_DIR$\..\Core\Src\system_stm32l4xx.c</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\CommonTables\arm_common_tables.c</file>
             <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_adc.c</file>
-            <file>$PROJ_DIR$\..\Core\Src\stm32l4xx_it.c</file>
             <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_adc_ex.c</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_rfft_q31.c</file>
-            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_cortex.o</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_q15.c</file>
-            <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_uart.c</file>
-            <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
-            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\CMSIS\system_stm32l4xx.o</file>
-            <file>$PROJ_DIR$\..\Core\Inc\main.h</file>
-            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_i2c.o</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_bitreversal.c</file>
-            <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_radix4_init_q31.c</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_radix2_q31.c</file>
-            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_rcc_ex.o</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_flash_ex.h</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_adc_ex.h</file>
-            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_exti.o</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_radix2_init_f32.c</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_dct4_init_f32.c</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_dct4_q15.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_dma.h</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_rfft_init_q15.c</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\Device\ST\STM32L4xx\Include\stm32l412xx.h</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_radix8_f32.c</file>
-            <file>$TOOLKIT_DIR$\inc\c\DLib_float_setup.h</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_rfft_fast_init_f32.c</file>
-            <file>$TOOLKIT_DIR$\lib\rt7M_tl.a</file>
-            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_flash_ex.o</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_ll_adc.h</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal.h</file>
-            <file>$TOOLKIT_DIR$\lib\dl7M_tln.a</file>
-            <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
-            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_uart.o</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Include\arm_common_tables.h</file>
-            <file>$TOOLKIT_DIR$\inc\c\math.h</file>
-            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_i2c_ex.o</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_rfft_init_f32.c</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_rfft_q15.c</file>
-            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Application\EWARM\startup_stm32l412xx.o.rsp</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_radix4_q15.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_flash.h</file>
+            <file>$PROJ_DIR$\startup_stm32l412xx.s</file>
+            <file>$PROJ_DIR$\..\Core\Src\stm32l4xx_it.c</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\ComplexMathFunctions\arm_cmplx_mag_f32.c</file>
             <file>$PROJ_DIR$\..\Drivers\CMSIS\Include\cmsis_iccarm.h</file>
-            <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
-            <file>$TOOLKIT_DIR$\inc\c\float.h</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\Include\cmsis_compiler.h</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_q31.c</file>
-            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Application\User\Core\stm32l4xx_it.o</file>
             <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_uart_ex.h</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_tim.h</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_uart.h</file>
             <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_radix2_init_q31.c</file>
-            <file>$PROJ_DIR$\..\Core\Inc\stm32l4xx_hal_conf.h</file>
             <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Exe\ELEN501_Lab8_Post_Turn-in.hex</file>
-            <file>$TOOLKIT_DIR$\inc\c\DLib_Product_string.h</file>
-            <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
-            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Application\User\Core\main.o</file>
-            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_uart_ex.o</file>
-            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Application\User\Core\TransformFunctions.o</file>
-            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_flash.o</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_uart.h</file>
             <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_exti.h</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Include\arm_common_tables.h</file>
+            <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\Include\cmsis_compiler.h</file>
+            <file>$PROJ_DIR$\..\Core\Inc\stm32l4xx_hal_conf.h</file>
+            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_i2c_ex.o</file>
+            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Application\User\Core\TransformFunctions.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
             <file>$PROJ_DIR$\..\Drivers\CMSIS\Device\ST\STM32L4xx\Include\system_stm32l4xx.h</file>
             <file>$TOOLKIT_DIR$\lib\m7M_tls.a</file>
             <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_tim.o</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_tim.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\float.h</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_q31.c</file>
             <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_gpio_ex.h</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_rfft_init_q31.c</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_radix2_f32.c</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product_string.h</file>
             <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_dma.o</file>
             <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_adc.h</file>
             <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_flash_ramfunc.h</file>
             <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Application\EWARM\startup_stm32l412xx.o</file>
             <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Application\User\Core\arm_const_structs.o</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_dct4_init_q31.c</file>
             <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_rcc.h</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_rfft_fast_f32.c</file>
             <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_rfft_f32.c</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_rfft_init_f32.c</file>
+            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Application\EWARM\startup_stm32l412xx.o.rsp</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_dct4_init_q31.c</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_rfft_init_q31.c</file>
             <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_gpio.o</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_rfft_q15.c</file>
+            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Application\User\Core\main.o</file>
+            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Application\User\Core\stm32l4xx_it.o</file>
+            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_flash.o</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_radix2_f32.c</file>
             <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_radix2_q15.c</file>
-            <file>$PROJ_DIR$\..\Core\Inc\stm32l4xx_it.h</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_radix4_q31.c</file>
-            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_adc_ex.o</file>
+            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_uart_ex.o</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_bitreversal2.c</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_rfft_fast_f32.c</file>
+            <file>$TOOLKIT_DIR$\inc\c\math.h</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_radix4_q15.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_flash.h</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_radix2_init_q15.c</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Include\arm_const_structs.h</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_radix4_f32.c</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Full.h</file>
             <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_flash_ramfunc.o</file>
             <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_cortex.h</file>
             <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\List\ELEN501_Lab8_Post_Turn-in.map</file>
+            <file>$PROJ_DIR$\..\Core\Inc\stm32l4xx_it.h</file>
             <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal.o</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_radix4_init_f32.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_tim_ex.h</file>
+            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_adc_ex.o</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_radix4_q31.c</file>
             <file>$PROJ_DIR$\..\Drivers\CMSIS\Device\ST\STM32L4xx\Include\stm32l4xx.h</file>
             <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_radix2_init_q15.c</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_radix4_f32.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_tim_ex.h</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Include\arm_const_structs.h</file>
-            <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Full.h</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_bitreversal2.c</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_radix4_init_f32.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_rcc_ex.h</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_f32.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_gpio.h</file>
             <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_tim_ex.o</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_radix4_init_q15.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h</file>
+            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_dma_ex.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\aarch32\iccarm_builtin.h</file>
+            <file>$PROJ_DIR$\..\Core\Inc\Scheduler.h</file>
+            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_adc.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\stddef.h</file>
             <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_rcc.o</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_pwr.h</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_dct4_f32.c</file>
+            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Exe\ELEN501_Lab8_Post_Turn-in.out</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\Include\core_cm4.h</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\Include\cmsis_version.h</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_pwr_ex.h</file>
+            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Application\User\Core\stm32l4xx_hal_msp.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\string.h</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_uart_ex.c</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_dct4_q31.c</file>
+            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Application\User\Core\arm_common_tables.o</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_i2c_ex.h</file>
             <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_i2c.h</file>
             <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Application\User\Core\arm_max_f32.o</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_f32.c</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_dct4_f32.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_flash_ex.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_gpio.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_pwr.h</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_pwr_ex.h</file>
-            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_adc.o</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_dct4_init_q15.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_rcc_ex.h</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_uart_ex.c</file>
             <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_pwr.o</file>
-            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Application\User\Core\stm32l4xx_hal_msp.o</file>
-            <file>$TOOLKIT_DIR$\inc\c\stddef.h</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_flash.c</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\Include\core_cm4.h</file>
             <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Application\User\Core\arm_cmplx_mag_f32.o</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_radix4_init_q15.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_tim_ex.c</file>
-            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Exe\ELEN501_Lab8_Post_Turn-in.out</file>
             <file>$PROJ_DIR$\..\Drivers\CMSIS\Include\mpu_armv7.h</file>
-            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_dma_ex.o</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_def.h</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_dma_ex.c</file>
             <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_pwr_ex.o</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_flash_ramfunc.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_pwr.c</file>
-            <file>$TOOLKIT_DIR$\inc\c\aarch32\iccarm_builtin.h</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_dct4_q31.c</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_dct4_init_q15.c</file>
             <file>$PROJ_DIR$\stm32l412xx_flash.icf</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_i2c_ex.h</file>
-            <file>$PROJ_DIR$\..\Core\Inc\Scheduler.h</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_dma.c</file>
-            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Application\User\Core\arm_common_tables.o</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\Include\cmsis_version.h</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_exti.c</file>
             <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Include\arm_math.h</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_pwr_ex.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_def.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_flash.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_gpio.c</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_rfft_q31.c</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_q15.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_flash_ex.h</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_adc_ex.h</file>
+            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_exti.o</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_rfft_init_q15.c</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\Device\ST\STM32L4xx\Include\stm32l412xx.h</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal.h</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_flash_ex.c</file>
+            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_cortex.o</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_bitreversal.c</file>
+            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_i2c.o</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_radix2_init_f32.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_ll_adc.h</file>
+            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_uart.o</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_dma.h</file>
+            <file>$PROJ_DIR$\..\Core\Inc\main.h</file>
+            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_flash_ex.o</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_dct4_init_f32.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_flash_ramfunc.c</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
             <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_cortex.c</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_radix4_init_q31.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_dma_ex.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_exti.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_pwr.c</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_radix2_q31.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_pwr_ex.c</file>
+            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_rcc_ex.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_tim_ex.c</file>
+            <file>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Obj\Drivers\CMSIS\system_stm32l4xx.o</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_uart.c</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_dct4_q15.c</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_cfft_radix8_f32.c</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\arm_rfft_fast_init_f32.c</file>
+            <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
             <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_tim.c</file>
-            <file>$TOOLKIT_DIR$\inc\c\string.h</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal_gpio.h</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_dma.c</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_float_setup.h</file>
+            <file>$TOOLKIT_DIR$\lib\rt7M_tl.a</file>
+            <file>$TOOLKIT_DIR$\lib\dl7M_tln.a</file>
         </outputs>
         <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 100</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 68 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 45 108 22 71 141 126 103 27 48 20</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
             <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_i2c.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 25</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 68 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 45 108 22 71 141 126 103 27 48 20</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_i2c_ex.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 52</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 68 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 45 108 22 71 141 126 103 27 48 20</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_rcc.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 111</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 68 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 45 108 22 71 141 126 103 27 48 20</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_rcc_ex.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 30</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 68 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 45 108 22 71 141 126 103 27 48 20</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\ComplexMathFunctions\arm_cmplx_mag_f32.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 129</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 150 61 58 108 22 71 70 41 141 60 51 103 154 27 48 20</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\CommonTables\arm_common_tables.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 147</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 50 150 61 58 108 22 71 70 41 141 60 51 103 154 27 48 20</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\CommonTables\arm_const_structs.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 87</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 50 107 150 61 58 108 22 71 70 41 141 60 51 103 154 27 48 20</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\StatisticsFunctions\arm_max_f32.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 113</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 150 61 58 108 22 71 70 41 141 60 51 103 154 27 48 20</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\TransformFunctions.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 74</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 50 107 150 26 109 114 19 62 82 34 104 67 93 29 105 101 130 28 56 95 40 115 35 121 88 36 142 91 90 42 53 38 81 54 17 61 58 108 22 71 70 41 141 60 51 103 154 27 48 20</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\startup_stm32l412xx.s</name>
-            <outputs>
-                <tool>
-                    <name>AARM</name>
-                    <file> 86</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>AARM</name>
-                    <file> 55</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Core\Src\main.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 72</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 145 24 68 50 107 150 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 45 108 22 71 70 41 141 60 51 126 103 154 27 48 20</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Core\Src\stm32l4xx_hal_msp.c</name>
             <outputs>
                 <tool>
                     <name>ICCARM</name>
@@ -353,7 +173,142 @@
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 24 68 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 45 108 22 71 141 126 103 27 48 20</file>
+                    <file> 26 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 127 65 134 29 84 87 75 150 111 143</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_rcc.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 88</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 26 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 127 65 134 29 84 87 75 150 111 143</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_rcc_ex.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 142</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 26 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 127 65 134 29 84 87 75 150 111 143</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 70</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 26 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 127 65 134 29 84 87 75 150 111 143</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_i2c_ex.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 27</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 26 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 127 65 134 29 84 87 75 150 111 143</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\TransformFunctions\TransformFunctions.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 28</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 23 63 109 124 57 78 115 35 54 126 62 19 55 140 64 76 81 136 60 73 148 90 132 107 47 147 98 44 58 149 45 119 48 50 114 25 17 65 134 29 37 153 84 34 59 75 96 150 111 143</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\CommonTables\arm_const_structs.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 42</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 23 63 109 25 17 65 134 29 37 153 84 34 59 75 96 150 111 143</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Core\Src\main.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 51</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 85 130 26 23 63 109 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 127 65 134 29 37 153 84 34 59 87 75 96 150 111 143</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\StatisticsFunctions\arm_max_f32.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 102</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 109 25 17 65 134 29 37 153 84 34 59 75 96 150 111 143</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Core\Src\stm32l4xx_hal_msp.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 95</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 130 26 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 127 65 134 29 84 87 75 150 111 143</file>
                 </tool>
             </inputs>
         </file>
@@ -362,13 +317,28 @@
             <outputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 23</file>
+                    <file> 145</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 68 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 45 108 22 71 141 126 103 27 48 20</file>
+                    <file> 26 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 127 65 134 29 84 87 75 150 111 143</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\CommonTables\arm_common_tables.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 99</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 23 109 25 17 65 134 29 37 153 84 34 59 75 96 150 111 143</file>
                 </tool>
             </inputs>
         </file>
@@ -377,28 +347,13 @@
             <outputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 120</file>
+                    <file> 86</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 68 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 45 108 22 71 141 126 103 27 48 20</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Core\Src\stm32l4xx_it.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 63</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 145 24 68 94 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 45 108 22 71 141 126 103 27 48 20</file>
+                    <file> 26 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 127 65 134 29 84 87 75 150 111 143</file>
                 </tool>
             </inputs>
         </file>
@@ -407,13 +362,58 @@
             <outputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 96</file>
+                    <file> 72</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 68 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 45 108 22 71 141 126 103 27 48 20</file>
+                    <file> 26 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 127 65 134 29 84 87 75 150 111 143</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\startup_stm32l412xx.s</name>
+            <outputs>
+                <tool>
+                    <name>AARM</name>
+                    <file> 41</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>AARM</name>
+                    <file> 46</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Core\Src\stm32l4xx_it.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 52</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 85 130 26 69 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 127 65 134 29 84 87 75 150 111 143</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\ComplexMathFunctions\arm_cmplx_mag_f32.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 104</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 109 25 17 65 134 29 37 153 84 34 59 75 96 150 111 143</file>
                 </tool>
             </inputs>
         </file>
@@ -422,12 +422,70 @@
             <outputs>
                 <tool>
                     <name>ILINK</name>
-                    <file> 99 132</file>
+                    <file> 68 91</file>
                 </tool>
             </outputs>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_uart.c</name>
+            <name>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Exe\ELEN501_Lab8_Post_Turn-in.hex</name>
+            <inputs>
+                <tool>
+                    <name>OBJCOPY</name>
+                    <file> 91</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Exe\ELEN501_Lab8_Post_Turn-in.out</name>
+            <outputs>
+                <tool>
+                    <name>OBJCOPY</name>
+                    <file> 20</file>
+                </tool>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 68</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 108 41 28 104 99 42 102 51 95 52 145 70 86 72 123 38 83 118 53 131 66 49 125 27 103 106 88 142 32 80 155 31 154 24</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_uart_ex.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 56</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 26 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 21 18 127 65 134 29 84 87 75 150 111 143</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_flash.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 53</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 26 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 127 65 134 29 84 87 75 150 111 143</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_gpio.c</name>
             <outputs>
                 <tool>
                     <name>ICCARM</name>
@@ -437,16 +495,7 @@
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 68 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 66 64 45 108 22 71 141 126 103 27 48 20</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Exe\ELEN501_Lab8_Post_Turn-in.hex</name>
-            <inputs>
-                <tool>
-                    <name>OBJCOPY</name>
-                    <file> 132</file>
+                    <file> 26 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 127 65 134 29 84 87 75 150 111 143</file>
                 </tool>
             </inputs>
         </file>
@@ -455,107 +504,13 @@
             <outputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 44</file>
+                    <file> 131</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 68 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 45 108 22 71 141 126 103 27 48 20</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_gpio.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 92</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 68 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 45 108 22 71 141 126 103 27 48 20</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_uart_ex.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 73</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 68 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 66 64 45 108 22 71 141 126 103 27 48 20</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_flash.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 75</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 68 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 45 108 22 71 141 126 103 27 48 20</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_tim_ex.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 110</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 68 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 45 108 22 71 141 126 103 27 48 20</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\ELEN501_Lab8_Post_Turn-in\Exe\ELEN501_Lab8_Post_Turn-in.out</name>
-            <outputs>
-                <tool>
-                    <name>OBJCOPY</name>
-                    <file> 69</file>
-                </tool>
-                <tool>
-                    <name>ILINK</name>
-                    <file> 99</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ILINK</name>
-                    <file> 143 86 74 129 147 87 113 72 125 63 23 100 120 96 18 83 134 33 75 44 97 92 25 52 124 137 111 30 79 110 47 78 43 59</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_dma_ex.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 134</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 68 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 45 108 22 71 141 126 103 27 48 20</file>
+                    <file> 26 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 127 65 134 29 84 87 75 150 111 143</file>
                 </tool>
             </inputs>
         </file>
@@ -564,33 +519,33 @@
             <outputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 97</file>
+                    <file> 66</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 68 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 45 108 22 71 141 126 103 27 48 20</file>
+                    <file> 26 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 127 65 134 29 84 87 75 150 111 143</file>
                 </tool>
             </inputs>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_pwr.c</name>
+            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_cortex.c</name>
             <outputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 124</file>
+                    <file> 123</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 68 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 45 108 22 71 141 126 103 27 48 20</file>
+                    <file> 26 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 127 65 134 29 84 87 75 150 111 143</file>
                 </tool>
             </inputs>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_dma.c</name>
+            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_dma_ex.c</name>
             <outputs>
                 <tool>
                     <name>ICCARM</name>
@@ -600,7 +555,7 @@
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 68 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 45 108 22 71 141 126 103 27 48 20</file>
+                    <file> 26 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 127 65 134 29 84 87 75 150 111 143</file>
                 </tool>
             </inputs>
         </file>
@@ -609,13 +564,28 @@
             <outputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 33</file>
+                    <file> 118</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 68 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 45 108 22 71 141 126 103 27 48 20</file>
+                    <file> 26 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 127 65 134 29 84 87 75 150 111 143</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_pwr.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 103</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 26 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 127 65 134 29 84 87 75 150 111 143</file>
                 </tool>
             </inputs>
         </file>
@@ -624,28 +594,43 @@
             <outputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 137</file>
+                    <file> 106</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 68 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 45 108 22 71 141 126 103 27 48 20</file>
+                    <file> 26 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 127 65 134 29 84 87 75 150 111 143</file>
                 </tool>
             </inputs>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_cortex.c</name>
+            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_tim_ex.c</name>
             <outputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 18</file>
+                    <file> 80</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 68 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 45 108 22 71 141 126 103 27 48 20</file>
+                    <file> 26 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 127 65 134 29 84 87 75 150 111 143</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_uart.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 128</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 26 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 21 18 127 65 134 29 84 87 75 150 111 143</file>
                 </tool>
             </inputs>
         </file>
@@ -654,13 +639,28 @@
             <outputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 79</file>
+                    <file> 32</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 68 39 102 77 61 58 148 128 133 139 46 84 32 98 135 37 76 57 31 85 155 80 112 144 118 119 89 122 65 106 45 108 22 71 141 126 103 27 48 20</file>
+                    <file> 26 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 127 65 134 29 84 87 75 150 111 143</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_dma.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 38</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 26 120 74 30 25 17 93 92 105 82 121 39 117 67 110 129 22 61 116 40 79 36 101 100 89 94 43 77 33 71 127 65 134 29 84 87 75 150 111 143</file>
                 </tool>
             </inputs>
         </file>
@@ -669,15 +669,7 @@
             <tool>ILINK</tool>
         </forcedrebuild>
         <forcedrebuild>
-            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal.c</name>
-            <tool>ICCARM</tool>
-        </forcedrebuild>
-        <forcedrebuild>
             <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_i2c.c</name>
-            <tool>ICCARM</tool>
-        </forcedrebuild>
-        <forcedrebuild>
-            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_i2c_ex.c</name>
             <tool>ICCARM</tool>
         </forcedrebuild>
         <forcedrebuild>
@@ -689,11 +681,11 @@
             <tool>ICCARM</tool>
         </forcedrebuild>
         <forcedrebuild>
-            <name>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\ComplexMathFunctions\arm_cmplx_mag_f32.c</name>
+            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal.c</name>
             <tool>ICCARM</tool>
         </forcedrebuild>
         <forcedrebuild>
-            <name>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\StatisticsFunctions\arm_max_f32.c</name>
+            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_i2c_ex.c</name>
             <tool>ICCARM</tool>
         </forcedrebuild>
         <forcedrebuild>
@@ -702,6 +694,10 @@
         </forcedrebuild>
         <forcedrebuild>
             <name>$PROJ_DIR$\..\Core\Src\main.c</name>
+            <tool>ICCARM</tool>
+        </forcedrebuild>
+        <forcedrebuild>
+            <name>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\StatisticsFunctions\arm_max_f32.c</name>
             <tool>ICCARM</tool>
         </forcedrebuild>
         <forcedrebuild>
@@ -717,23 +713,15 @@
             <tool>ICCARM</tool>
         </forcedrebuild>
         <forcedrebuild>
-            <name>$PROJ_DIR$\..\Core\Src\stm32l4xx_it.c</name>
-            <tool>ICCARM</tool>
-        </forcedrebuild>
-        <forcedrebuild>
             <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_adc_ex.c</name>
             <tool>ICCARM</tool>
         </forcedrebuild>
         <forcedrebuild>
-            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_uart.c</name>
+            <name>$PROJ_DIR$\..\Core\Src\stm32l4xx_it.c</name>
             <tool>ICCARM</tool>
         </forcedrebuild>
         <forcedrebuild>
-            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_flash_ex.c</name>
-            <tool>ICCARM</tool>
-        </forcedrebuild>
-        <forcedrebuild>
-            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_gpio.c</name>
+            <name>$PROJ_DIR$\..\Drivers\CMSIS\DSP\Source\ComplexMathFunctions\arm_cmplx_mag_f32.c</name>
             <tool>ICCARM</tool>
         </forcedrebuild>
         <forcedrebuild>
@@ -745,11 +733,11 @@
             <tool>ICCARM</tool>
         </forcedrebuild>
         <forcedrebuild>
-            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_tim_ex.c</name>
+            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_gpio.c</name>
             <tool>ICCARM</tool>
         </forcedrebuild>
         <forcedrebuild>
-            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_dma_ex.c</name>
+            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_flash_ex.c</name>
             <tool>ICCARM</tool>
         </forcedrebuild>
         <forcedrebuild>
@@ -757,11 +745,11 @@
             <tool>ICCARM</tool>
         </forcedrebuild>
         <forcedrebuild>
-            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_pwr.c</name>
+            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_cortex.c</name>
             <tool>ICCARM</tool>
         </forcedrebuild>
         <forcedrebuild>
-            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_dma.c</name>
+            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_dma_ex.c</name>
             <tool>ICCARM</tool>
         </forcedrebuild>
         <forcedrebuild>
@@ -769,15 +757,27 @@
             <tool>ICCARM</tool>
         </forcedrebuild>
         <forcedrebuild>
+            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_pwr.c</name>
+            <tool>ICCARM</tool>
+        </forcedrebuild>
+        <forcedrebuild>
             <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_pwr_ex.c</name>
             <tool>ICCARM</tool>
         </forcedrebuild>
         <forcedrebuild>
-            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_cortex.c</name>
+            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_tim_ex.c</name>
+            <tool>ICCARM</tool>
+        </forcedrebuild>
+        <forcedrebuild>
+            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_uart.c</name>
             <tool>ICCARM</tool>
         </forcedrebuild>
         <forcedrebuild>
             <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_tim.c</name>
+            <tool>ICCARM</tool>
+        </forcedrebuild>
+        <forcedrebuild>
+            <name>$PROJ_DIR$\..\Drivers\STM32L4xx_HAL_Driver\Src\stm32l4xx_hal_dma.c</name>
             <tool>ICCARM</tool>
         </forcedrebuild>
         <forcedrebuild>
