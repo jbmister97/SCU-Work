@@ -32,6 +32,9 @@ uint8_t degOffset = 0;
 //DWfloat humidity = {"%4.1f", "----", 0, 0, true, 40.1};
 //DWint16_t tempCJ_F = {"%5d", "!!!!", 0, 0, true, 0};
 extern DWfloat temperature;
+extern DWfloat tempThreshLow;
+extern DWfloat tempThreshMid;
+extern DWfloat tempThreshHigh;
 extern DWstring units;
 //extern DWfloat target;
 extern uint8_t unitChoices[2][5];
@@ -81,11 +84,29 @@ void SwitchScreens(ui_screen screen_no)
     SSD1306_GotoXY (0, 20);
     SSD1306_Puts ("Temp:", &Font_11x18, SSD1306_COLOR_WHITE);
     */
-    //temperature.xPos = 31;
-    //temperature.yPos = 30;
-    //temperature.xPos = 55;
-    temperature.xPos = 33;
-    temperature.yPos = 20;
+    //temperature.xPos = 33;
+    //temperature.yPos = 20;
+    temperature.xPos = 0;
+    temperature.yPos = 30;
+    
+    
+    // Set low threshold
+    SSD1306_GotoXY (66,20);
+    SSD1306_Puts ("L:", &Font_7x10, SSD1306_COLOR_WHITE);
+    tempThreshLow.xPos = 80;
+    tempThreshLow.yPos = 20;
+    
+    // Set mid threshold
+    SSD1306_GotoXY (66,35);
+    SSD1306_Puts ("M:", &Font_7x10, SSD1306_COLOR_WHITE);
+    tempThreshMid.xPos = 80;
+    tempThreshMid.yPos = 35;
+    
+    // Set high threshold
+    SSD1306_GotoXY (66,50);
+    SSD1306_Puts ("H:", &Font_7x10, SSD1306_COLOR_WHITE);
+    tempThreshHigh.xPos = 80;
+    tempThreshHigh.yPos = 50;
     
     /*
     // Set target temperature
@@ -223,6 +244,49 @@ void UpdateScreenValues(void)
     SSD1306_GotoXY ((temperature.xPos + 55), temperature.yPos);
     if (units.data[3] == 'C') {SSD1306_Puts(endC, &Font_11x18, SSD1306_COLOR_WHITE);}
     else {SSD1306_Puts(endF, &Font_11x18, SSD1306_COLOR_WHITE);}
+    
+    // Update low threshold value
+    SSD1306_GotoXY (tempThreshLow.xPos, tempThreshLow.yPos);
+    if (tempThreshLow.valid) {
+      sprintf(displayString, tempThreshLow.format, tempThreshLow.data);
+      strcpy(testStr,displayString);
+      SSD1306_Puts(displayString, &Font_7x10, SSD1306_COLOR_WHITE);
+    }
+    else 
+      SSD1306_Puts(tempThreshLow.invalidMsg, &Font_7x10, SSD1306_COLOR_WHITE);
+    
+    SSD1306_GotoXY ((tempThreshLow.xPos + 35), tempThreshLow.yPos);
+    if (units.data[3] == 'C') {SSD1306_Puts(endC, &Font_7x10, SSD1306_COLOR_WHITE);}
+    else {SSD1306_Puts(endF, &Font_7x10, SSD1306_COLOR_WHITE);}
+    
+    // Update mid threshold value
+    SSD1306_GotoXY (tempThreshMid.xPos, tempThreshMid.yPos);
+    if (tempThreshMid.valid) {
+      sprintf(displayString, tempThreshMid.format, tempThreshMid.data);
+      strcpy(testStr,displayString);
+      SSD1306_Puts(displayString, &Font_7x10, SSD1306_COLOR_WHITE);
+    }
+    else 
+      SSD1306_Puts(tempThreshMid.invalidMsg, &Font_7x10, SSD1306_COLOR_WHITE);
+    
+    SSD1306_GotoXY ((tempThreshMid.xPos + 35), tempThreshMid.yPos);
+    if (units.data[3] == 'C') {SSD1306_Puts(endC, &Font_7x10, SSD1306_COLOR_WHITE);}
+    else {SSD1306_Puts(endF, &Font_7x10, SSD1306_COLOR_WHITE);}
+    
+    // Update mid threshold value
+    SSD1306_GotoXY (tempThreshHigh.xPos, tempThreshHigh.yPos);
+    if (tempThreshHigh.valid) {
+      sprintf(displayString, tempThreshHigh.format, tempThreshHigh.data);
+      strcpy(testStr,displayString);
+      SSD1306_Puts(displayString, &Font_7x10, SSD1306_COLOR_WHITE);
+    }
+    else 
+      SSD1306_Puts(tempThreshHigh.invalidMsg, &Font_7x10, SSD1306_COLOR_WHITE);
+    
+    SSD1306_GotoXY ((tempThreshHigh.xPos + 35), tempThreshHigh.yPos);
+    if (units.data[3] == 'C') {SSD1306_Puts(endC, &Font_7x10, SSD1306_COLOR_WHITE);}
+    else {SSD1306_Puts(endF, &Font_7x10, SSD1306_COLOR_WHITE);}
+    
     
     /*
     // Update target temperature

@@ -35,6 +35,10 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define ADC_BUFFER_SIZE         100
+#define ADC_INDEX_TEMP          0
+#define ADC_INDEX_LOW           1
+#define ADC_INDEX_MID           2
+#define ADC_INDEX_HIGH          3
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -48,6 +52,8 @@ DMA_HandleTypeDef hdma_adc;
 
 I2C_HandleTypeDef hi2c1;
 
+TIM_HandleTypeDef htim21;
+
 /* USER CODE BEGIN PV */
 // Scheduler Variables
 extern uint8_t ten_mS_Flag;
@@ -58,15 +64,22 @@ extern uint8_t five_hundred_mS_Flag;
 
 // ADC Variables
 const uint8_t gain = 2;
-uint16_t adcValue;
+uint16_t adcValue[4];
 uint16_t adcBuffer[ADC_BUFFER_SIZE];
 uint16_t adcAvg;
 float tempInC;
 float tempF;
+float tempThreshLowF;
+float tempThreshMidF;
+float tempThreshHighF;
+
 float voltageInmV;
 
 // Display Varaibles
 DWfloat temperature = {"%4.1f ", "----", 0, 0, true, 25.0};
+DWfloat tempThreshLow = {"%4.1f ", "----", 0, 0, true, 25.0};
+DWfloat tempThreshMid = {"%4.1f ", "----", 0, 0, true, 25.0};
+DWfloat tempThreshHigh = {"%4.1f ", "----", 0, 0, true, 25.0};
 DWstring units = {"%s", "----", 0, 0, true, "DegC"};
 uint8_t unitChoices[2][5] = {"DegF", "DegC"};
 
@@ -78,9 +91,11 @@ static void MX_GPIO_Init(void);
 static void MX_DMA_Init(void);
 static void MX_ADC_Init(void);
 static void MX_I2C1_Init(void);
+static void MX_TIM21_Init(void);
 /* USER CODE BEGIN PFP */
 void Update_TempC(void);
 void Update_ADCBuff(uint16_t value);
+float Calc_Temp_Thresh(uint16_t adcCounts);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -119,6 +134,7 @@ int main(void)
   MX_DMA_Init();
   MX_ADC_Init();
   MX_I2C1_Init();
+  MX_TIM21_Init();
   /* USER CODE BEGIN 2 */
   
     // Start ADC DMA
@@ -156,9 +172,9 @@ int main(void)
       ten_mS_Flag = false;
       
       // Read ADC and update buffer
-      HAL_ADC_Start_DMA(&hadc, (uint32_t *) &adcValue, 1);
-      Update_ADCBuff(adcValue);
-    
+      HAL_ADC_Start_DMA(&hadc, (uint32_t *) adcValue, 4);
+      Update_ADCBuff(adcValue[ADC_INDEX_TEMP]);
+      
     }
     
     // 25 ms scheduler
@@ -187,6 +203,14 @@ int main(void)
       temperature.data = tempF;
       // Change units to F
       units.data[3] = 'F';
+      
+      // Update threshold values
+      tempThreshLowF = Calc_Temp_Thresh(adcValue[ADC_INDEX_LOW]);
+      tempThreshLow.data = tempThreshLowF;
+      tempThreshMidF = Calc_Temp_Thresh(adcValue[ADC_INDEX_MID]);
+      tempThreshMid.data = tempThreshMidF;
+      tempThreshHighF = Calc_Temp_Thresh(adcValue[ADC_INDEX_HIGH]);
+      tempThreshHigh.data = tempThreshHighF;
       
       // Update display;
       UpdateScreenValues();
@@ -301,6 +325,27 @@ static void MX_ADC_Init(void)
   {
     Error_Handler();
   }
+  /** Configure for the selected ADC regular channel to be converted.
+  */
+  sConfig.Channel = ADC_CHANNEL_4;
+  if (HAL_ADC_ConfigChannel(&hadc, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Configure for the selected ADC regular channel to be converted.
+  */
+  sConfig.Channel = ADC_CHANNEL_5;
+  if (HAL_ADC_ConfigChannel(&hadc, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Configure for the selected ADC regular channel to be converted.
+  */
+  sConfig.Channel = ADC_CHANNEL_6;
+  if (HAL_ADC_ConfigChannel(&hadc, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
   /* USER CODE BEGIN ADC_Init 2 */
 
   /* USER CODE END ADC_Init 2 */
@@ -354,6 +399,55 @@ static void MX_I2C1_Init(void)
 }
 
 /**
+  * @brief TIM21 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM21_Init(void)
+{
+
+  /* USER CODE BEGIN TIM21_Init 0 */
+
+  /* USER CODE END TIM21_Init 0 */
+
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+  TIM_OC_InitTypeDef sConfigOC = {0};
+
+  /* USER CODE BEGIN TIM21_Init 1 */
+
+  /* USER CODE END TIM21_Init 1 */
+  htim21.Instance = TIM21;
+  htim21.Init.Prescaler = 0;
+  htim21.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim21.Init.Period = 65535;
+  htim21.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim21.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_PWM_Init(&htim21) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim21, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = 0;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  if (HAL_TIM_PWM_ConfigChannel(&htim21, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM21_Init 2 */
+
+  /* USER CODE END TIM21_Init 2 */
+  HAL_TIM_MspPostInit(&htim21);
+
+}
+
+/**
   * Enable DMA controller clock
   */
 static void MX_DMA_Init(void)
@@ -382,6 +476,7 @@ static void MX_GPIO_Init(void)
 
 }
 
+/* USER CODE BEGIN 4 */
 void Update_ADCBuff(uint16_t value){
 
   // Shift values of the buffer
@@ -393,7 +488,6 @@ void Update_ADCBuff(uint16_t value){
   adcBuffer[ADC_BUFFER_SIZE-1] = value;
 }
 
-/* USER CODE BEGIN 4 */
 void Update_TempC(void) {
   uint32_t temp;
   for(uint8_t i = 0; i < ADC_BUFFER_SIZE; i++) {
@@ -406,6 +500,11 @@ void Update_TempC(void) {
   // Based on 0C-100C range
   tempInC = (voltageInmV-1567.0)/(-8.2);
   
+}
+
+float Calc_Temp_Thresh(uint16_t adcCounts) {
+  
+  return ((adcCounts/4096.0)*60.0)+60.0;
 }
 /* USER CODE END 4 */
 

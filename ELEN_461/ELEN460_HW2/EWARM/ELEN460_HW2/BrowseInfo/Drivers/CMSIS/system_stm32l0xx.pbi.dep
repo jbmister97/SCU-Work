@@ -35,4 +35,6 @@ C:\GitHub\SCU-Work\ELEN_461\ELEN460_HW2\EWARM\ELEN460_HW2\BrowseInfo\Drivers\CMS
   C:\GitHub\SCU-Work\ELEN_461\ELEN460_HW2\EWARM\..\Drivers\STM32L0xx_HAL_Driver\Inc\stm32l0xx_hal_i2c.h \
   C:\GitHub\SCU-Work\ELEN_461\ELEN460_HW2\EWARM\..\Drivers\STM32L0xx_HAL_Driver\Inc\stm32l0xx_hal_i2c_ex.h \
   C:\GitHub\SCU-Work\ELEN_461\ELEN460_HW2\EWARM\..\Drivers\STM32L0xx_HAL_Driver\Inc\stm32l0xx_hal_pwr.h \
-  C:\GitHub\SCU-Work\ELEN_461\ELEN460_HW2\EWARM\..\Drivers\STM32L0xx_HAL_Driver\Inc\stm32l0xx_hal_pwr_ex.h
+  C:\GitHub\SCU-Work\ELEN_461\ELEN460_HW2\EWARM\..\Drivers\STM32L0xx_HAL_Driver\Inc\stm32l0xx_hal_pwr_ex.h \
+  C:\GitHub\SCU-Work\ELEN_461\ELEN460_HW2\EWARM\..\Drivers\STM32L0xx_HAL_Driver\Inc\stm32l0xx_hal_tim.h \
+  C:\GitHub\SCU-Work\ELEN_461\ELEN460_HW2\EWARM\..\Drivers\STM32L0xx_HAL_Driver\Inc\stm32l0xx_hal_tim_ex.h
