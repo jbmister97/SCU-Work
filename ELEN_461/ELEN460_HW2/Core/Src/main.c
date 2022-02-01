@@ -35,16 +35,17 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define ADC_BUFFER_SIZE         100
-#define ADC_INDEX_TEMP          0
-#define ADC_INDEX_LOW           1
+#define ADC_INDEX_TEMP          2
+#define ADC_INDEX_LOW           0
 #define ADC_INDEX_MID           3
-#define ADC_INDEX_HIGH          2
+#define ADC_INDEX_HIGH          1
 #define LOGIC_T1_BUFF_SIZE      50
 #define LOGIC_T2_BUFF_SIZE      50
 #define LOGIC_T3_BUFF_SIZE      50
 #define LOGIC_T1_PIN            GPIOA, GPIO_PIN_12
 #define LOGIC_T2_PIN            GPIOB, GPIO_PIN_0
 #define LOGIC_T3_PIN            GPIOB, GPIO_PIN_7
+#define LOGIC_HEATER_PIN        GPIOB, GPIO_PIN_6
 #define CLOCK_PULSE             32500
 /* USER CODE END PD */
 
@@ -82,6 +83,7 @@ float voltageInmV;
 uint8_t t1;
 uint8_t t2;
 uint8_t t3;
+uint8_t heaterState;
 uint16_t t1Buffer[LOGIC_T1_BUFF_SIZE];
 uint16_t t2Buffer[LOGIC_T2_BUFF_SIZE];
 uint16_t t3Buffer[LOGIC_T3_BUFF_SIZE];
@@ -287,7 +289,7 @@ int main(void)
     
     
     // Everytime through the loop
-    
+    heaterState = HAL_GPIO_ReadPin(LOGIC_HEATER_PIN);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -383,7 +385,7 @@ static void MX_ADC_Init(void)
   }
   /** Configure for the selected ADC regular channel to be converted.
   */
-  sConfig.Channel = ADC_CHANNEL_3;
+  sConfig.Channel = ADC_CHANNEL_1;
   sConfig.Rank = ADC_RANK_CHANNEL_NUMBER;
   if (HAL_ADC_ConfigChannel(&hadc, &sConfig) != HAL_OK)
   {
@@ -391,14 +393,14 @@ static void MX_ADC_Init(void)
   }
   /** Configure for the selected ADC regular channel to be converted.
   */
-  sConfig.Channel = ADC_CHANNEL_4;
+  sConfig.Channel = ADC_CHANNEL_2;
   if (HAL_ADC_ConfigChannel(&hadc, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
   /** Configure for the selected ADC regular channel to be converted.
   */
-  sConfig.Channel = ADC_CHANNEL_6;
+  sConfig.Channel = ADC_CHANNEL_3;
   if (HAL_ADC_ConfigChannel(&hadc, &sConfig) != HAL_OK)
   {
     Error_Handler();
@@ -559,6 +561,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PB6 */
+  GPIO_InitStruct.Pin = GPIO_PIN_6;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 }
 
