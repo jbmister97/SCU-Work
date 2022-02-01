@@ -226,7 +226,7 @@
                     <item>t3</item>
                     <item>tempF</item>
                     <item>heaterState</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>
