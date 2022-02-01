@@ -37,8 +37,15 @@
 #define ADC_BUFFER_SIZE         100
 #define ADC_INDEX_TEMP          0
 #define ADC_INDEX_LOW           1
-#define ADC_INDEX_MID           2
-#define ADC_INDEX_HIGH          3
+#define ADC_INDEX_MID           3
+#define ADC_INDEX_HIGH          2
+#define LOGIC_T1_BUFF_SIZE      50
+#define LOGIC_T2_BUFF_SIZE      50
+#define LOGIC_T3_BUFF_SIZE      50
+#define LOGIC_T1_PIN            GPIOA, GPIO_PIN_12
+#define LOGIC_T2_PIN            GPIOB, GPIO_PIN_0
+#define LOGIC_T3_PIN            GPIOB, GPIO_PIN_7
+#define CLOCK_PULSE             32500
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -52,7 +59,7 @@ DMA_HandleTypeDef hdma_adc;
 
 I2C_HandleTypeDef hi2c1;
 
-TIM_HandleTypeDef htim21;
+TIM_HandleTypeDef htim22;
 
 /* USER CODE BEGIN PV */
 // Scheduler Variables
@@ -69,11 +76,21 @@ uint16_t adcBuffer[ADC_BUFFER_SIZE];
 uint16_t adcAvg;
 float tempInC;
 float tempF;
+float voltageInmV;
+
+// Controller
+uint8_t t1;
+uint8_t t2;
+uint8_t t3;
+uint16_t t1Buffer[LOGIC_T1_BUFF_SIZE];
+uint16_t t2Buffer[LOGIC_T2_BUFF_SIZE];
+uint16_t t3Buffer[LOGIC_T3_BUFF_SIZE];
+uint16_t t1Avg;
+uint16_t t2Avg;
+uint16_t t3Avg;
 float tempThreshLowF;
 float tempThreshMidF;
 float tempThreshHighF;
-
-float voltageInmV;
 
 // Display Varaibles
 DWfloat temperature = {"%4.1f ", "----", 0, 0, true, 25.0};
@@ -91,11 +108,18 @@ static void MX_GPIO_Init(void);
 static void MX_DMA_Init(void);
 static void MX_ADC_Init(void);
 static void MX_I2C1_Init(void);
-static void MX_TIM21_Init(void);
+static void MX_TIM22_Init(void);
 /* USER CODE BEGIN PFP */
 void Update_TempC(void);
 void Update_ADCBuff(uint16_t value);
 float Calc_Temp_Thresh(uint16_t adcCounts);
+void SetClockPeriod(uint16_t period);
+void Update_T1_Buff(uint16_t value);
+void Update_T2_Buff(uint16_t value);
+void Update_T3_Buff(uint16_t value);
+void Update_T1_Avg(void);
+void Update_T2_Avg(void);
+void Update_T3_Avg(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -134,11 +158,10 @@ int main(void)
   MX_DMA_Init();
   MX_ADC_Init();
   MX_I2C1_Init();
-  MX_TIM21_Init();
+  MX_TIM22_Init();
   /* USER CODE BEGIN 2 */
   
-    // Start ADC DMA
-  //HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&dmaBuffer, 3);
+    
   
   SSD1306_Init();  // initialise  
   
@@ -160,6 +183,9 @@ int main(void)
 
   SwitchScreens(HOME);
   
+  // Start clock PWM Timer
+  HAL_TIM_PWM_Start_IT(&htim22, TIM_CHANNEL_1);
+  SetClockPeriod(CLOCK_PULSE);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -175,13 +201,44 @@ int main(void)
       HAL_ADC_Start_DMA(&hadc, (uint32_t *) adcValue, 4);
       Update_ADCBuff(adcValue[ADC_INDEX_TEMP]);
       
+      // Upadte Threshold buffers
+      Update_T1_Buff(adcValue[ADC_INDEX_LOW]);
+      Update_T2_Buff(adcValue[ADC_INDEX_MID]);
+      Update_T3_Buff(adcValue[ADC_INDEX_HIGH]);
     }
     
     // 25 ms scheduler
     if(twentyfive_mS_Flag) {
       twentyfive_mS_Flag = false;
       
+      // Check thresholds
+      t1 = (tempF > tempThreshLowF);
+      t2 = (tempF > tempThreshMidF);
+      t3 = (tempF > tempThreshHighF);
       
+      // Update T1 output
+      if(t1){
+        HAL_GPIO_WritePin(LOGIC_T1_PIN,GPIO_PIN_SET);
+      }
+      else {
+        HAL_GPIO_WritePin(LOGIC_T1_PIN,GPIO_PIN_RESET);
+      }
+      
+      // Update T2 output
+      if(t2){
+        HAL_GPIO_WritePin(LOGIC_T2_PIN,GPIO_PIN_SET);
+      }
+      else {
+        HAL_GPIO_WritePin(LOGIC_T2_PIN,GPIO_PIN_RESET);
+      }
+      
+      // Update T3 output
+      if(t3){
+        HAL_GPIO_WritePin(LOGIC_T3_PIN,GPIO_PIN_SET);
+      }
+      else {
+        HAL_GPIO_WritePin(LOGIC_T3_PIN,GPIO_PIN_RESET);
+      }
       
     }
     
@@ -205,11 +262,14 @@ int main(void)
       units.data[3] = 'F';
       
       // Update threshold values
-      tempThreshLowF = Calc_Temp_Thresh(adcValue[ADC_INDEX_LOW]);
+      Update_T1_Avg();
+      Update_T2_Avg();
+      Update_T3_Avg();
+      tempThreshLowF = Calc_Temp_Thresh(t1Avg);
       tempThreshLow.data = tempThreshLowF;
-      tempThreshMidF = Calc_Temp_Thresh(adcValue[ADC_INDEX_MID]);
+      tempThreshMidF = Calc_Temp_Thresh(t2Avg);
       tempThreshMid.data = tempThreshMidF;
-      tempThreshHighF = Calc_Temp_Thresh(adcValue[ADC_INDEX_HIGH]);
+      tempThreshHighF = Calc_Temp_Thresh(t3Avg);
       tempThreshHigh.data = tempThreshHighF;
       
       // Update display;
@@ -224,6 +284,10 @@ int main(void)
       
       
     }
+    
+    
+    // Everytime through the loop
+    
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -334,14 +398,14 @@ static void MX_ADC_Init(void)
   }
   /** Configure for the selected ADC regular channel to be converted.
   */
-  sConfig.Channel = ADC_CHANNEL_5;
+  sConfig.Channel = ADC_CHANNEL_6;
   if (HAL_ADC_ConfigChannel(&hadc, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
   /** Configure for the selected ADC regular channel to be converted.
   */
-  sConfig.Channel = ADC_CHANNEL_6;
+  sConfig.Channel = ADC_CHANNEL_7;
   if (HAL_ADC_ConfigChannel(&hadc, &sConfig) != HAL_OK)
   {
     Error_Handler();
@@ -399,36 +463,36 @@ static void MX_I2C1_Init(void)
 }
 
 /**
-  * @brief TIM21 Initialization Function
+  * @brief TIM22 Initialization Function
   * @param None
   * @retval None
   */
-static void MX_TIM21_Init(void)
+static void MX_TIM22_Init(void)
 {
 
-  /* USER CODE BEGIN TIM21_Init 0 */
+  /* USER CODE BEGIN TIM22_Init 0 */
 
-  /* USER CODE END TIM21_Init 0 */
+  /* USER CODE END TIM22_Init 0 */
 
   TIM_MasterConfigTypeDef sMasterConfig = {0};
   TIM_OC_InitTypeDef sConfigOC = {0};
 
-  /* USER CODE BEGIN TIM21_Init 1 */
+  /* USER CODE BEGIN TIM22_Init 1 */
 
-  /* USER CODE END TIM21_Init 1 */
-  htim21.Instance = TIM21;
-  htim21.Init.Prescaler = 0;
-  htim21.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim21.Init.Period = 65535;
-  htim21.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim21.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if (HAL_TIM_PWM_Init(&htim21) != HAL_OK)
+  /* USER CODE END TIM22_Init 1 */
+  htim22.Instance = TIM22;
+  htim22.Init.Prescaler = 0;
+  htim22.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim22.Init.Period = 65535;
+  htim22.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim22.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_PWM_Init(&htim22) != HAL_OK)
   {
     Error_Handler();
   }
   sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim21, &sMasterConfig) != HAL_OK)
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim22, &sMasterConfig) != HAL_OK)
   {
     Error_Handler();
   }
@@ -436,14 +500,14 @@ static void MX_TIM21_Init(void)
   sConfigOC.Pulse = 0;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-  if (HAL_TIM_PWM_ConfigChannel(&htim21, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+  if (HAL_TIM_PWM_ConfigChannel(&htim22, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN TIM21_Init 2 */
+  /* USER CODE BEGIN TIM22_Init 2 */
 
-  /* USER CODE END TIM21_Init 2 */
-  HAL_TIM_MspPostInit(&htim21);
+  /* USER CODE END TIM22_Init 2 */
+  HAL_TIM_MspPostInit(&htim22);
 
 }
 
@@ -470,9 +534,31 @@ static void MX_DMA_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_7, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : PB0 PB7 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_7;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PA12 */
+  GPIO_InitStruct.Pin = GPIO_PIN_12;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 }
 
@@ -505,6 +591,78 @@ void Update_TempC(void) {
 float Calc_Temp_Thresh(uint16_t adcCounts) {
   
   return ((adcCounts/4096.0)*60.0)+60.0;
+}
+    
+
+void SetClockPeriod(uint16_t period)
+{
+  TIM_OC_InitTypeDef sConfigOC = {0};
+
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = period;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+
+  HAL_TIM_PWM_Stop(&htim22, TIM_CHANNEL_1);
+  HAL_TIM_PWM_ConfigChannel(&htim22, &sConfigOC, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim22, TIM_CHANNEL_1);
+}
+
+void Update_T1_Buff(uint16_t value){
+
+  // Shift values of the buffer
+  for(uint8_t i = 1; i < LOGIC_T1_BUFF_SIZE; i++) {
+    t1Buffer[i-1] = t1Buffer[i];
+  }
+    
+  // Place new value at end of buffer;
+  t1Buffer[LOGIC_T1_BUFF_SIZE-1] = value;
+}
+
+void Update_T2_Buff(uint16_t value){
+
+  // Shift values of the buffer
+  for(uint8_t i = 1; i < LOGIC_T2_BUFF_SIZE; i++) {
+    t2Buffer[i-1] = t2Buffer[i];
+  }
+    
+  // Place new value at end of buffer;
+  t2Buffer[LOGIC_T2_BUFF_SIZE-1] = value;
+}
+
+void Update_T3_Buff(uint16_t value){
+
+  // Shift values of the buffer
+  for(uint8_t i = 1; i < LOGIC_T3_BUFF_SIZE; i++) {
+    t3Buffer[i-1] = t3Buffer[i];
+  }
+    
+  // Place new value at end of buffer;
+  t3Buffer[LOGIC_T3_BUFF_SIZE-1] = value;
+}
+
+void Update_T1_Avg(void) {
+  uint32_t temp;
+  for(uint8_t i = 0; i < LOGIC_T1_BUFF_SIZE; i++) {
+    temp += t1Buffer[i];
+  }
+  t1Avg = temp / LOGIC_T1_BUFF_SIZE;
+}
+
+void Update_T2_Avg(void) {
+  uint32_t temp;
+  for(uint8_t i = 0; i < LOGIC_T2_BUFF_SIZE; i++) {
+    temp += t2Buffer[i];
+  }
+  t2Avg = temp / LOGIC_T2_BUFF_SIZE;
+}
+
+void Update_T3_Avg(void) {
+  uint32_t temp;
+  for(uint8_t i = 0; i < LOGIC_T3_BUFF_SIZE; i++) {
+    temp += t3Buffer[i];
+  }
+  t3Avg = temp / LOGIC_T3_BUFF_SIZE;
 }
 /* USER CODE END 4 */
 
