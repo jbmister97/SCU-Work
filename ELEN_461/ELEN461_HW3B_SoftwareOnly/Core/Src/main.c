@@ -207,10 +207,10 @@ int main(void)
       Update_T3_Buff(adcValue[ADC_INDEX_HIGH]);
       
       
-      // Update outputs
-      heaterState = ;
-      redOutput = !t1;
-      greenOutput = t3;
+      // Update output variables
+      heaterState = (!t2)*(!t3)*(!((!heaterState)*(t1)));
+      greenOutput = !t1;
+      redOutput = t3;
     }
     
     // 25 ms scheduler
@@ -222,6 +222,31 @@ int main(void)
       t2 = (tempF > tempThreshMidF);
       t3 = (tempF > tempThreshHighF);
       inputs = (t3 << 2) | (t2 << 1) | (t1 << 0);
+      
+      // Update output pins
+      // Heater output
+      if(heaterState) {
+        HAL_GPIO_WritePin(LOGIC_HEATER_PIN, GPIO_PIN_SET);
+      }
+      else {
+        HAL_GPIO_WritePin(LOGIC_HEATER_PIN, GPIO_PIN_RESET);
+      }
+      
+      // Red output
+      if(redOutput) {
+        HAL_GPIO_WritePin(LOGIC_RED_PIN, GPIO_PIN_SET);
+      }
+      else {
+        HAL_GPIO_WritePin(LOGIC_RED_PIN, GPIO_PIN_RESET);
+      }
+      
+      // Green output
+      if(greenOutput) {
+        HAL_GPIO_WritePin(LOGIC_GREEN_PIN, GPIO_PIN_SET);
+      }
+      else {
+        HAL_GPIO_WritePin(LOGIC_GREEN_PIN, GPIO_PIN_RESET);
+      }
     }
     
     // 100 ms scheduler
