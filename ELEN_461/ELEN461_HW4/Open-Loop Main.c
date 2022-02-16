@@ -231,12 +231,19 @@ int main(void)
     if(twentyfive_mS_Flag) {
       twentyfive_mS_Flag = false;
       
+      
       // Check thresholds
       t1 = (tempF > tempThreshLowF);
       t2 = (tempF > tempDesired);
       t3 = (tempF > tempThreshHighF);
-      inputs = (t3 << 2) | (t2 << 1) | (t1 << 0);
+      //inputs = (t3 << 2) | (t2 << 1) | (t1 << 0);
       
+      // Update PWM duty
+        Heater_Calc_Duty();
+        // Set PWM duty cycle
+        Heater_Set_Duty(HeaterPWMDuty);
+      
+      /*
       // Update output pins
       // Heater output
       if(heaterState) {
@@ -264,6 +271,7 @@ int main(void)
       else {
         HAL_GPIO_WritePin(LOGIC_GREEN_PIN, GPIO_PIN_RESET);
       }
+      */
     }
     
     // 100 ms scheduler
@@ -676,7 +684,7 @@ void Update_T3_Avg(void) {
 
 void Heater_Calc_Duty(void) {
   
-  duty = ((tempDesired - 66.0) / HEATER_RANGE);
+  duty = ((tempDesired - 69.0) / HEATER_RANGE);
   if(duty > 1) {duty = 1.0;}
   else if(duty < 0) {duty = 0;}
   HeaterPWMDuty = (uint32_t) (duty * 65535);

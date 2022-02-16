@@ -108,7 +108,7 @@ float tempThreshHighF;
 float tempError;
 float tempErrorLast;
 float errorBuff[ERROR_BUFF_SIZE];
-const float kp = 8.0;
+const float kp = 2.0;
 const float ki = 0.05;
 const float kd = 2.0;
 const float kff = 1.5;
@@ -741,7 +741,7 @@ void Update_Error_Controller(void) {
   feedforward = kff * (tempDesired-70);
   
   // Proportional Control
-  //sum = proportional;
+  sum = proportional;
   
   // PD Control
   //sum = proportional + differentiator;
@@ -753,7 +753,7 @@ void Update_Error_Controller(void) {
   //sum = proportional + integral + differentiator;
   
   // Feed Forward and proportional
-  sum = proportional + feedforward;
+  //sum = proportional + feedforward;
 }
 
 void Heater_Set_Duty(uint32_t counts) {
