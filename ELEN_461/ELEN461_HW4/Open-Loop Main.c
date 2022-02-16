@@ -34,7 +34,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define ADC_BUFFER_SIZE         100
+#define ADC_BUFFER_SIZE         200
 #define ADC_INDEX_TEMP          2
 #define ADC_INDEX_LOW           0
 #define ADC_INDEX_MID           3
@@ -99,8 +99,9 @@ uint16_t t2Avg;
 uint16_t t3Avg;
 uint32_t HeaterPWMDuty;
 float tempThreshLowF;
-float tempThreshMidF;
+float tempDesired;
 float tempThreshHighF;
+float duty;
 
 // Display Varaibles
 DWfloat temperature = {"%4.1f ", "----", 0, 0, true, 25.0};
@@ -131,7 +132,7 @@ void Update_T3_Buff(uint16_t value);
 void Update_T1_Avg(void);
 void Update_T2_Avg(void);
 void Update_T3_Avg(void);
-void Heater_Calc_Duty(float temp);
+void Heater_Calc_Duty(void);
 void Heater_Set_Duty(uint32_t counts);
 /* USER CODE END PFP */
 
@@ -232,7 +233,7 @@ int main(void)
       
       // Check thresholds
       t1 = (tempF > tempThreshLowF);
-      t2 = (tempF > tempThreshMidF);
+      t2 = (tempF > tempDesired);
       t3 = (tempF > tempThreshHighF);
       inputs = (t3 << 2) | (t2 << 1) | (t1 << 0);
       
@@ -240,7 +241,7 @@ int main(void)
       // Heater output
       if(heaterState) {
         // Update PWM duty
-        Heater_Calc_Duty(tempF);
+        Heater_Calc_Duty();
         // Set PWM duty cycle
         Heater_Set_Duty(HeaterPWMDuty);
       }
@@ -290,8 +291,8 @@ int main(void)
       Update_T3_Avg();
       tempThreshLowF = Calc_Temp_Thresh_Low(t1Avg);
       tempThreshLow.data = tempThreshLowF;
-      tempThreshMidF = Calc_Temp_Thresh(t2Avg);
-      tempThreshMid.data = tempThreshMidF;
+      tempDesired = Calc_Temp_Thresh(t2Avg);
+      tempThreshMid.data = tempDesired;
       tempThreshHighF = Calc_Temp_Thresh_High(t3Avg);
       tempThreshHigh.data = tempThreshHighF;
       
@@ -564,10 +565,10 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOA_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4|GPIO_PIN_6, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : PA4 PA5 PA6 */
-  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6;
+  /*Configure GPIO pins : PA4 PA6 */
+  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_6;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -608,12 +609,12 @@ float Calc_Temp_Thresh(uint16_t adcCounts) {
 
 float Calc_Temp_Thresh_Low(uint16_t adcCounts) {
   
-  return tempThreshMidF - ((adcCounts/4096.0)*10.0);
+  return tempDesired - ((adcCounts/4096.0)*10.0);
 }
 
 float Calc_Temp_Thresh_High(uint16_t adcCounts) {
   
-  return tempThreshMidF + ((adcCounts/4096.0)*10.0);
+  return tempDesired + ((adcCounts/4096.0)*10.0);
 }
 
 void Update_T1_Buff(uint16_t value){
@@ -673,12 +674,12 @@ void Update_T3_Avg(void) {
   t3Avg = temp / LOGIC_T3_BUFF_SIZE;
 }
 
-void Heater_Calc_Duty(float temp) {
-  float error;
-  error = ((tempThreshMidF - temp) / HEATER_RANGE);
-  if(error > 1) {error = 1.0;}
-  else if(error < 0) {error = 0;}
-  HeaterPWMDuty = (uint32_t) error * 65535;
+void Heater_Calc_Duty(void) {
+  
+  duty = ((tempDesired - 66.0) / HEATER_RANGE);
+  if(duty > 1) {duty = 1.0;}
+  else if(duty < 0) {duty = 0;}
+  HeaterPWMDuty = (uint32_t) (duty * 65535);
 }
 
 void Heater_Set_Duty(uint32_t counts) {

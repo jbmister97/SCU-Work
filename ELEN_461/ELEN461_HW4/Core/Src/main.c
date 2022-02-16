@@ -93,6 +93,7 @@ uint8_t t3;
 uint8_t heaterState;
 uint8_t greenOutput;
 uint8_t redOutput;
+uint8_t initialFlag;
 
 uint16_t t1Buffer[LOGIC_T1_BUFF_SIZE];
 uint16_t t2Buffer[LOGIC_T2_BUFF_SIZE];
@@ -102,17 +103,20 @@ uint16_t t2Avg;
 uint16_t t3Avg;
 uint32_t HeaterPWMDuty;
 float tempThreshLowF;
-float tempThreshMidF;
+float tempDesired;
 float tempThreshHighF;
 float tempError;
 float tempErrorLast;
 float errorBuff[ERROR_BUFF_SIZE];
-const float kp = 1.4;
-const float kd = 0.3;
+const float kp = 8.0;
+const float ki = 0.05;
+const float kd = 2.0;
+const float kff = 1.5;
 float proportional;
 float integral;
 float differentiator;
 float sum;
+float feedforward;
 
 // Display Varaibles
 DWfloat temperature = {"%4.1f ", "----", 0, 0, true, 25.0};
@@ -224,9 +228,7 @@ int main(void)
     if(ten_mS_Flag) {
       ten_mS_Flag = false;
       
-      // Read ADC and update buffer
-      HAL_ADC_Start_DMA(&hadc, (uint32_t *) adcValue, 4);
-      Update_ADCBuff(adcValue[ADC_INDEX_TEMP]);
+      
       
       // Update Threshold buffers
       Update_T1_Buff(adcValue[ADC_INDEX_LOW]);
@@ -237,25 +239,35 @@ int main(void)
       heaterState = (!t2)*(!t3)*(!((!heaterState)*(t1)));
       greenOutput = !t1;
       redOutput = t3;
+      
     }
     
     // 25 ms scheduler
     if(twentyfive_mS_Flag) {
       twentyfive_mS_Flag = false;
       
-      // Update error and sum
-      tempErrorLast = tempError;
-      tempError = tempThreshMidF - tempF;
-      Update_Error_Controller();
+      
       
       // Check thresholds
       t1 = (tempF > tempThreshLowF);
-      t2 = (tempF > tempThreshMidF);
+      t2 = (tempF > tempDesired);
       t3 = (tempF > tempThreshHighF);
-      inputs = (t3 << 2) | (t2 << 1) | (t1 << 0);
+      //inputs = (t3 << 2) | (t2 << 1) | (t1 << 0);
+      
+      
+      // Don't start heater until temp spike on startup winds down
+      if(heaterState) {initialFlag = true;}
+      if(initialFlag) {
+      // Update PWM duty
+        Heater_Calc_Duty(sum);
+        // Set PWM duty cycle
+        Heater_Set_Duty(HeaterPWMDuty);
+      }
       
       // Update output pins
       // Heater output
+      
+      /*
       if(heaterState) {
         // Update PWM duty
         Heater_Calc_Duty(sum);
@@ -281,6 +293,7 @@ int main(void)
       else {
         HAL_GPIO_WritePin(LOGIC_GREEN_PIN, GPIO_PIN_RESET);
       }
+      */
     }
     
     // 100 ms scheduler
@@ -290,15 +303,22 @@ int main(void)
       
       // Update Temp value in C
       Update_TempC();
+      
+      // convert temp to F
+      tempF = tempInC*(9.0/5.0) + 32.0;
+      temperature.data = tempF;
+      
+      // Update error and sum
+      tempErrorLast = tempError;
+      tempError = tempDesired - tempF;
+      Update_Error_Controller();
     }
     
     // 500 ms scheduler
     if(five_hundred_mS_Flag){
       five_hundred_mS_Flag = false;
       
-      // convert temp to F
-      tempF = tempInC*(9.0/5.0) + 32.0;
-      temperature.data = tempF;
+      
       // Change units to F
       units.data[3] = 'F';
       
@@ -308,8 +328,8 @@ int main(void)
       Update_T3_Avg();
       tempThreshLowF = Calc_Temp_Thresh_Low(t1Avg);
       tempThreshLow.data = tempThreshLowF;
-      tempThreshMidF = Calc_Temp_Thresh(t2Avg);
-      tempThreshMid.data = tempThreshMidF;
+      tempDesired = Calc_Temp_Thresh(t2Avg);
+      tempThreshMid.data = tempDesired;
       tempThreshHighF = Calc_Temp_Thresh_High(t3Avg);
       tempThreshHigh.data = tempThreshHighF;
       
@@ -328,7 +348,9 @@ int main(void)
     
     // Every loop
     
-    
+    // Read ADC and update buffer
+      HAL_ADC_Start_DMA(&hadc, (uint32_t *) adcValue, 4);
+      Update_ADCBuff(adcValue[ADC_INDEX_TEMP]);
     
     /* USER CODE END WHILE */
 
@@ -626,12 +648,12 @@ float Calc_Temp_Thresh(uint16_t adcCounts) {
 
 float Calc_Temp_Thresh_Low(uint16_t adcCounts) {
   
-  return tempThreshMidF - ((adcCounts/4096.0)*10.0);
+  return tempDesired - ((adcCounts/4096.0)*10.0);
 }
 
 float Calc_Temp_Thresh_High(uint16_t adcCounts) {
   
-  return tempThreshMidF + ((adcCounts/4096.0)*10.0);
+  return tempDesired + ((adcCounts/4096.0)*10.0);
 }
 
 void Update_T1_Buff(uint16_t value){
@@ -691,12 +713,12 @@ void Update_T3_Avg(void) {
   t3Avg = temp / LOGIC_T3_BUFF_SIZE;
 }
 
-void Heater_Calc_Duty(float temp) {
+void Heater_Calc_Duty(float error_temp) {
   float error;
-  error = temp / HEATER_RANGE;
+  error = error_temp / HEATER_RANGE;
   if(error > 1) {error = 1.0;}
   else if(error < 0) {error = 0;}
-  HeaterPWMDuty = (uint32_t) error * 65535;
+  HeaterPWMDuty = (uint32_t) (error * 65535);
 }
 
 void Update_Error_Buff(float value) {
@@ -712,12 +734,26 @@ void Update_Error_Controller(void) {
   
   proportional = kp * tempError;
   
-  //integrator += ki * SAMPLE_INTERVAL * ((tempError+tempErrorLast)/2);
+  integral += ki * SAMPLE_INTERVAL * ((tempError+tempErrorLast)/2);
   
   differentiator = kd * ((tempError-tempErrorLast)/SAMPLE_INTERVAL);
   
-  sum = proportional + differentiator;
+  feedforward = kff * (tempDesired-70);
   
+  // Proportional Control
+  //sum = proportional;
+  
+  // PD Control
+  //sum = proportional + differentiator;
+  
+  // PI Control
+  //sum = proportional + integral;
+  
+  // PID Control
+  //sum = proportional + integral + differentiator;
+  
+  // Feed Forward and proportional
+  sum = proportional + feedforward;
 }
 
 void Heater_Set_Duty(uint32_t counts) {
