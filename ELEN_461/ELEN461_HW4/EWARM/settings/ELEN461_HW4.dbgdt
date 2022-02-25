@@ -146,7 +146,7 @@
                     <item>tempErrorLast</item>
                     <item>tempErrorLast</item>
                     <item>integral</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>
