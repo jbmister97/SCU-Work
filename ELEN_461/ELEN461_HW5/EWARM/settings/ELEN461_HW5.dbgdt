@@ -222,7 +222,7 @@
                     <item>controlAvgCounts</item>
                     <item>controlBuffer</item>
                     <item>targetAvg</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>
