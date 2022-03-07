@@ -23,16 +23,25 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "servo.h"
+#include "ux_manager.h"
+#include "hc_sr04.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-#define LED_BOARD_PIN           GPIOA, GPIO_PIN_5
+
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define LED_BOARD_PIN           GPIOA, GPIO_PIN_5
+#define SETPOINT_LEFT_PIN       GPIOB, GPIO_PIN_13
+#define SETPOINT_MID_PIN        GPIOB, GPIO_PIN_14
+#define SETPOINT_RIGHT_PIN      GPIOB, GPIO_PIN_15
+    
+#define DUTY_INTERVAL           50
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -41,48 +50,73 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+I2C_HandleTypeDef hi2c1;
+
+TIM_HandleTypeDef htim3;
+TIM_HandleTypeDef htim14;
+
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
   .name = "defaultTask",
   .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityNormal,
+  .priority = (osPriority_t) osPriorityBelowNormal1,
 };
 /* Definitions for errorCalc */
 osThreadId_t errorCalcHandle;
 const osThreadAttr_t errorCalc_attributes = {
   .name = "errorCalc",
   .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityLow1,
+  .priority = (osPriority_t) osPriorityBelowNormal1,
 };
 /* Definitions for setPWM */
 osThreadId_t setPWMHandle;
 const osThreadAttr_t setPWM_attributes = {
   .name = "setPWM",
   .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityLow2,
+  .priority = (osPriority_t) osPriorityBelowNormal2,
 };
 /* Definitions for readButtons */
 osThreadId_t readButtonsHandle;
 const osThreadAttr_t readButtons_attributes = {
   .name = "readButtons",
   .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityLow3,
+  .priority = (osPriority_t) osPriorityBelowNormal1,
+};
+/* Definitions for displayUpdate */
+osThreadId_t displayUpdateHandle;
+const osThreadAttr_t displayUpdate_attributes = {
+  .name = "displayUpdate",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityBelowNormal1,
 };
 /* USER CODE BEGIN PV */
+uint8_t buttons;
 
+//uint8_t servoState = SERVO_STATE_ZERO_POSITION;
+uint8_t servoDir = MID;
+uint8_t servoDirLast = RIGHT;
+uint16_t servoDutyCurrent = SERVO_STATE_ZERO_POSITION;
+
+// Display Varaibles
+DWfloat speed = {"%4.1f ", "----", 0, 0, true, 25.0};
+DWuint16_t distance = {"%4d ", "----", 0, 0, true, 25};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_I2C1_Init(void);
+static void MX_TIM3_Init(void);
+static void MX_TIM14_Init(void);
 void StartDefaultTask(void *argument);
 void Task_Error_Calc(void *argument);
 void Task_Set_PWM(void *argument);
 void Task_Read_Buttons(void *argument);
+void Task_Display_Update(void *argument);
 
 /* USER CODE BEGIN PFP */
-
+void Set_Servo_Position(uint16_t duty);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -118,8 +152,16 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_I2C1_Init();
+  MX_TIM3_Init();
+  MX_TIM14_Init();
   /* USER CODE BEGIN 2 */
-
+  // Initialize PWM timer
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
+  
+  // Initialize display
+  SSD1306_Init();
+  SwitchScreens(HOME);
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -153,6 +195,9 @@ int main(void)
 
   /* creation of readButtons */
   readButtonsHandle = osThreadNew(Task_Read_Buttons, NULL, &readButtons_attributes);
+
+  /* creation of displayUpdate */
+  displayUpdateHandle = osThreadNew(Task_Display_Update, NULL, &displayUpdate_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -217,6 +262,134 @@ void SystemClock_Config(void)
 }
 
 /**
+  * @brief I2C1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_I2C1_Init(void)
+{
+
+  /* USER CODE BEGIN I2C1_Init 0 */
+
+  /* USER CODE END I2C1_Init 0 */
+
+  /* USER CODE BEGIN I2C1_Init 1 */
+
+  /* USER CODE END I2C1_Init 1 */
+  hi2c1.Instance = I2C1;
+  hi2c1.Init.ClockSpeed = 100000;
+  hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
+  hi2c1.Init.OwnAddress1 = 0;
+  hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+  hi2c1.Init.OwnAddress2 = 0;
+  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+  if (HAL_I2C_Init(&hi2c1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN I2C1_Init 2 */
+
+  /* USER CODE END I2C1_Init 2 */
+
+}
+
+/**
+  * @brief TIM3 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM3_Init(void)
+{
+
+  /* USER CODE BEGIN TIM3_Init 0 */
+
+  /* USER CODE END TIM3_Init 0 */
+
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+  TIM_OC_InitTypeDef sConfigOC = {0};
+
+  /* USER CODE BEGIN TIM3_Init 1 */
+
+  /* USER CODE END TIM3_Init 1 */
+  htim3.Instance = TIM3;
+  htim3.Init.Prescaler = 32;
+  htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim3.Init.Period = 10000;
+  htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_PWM_Init(&htim3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = 0;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  if (HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM3_Init 2 */
+
+  /* USER CODE END TIM3_Init 2 */
+  HAL_TIM_MspPostInit(&htim3);
+
+}
+
+/**
+  * @brief TIM14 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM14_Init(void)
+{
+
+  /* USER CODE BEGIN TIM14_Init 0 */
+
+  /* USER CODE END TIM14_Init 0 */
+
+  TIM_OC_InitTypeDef sConfigOC = {0};
+
+  /* USER CODE BEGIN TIM14_Init 1 */
+
+  /* USER CODE END TIM14_Init 1 */
+  htim14.Instance = TIM14;
+  htim14.Init.Prescaler = 16;
+  htim14.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim14.Init.Period = 65535;
+  htim14.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim14.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim14) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_TIM_PWM_Init(&htim14) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = 0;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  if (HAL_TIM_PWM_ConfigChannel(&htim14, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM14_Init 2 */
+
+  /* USER CODE END TIM14_Init 2 */
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -227,16 +400,33 @@ static void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, Sensor_Ctrl_Pin|Board_LED_Out_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin : PA5 */
-  GPIO_InitStruct.Pin = GPIO_PIN_5;
+  /*Configure GPIO pins : Sensor_Ctrl_Pin Board_LED_Out_Pin */
+  GPIO_InitStruct.Pin = Sensor_Ctrl_Pin|Board_LED_Out_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PA3 */
+  GPIO_InitStruct.Pin = GPIO_PIN_3;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : LEFT_SP_BTN_Pin MID_SP_BTN_Pin RIGHT_SP_BTN_Pin */
+  GPIO_InitStruct.Pin = LEFT_SP_BTN_Pin|MID_SP_BTN_Pin|RIGHT_SP_BTN_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI3_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI3_IRQn);
 
 }
 
@@ -255,7 +445,8 @@ void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
   portTickType lastWakeTime;
-  const portTickType taskInterval = 1000; //(every n ticks)
+  const portTickType taskInterval = 1000; //(every n ticks in ms)
+  lastWakeTime = xTaskGetTickCount();
   /* Infinite loop */
   for(;;)
   {
@@ -275,10 +466,13 @@ void StartDefaultTask(void *argument)
 void Task_Error_Calc(void *argument)
 {
   /* USER CODE BEGIN Task_Error_Calc */
+  portTickType lastWakeTime;
+  const portTickType taskInterval = 1200; //(every n ticks in ms)
+  lastWakeTime = xTaskGetTickCount();
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    vTaskDelayUntil(&lastWakeTime,taskInterval);
   }
   /* USER CODE END Task_Error_Calc */
 }
@@ -293,10 +487,70 @@ void Task_Error_Calc(void *argument)
 void Task_Set_PWM(void *argument)
 {
   /* USER CODE BEGIN Task_Set_PWM */
+  portTickType lastWakeTime;
+  const portTickType taskInterval = 50; //(every n ticks in ms)
+  lastWakeTime = xTaskGetTickCount();
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    
+    /*
+    switch(servoDir) {
+        case LEFT:
+          if(servoDir != servoDirLast) {
+            if(servoDutyCurrent != SERVO_NEG_90_POSITION_VALUE) {
+              Set_Servo_Position(servoDutyCurrent);
+              if(servoDutyCurrent < SERVO_NEG_90_POSITION_VALUE) {servoDutyCurrent += DUTY_INTERVAL;}
+              if(servoDutyCurrent > SERVO_NEG_90_POSITION_VALUE) {servoDutyCurrent -= DUTY_INTERVAL;}
+            }
+            else {servoDirLast = servoDir;}
+          }
+          break;
+        case MID:
+          if(servoDir != servoDirLast) {
+            if(servoDutyCurrent != SERVO_ZERO_POSITION_VALUE) {
+              Set_Servo_Position(servoDutyCurrent);
+              if(servoDutyCurrent < SERVO_ZERO_POSITION_VALUE) {servoDutyCurrent += DUTY_INTERVAL;}
+              if(servoDutyCurrent > SERVO_ZERO_POSITION_VALUE) {servoDutyCurrent -= DUTY_INTERVAL;}
+            }
+            else {servoDirLast = servoDir;}
+          }
+          break;
+        case RIGHT:
+          if(servoDir != servoDirLast) {
+            if(servoDutyCurrent != SERVO_POS_90_POSITION_VALUE) {
+              Set_Servo_Position(servoDutyCurrent);
+              if(servoDutyCurrent < SERVO_POS_90_POSITION_VALUE) {servoDutyCurrent += DUTY_INTERVAL;}
+              if(servoDutyCurrent > SERVO_POS_90_POSITION_VALUE) {servoDutyCurrent -= DUTY_INTERVAL;}
+            }
+            else {servoDirLast = servoDir;}
+          }
+          break;
+    }
+  */
+    
+    switch(servoDir) {
+        case LEFT:
+          if(servoDir != servoDirLast) {
+            Set_Servo_Position(SERVO_NEG_90_POSITION_VALUE);
+            servoDirLast = servoDir;
+          }
+          break;
+        case MID:
+          if(servoDir != servoDirLast) {
+            Set_Servo_Position(SERVO_ZERO_POSITION_VALUE);
+            servoDirLast = servoDir;
+          }
+          break;
+        case RIGHT:
+          if(servoDir != servoDirLast) {
+            Set_Servo_Position(SERVO_POS_90_POSITION_VALUE);
+            servoDirLast = servoDir;
+          }
+          break;
+    }
+    
+    vTaskDelayUntil(&lastWakeTime,taskInterval);
   }
   /* USER CODE END Task_Set_PWM */
 }
@@ -311,12 +565,57 @@ void Task_Set_PWM(void *argument)
 void Task_Read_Buttons(void *argument)
 {
   /* USER CODE BEGIN Task_Read_Buttons */
+  portTickType lastWakeTime;
+  const portTickType taskInterval = 15; //(every n ticks in ms)
+  lastWakeTime = xTaskGetTickCount();
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    buttons = (HAL_GPIO_ReadPin(SETPOINT_LEFT_PIN) << 2) | (HAL_GPIO_ReadPin(SETPOINT_MID_PIN) << 1) | (HAL_GPIO_ReadPin(SETPOINT_RIGHT_PIN) << 0);
+    switch(buttons){
+      case 0x7:      // if no buttons pressed, do nothing
+        break;
+      case 0x6:      // if right button pressed
+        servoDir = RIGHT;
+        break;
+      case 0x5:      // if mid button pressed
+      case 0x4:
+        servoDir = MID;
+        break;
+      case 0x3:      // if left button pressed
+      case 0x2:
+      case 0x1:
+      case 0x0:
+        servoDir = LEFT;
+        break;
+      
+    }
+    vTaskDelayUntil(&lastWakeTime,taskInterval);
   }
   /* USER CODE END Task_Read_Buttons */
+}
+
+/* USER CODE BEGIN Header_Task_Display_Update */
+/**
+* @brief Function implementing the displayUpdate thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_Task_Display_Update */
+void Task_Display_Update(void *argument)
+{
+  /* USER CODE BEGIN Task_Display_Update */
+  portTickType lastWakeTime;
+  const portTickType taskInterval = 33; //(every n ticks in ms)
+  lastWakeTime = xTaskGetTickCount();
+  /* Infinite loop */
+  for(;;)
+  {
+    // Update display;
+    UpdateScreenValues();
+    vTaskDelayUntil(&lastWakeTime,taskInterval);
+  }
+  /* USER CODE END Task_Display_Update */
 }
 
 /**

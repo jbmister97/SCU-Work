@@ -27,6 +27,14 @@ C:\GitHub\SCU-Work\ELEN_461\ELEN461_Project_RTOS\EWARM/../Drivers/CMSIS/Device/S
 -I
 C:\GitHub\SCU-Work\ELEN_461\ELEN461_Project_RTOS\EWARM/../Drivers/CMSIS/Include
 -I
+C:\GitHub\SCU-Work\ELEN_461\ELEN461_Project_RTOS\Core\Modules\UX
+-I
+C:\GitHub\SCU-Work\ELEN_461\ELEN461_Project_RTOS\Drivers\SSD1306\OLED\Inc
+-I
+C:\GitHub\SCU-Work\ELEN_461\ELEN461_Project_RTOS\Core\Modules\Servo
+-I
+C:\GitHub\SCU-Work\ELEN_461\ELEN461_Project_RTOS\Core\Modules\Ultrasonic HC-SR04\
+-I
 C:\Program Files\IAR Systems\Embedded Workbench 9.0\arm\inc\c\aarch32
 -I
 C:\Program Files\IAR Systems\Embedded Workbench 9.0\arm\inc
@@ -48,6 +56,14 @@ C:\GitHub\SCU-Work\ELEN_461\ELEN461_Project_RTOS\Middlewares\Third_Party\FreeRTO
 C:\GitHub\SCU-Work\ELEN_461\ELEN461_Project_RTOS\Drivers\CMSIS\Device\ST\STM32F4xx\Include
 -I
 C:\GitHub\SCU-Work\ELEN_461\ELEN461_Project_RTOS\Drivers\CMSIS\Include
+-I
+C:\GitHub\SCU-Work\ELEN_461\ELEN461_Project_RTOS\Core\Modules\UX
+-I
+C:\GitHub\SCU-Work\ELEN_461\ELEN461_Project_RTOS\Drivers\SSD1306\OLED\Inc
+-I
+C:\GitHub\SCU-Work\ELEN_461\ELEN461_Project_RTOS\Core\Modules\Servo
+-I
+C:\GitHub\SCU-Work\ELEN_461\ELEN461_Project_RTOS\Core\Modules\Ultrasonic HC-SR04
 -D__CHAR_BITS__=8
 -D__CHAR_MAX__=0xff
 -D__CHAR_MIN__=0

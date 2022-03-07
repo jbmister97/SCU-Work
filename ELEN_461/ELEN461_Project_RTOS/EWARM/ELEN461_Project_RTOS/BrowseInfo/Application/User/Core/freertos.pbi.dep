@@ -44,6 +44,8 @@ C:\GitHub\SCU-Work\ELEN_461\ELEN461_Project_RTOS\EWARM\ELEN461_Project_RTOS\Brow
   C:\GitHub\SCU-Work\ELEN_461\ELEN461_Project_RTOS\EWARM\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_flash.h \
   C:\GitHub\SCU-Work\ELEN_461\ELEN461_Project_RTOS\EWARM\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_flash_ex.h \
   C:\GitHub\SCU-Work\ELEN_461\ELEN461_Project_RTOS\EWARM\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_flash_ramfunc.h \
+  C:\GitHub\SCU-Work\ELEN_461\ELEN461_Project_RTOS\EWARM\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_i2c.h \
+  C:\GitHub\SCU-Work\ELEN_461\ELEN461_Project_RTOS\EWARM\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_i2c_ex.h \
   C:\GitHub\SCU-Work\ELEN_461\ELEN461_Project_RTOS\EWARM\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pwr.h \
   C:\GitHub\SCU-Work\ELEN_461\ELEN461_Project_RTOS\EWARM\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pwr_ex.h \
   C:\GitHub\SCU-Work\ELEN_461\ELEN461_Project_RTOS\EWARM\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h \
