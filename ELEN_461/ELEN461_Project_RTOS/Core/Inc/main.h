@@ -60,14 +60,10 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define Sensor_Ctrl_Pin GPIO_PIN_2
-#define Sensor_Ctrl_GPIO_Port GPIOA
 #define Board_LED_Out_Pin GPIO_PIN_5
 #define Board_LED_Out_GPIO_Port GPIOA
 #define LEFT_SP_BTN_Pin GPIO_PIN_13
 #define LEFT_SP_BTN_GPIO_Port GPIOB
-#define MID_SP_BTN_Pin GPIO_PIN_14
-#define MID_SP_BTN_GPIO_Port GPIOB
 #define RIGHT_SP_BTN_Pin GPIO_PIN_15
 #define RIGHT_SP_BTN_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
