@@ -18,8 +18,8 @@
 // Screens
 ui_screen currentScreen;
 ui_screen lastScreen;
-char endC[4] = "C";
-char endF[4] = "F";
+//char endC[4] = "C";
+//char endF[4] = "F";
 char testStr[25];
 
 uint8_t degOffset = 0;
@@ -31,8 +31,8 @@ uint8_t degOffset = 0;
 //DWfloat tempInF = {"%4.1f", "----", 0, 0, true, 72.2};
 //DWfloat humidity = {"%4.1f", "----", 0, 0, true, 40.1};
 //DWint16_t tempCJ_F = {"%5d", "!!!!", 0, 0, true, 0};
-extern DWfloat speed;
-extern DWuint16_t distance;
+extern DWfloat target;
+extern DWfloat distance;
 //extern uint8_t processKeyCode;
 //extern uint8_t keyCodeProcessed;
 // format seq (string): {<format string>,  <error message>, <Xpos>, <Ypos>, <valid?>, "<init value>"
@@ -71,25 +71,29 @@ void SwitchScreens(ui_screen screen_no)
     // clear the screen from the previos dispayed data
     SSD1306_Clear();
     
-    // Set Distance label
+    // Set title
+    SSD1306_GotoXY (18,0);
+    SSD1306_Puts ("Distance", &Font_11x18, SSD1306_COLOR_WHITE);
+    
+    // Set measured distance label
     SSD1306_GotoXY (0,20);
-    SSD1306_Puts ("Distance", &Font_7x10, SSD1306_COLOR_WHITE);
-    distance.xPos = 7;
-    distance.yPos = 35;
+    SSD1306_Puts ("Current:", &Font_7x10, SSD1306_COLOR_WHITE);
+    distance.xPos = 63;
+    distance.yPos = 20;
     
     // Set Distance units
-    SSD1306_GotoXY (21,50);
-    SSD1306_Puts ("mm", &Font_7x10, SSD1306_COLOR_WHITE);
+    SSD1306_GotoXY (105,20);
+    SSD1306_Puts ("cm", &Font_7x10, SSD1306_COLOR_WHITE);
     
-    // Set Speed label
-    SSD1306_GotoXY (73,20);
-    SSD1306_Puts ("Speed", &Font_7x10, SSD1306_COLOR_WHITE);
-    speed.xPos = 73;
-    speed.yPos = 35;
+    // Set Target label
+    SSD1306_GotoXY (0,35);
+    SSD1306_Puts ("Target:", &Font_7x10, SSD1306_COLOR_WHITE);
+    target.xPos = 63;
+    target.yPos = 35;
     
-    // Set Speed units
-    SSD1306_GotoXY (73,50);
-    SSD1306_Puts ("m/s", &Font_7x10, SSD1306_COLOR_WHITE);
+    // Set Target units
+    SSD1306_GotoXY (105,35);
+    SSD1306_Puts ("cm", &Font_7x10, SSD1306_COLOR_WHITE);
     
     // Send a screen update (note this does not update the live data)
     break;
@@ -195,16 +199,16 @@ void UpdateScreenValues(void)
   
   
   switch (currentScreen) {
-  case HOME:            // Update speed screen values
-    // Update speed value
-    SSD1306_GotoXY (speed.xPos, speed.yPos);
-    if (speed.valid) {
-      sprintf(displayString, speed.format, speed.data);
+  case HOME:            // Update target screen values
+    // Update target value
+    SSD1306_GotoXY (target.xPos, target.yPos);
+    if (target.valid) {
+      sprintf(displayString, target.format, target.data);
       strcpy(testStr,displayString);
       SSD1306_Puts(displayString, &Font_7x10, SSD1306_COLOR_WHITE);
     }
     else 
-      SSD1306_Puts(speed.invalidMsg, &Font_7x10, SSD1306_COLOR_WHITE);
+      SSD1306_Puts(target.invalidMsg, &Font_7x10, SSD1306_COLOR_WHITE);
     
     // Update distance value
     SSD1306_GotoXY (distance.xPos, distance.yPos);
