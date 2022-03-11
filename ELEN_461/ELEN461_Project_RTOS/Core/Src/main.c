@@ -127,6 +127,11 @@ uint8_t firstCaptured = false;
 uint16_t pulseVal1, pulseVal2;
 uint16_t pulseWidthValue;
 float distanceInCM;
+
+// ADC
+uint16_t adcValue;
+//float distanceTarget;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -854,10 +859,16 @@ void Task_Get_Distance(void *argument)
 void Task_Read_ADC(void *argument)
 {
   /* USER CODE BEGIN Task_Read_ADC */
+  portTickType lastWakeTime;
+  const portTickType taskInterval = 100; //(every n ticks in ms)
+  lastWakeTime = xTaskGetTickCount();
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    HAL_ADC_Start_DMA(&hadc, (uint32_t *) adcValue, 1);
+    // range of sensor is 3cm to 44cm
+    target.data = ((adcValue/4096)*41) + 3;
+    vTaskDelayUntil(&lastWakeTime,taskInterval);
   }
   /* USER CODE END Task_Read_ADC */
 }

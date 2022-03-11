@@ -241,7 +241,7 @@
                     <item>htim8</item>
                     <item>pulseWidthValue</item>
                     <item>distance</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>
