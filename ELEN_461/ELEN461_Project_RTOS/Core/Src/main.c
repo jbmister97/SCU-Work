@@ -153,9 +153,9 @@ float errorFinal, errorLast;
 float errorFinalBuff[ERROR_BUFF_SIZE];
 float errorFinalSum;
 float proportional, integral, derivative;
-const float Kp = 2.125;
-const float Ki = 0.03;
-const float Kd = 500.0;
+const float Kp = 5.0;
+const float Ki = 0.1;
+const float Kd = 3000.0;
 
 /* USER CODE END PV */
 
@@ -715,7 +715,7 @@ void Task_Error_Calc(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    if(distance.data < 70.0) {
+    //if(distance.data < 70.0) {
       errorRawLast = errorRaw;
       errorRaw = target.data - distance.data;
     
@@ -748,7 +748,7 @@ void Task_Error_Calc(void *argument)
       }
       errorFinal = errorFinalSum/ERROR_BUFF_SIZE;
       */
-    }
+    //}
     
     vTaskDelayUntil(&lastWakeTime,taskInterval);
   }
@@ -766,13 +766,13 @@ void Task_Set_PWM(void *argument)
 {
   /* USER CODE BEGIN Task_Set_PWM */
   portTickType lastWakeTime;
-  const portTickType taskInterval = 1500; //(every n ticks in ms)
+  const portTickType taskInterval = 75; //(every n ticks in ms)
   lastWakeTime = xTaskGetTickCount();
   /* Infinite loop */
   for(;;)
   {
     
-    
+    /*
     switch(servoDir) {
         case LEFT:
           //if(servoDir != servoDirLast) {
@@ -796,7 +796,7 @@ void Task_Set_PWM(void *argument)
           //}
           break;
     }
-    
+    */
     
     /*
     if(errorFinal > 0 ) {       // Error right
@@ -831,13 +831,13 @@ void Task_Set_PWM(void *argument)
       }
     */
     
-    /*
+    
     if(errorFinal > DISTANCE_RANGE_RIGHT) {errorFinal = DISTANCE_RANGE_RIGHT;}
     if(errorFinal < distanceLeftValueNeg) {errorFinal = distanceLeftValueNeg;}
       
     servoDuty =  (uint32_t) (SERVO_ZERO_POSITION_VALUE + ((errorFinal/DISTANCE_RANGE_LEFT) * SERVO_LEFT_RANGE_VALUE));
     Set_Servo_Position(servoDuty);
-    */
+    
     vTaskDelayUntil(&lastWakeTime,taskInterval);
   }
   /* USER CODE END Task_Set_PWM */

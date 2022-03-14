@@ -7,7 +7,7 @@
 #define LEFT                            0
 #define RIGHT                           1
 #define MID                             2
-#define SERVO_ZERO_POSITION_VALUE       740
+#define SERVO_ZERO_POSITION_VALUE       745
 #define SERVO_RIGHT_POSITION_VALUE      (SERVO_ZERO_POSITION_VALUE-15)
 //#define SERVO_NEG_90_POSITION_VALUE     300
 //#define SERVO_POS_90_POSITION_VALUE     1050
