@@ -84,7 +84,7 @@ void SwitchScreens(ui_screen screen_no)
     distance.yPos = 20;
     
     // Set Distance units
-    SSD1306_GotoXY (105,20);
+    SSD1306_GotoXY (91,20);
     SSD1306_Puts ("cm", &Font_7x10, SSD1306_COLOR_WHITE);
     
     // Set Target label
@@ -94,7 +94,7 @@ void SwitchScreens(ui_screen screen_no)
     target.yPos = 35;
     
     // Set Target units
-    SSD1306_GotoXY (105,35);
+    SSD1306_GotoXY (91,35);
     SSD1306_Puts ("cm", &Font_7x10, SSD1306_COLOR_WHITE);
     
     // Send a screen update (note this does not update the live data)

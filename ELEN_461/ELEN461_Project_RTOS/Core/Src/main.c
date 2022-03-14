@@ -54,8 +54,15 @@
 #define SERVO_LEFT_RANGE_VALUE        (SERVO_LEFT_POSITION_VALUE - SERVO_ZERO_POSITION_VALUE)
 
 #define ERROR_BUFF_SIZE         5
-#define DISTANCE_BUFF_SIZE      2
+#define DISTANCE_BUFF_SIZE      3
 #define ADC_BUFF_SIZE           3
+
+#define INTEGRAL_MAX            10
+#define INTEGRAL_MIN            (-10)
+
+// For spikes due to bad sensor readings
+#define DERIVATIVE_MAX          50
+#define DERIVATIVE_MIN          (-50)
 
 /* USER CODE END PD */
 
@@ -143,6 +150,7 @@ uint16_t pulseWidthValue;
 float distanceInCM;
 uint16_t distanceBuff[DISTANCE_BUFF_SIZE];
 uint32_t distanceSum;
+uint32_t distanceAvg;
 
 // ADC
 volatile uint16_t adcValue;
@@ -157,9 +165,9 @@ float errorFinal, errorLast;
 float errorFinalBuff[ERROR_BUFF_SIZE];
 float errorFinalSum;
 float proportional, integral, derivative;
-const float Kp = 5.0;
-const float Ki = 0.1;
-const float Kd = 3000.0;
+const float Kp = 1.2;
+const float Ki = 0.2;
+const float Kd = 0.6;
 
 /* USER CODE END PV */
 
@@ -201,21 +209,24 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
       
       // Calculate distance in centimeters
       //distance.data = pulseWidthValue/58.0;
-      distance.data = (uint16_t) pulseVal2/58;
+      //distance.data = (uint16_t) pulseVal2/58;
+      
       
       
       for(uint8_t i = 0; i < DISTANCE_BUFF_SIZE-1; i++) {
         distanceBuff[i] = distanceBuff[i+1];
       }
-      distanceBuff[DISTANCE_BUFF_SIZE-1] = (uint16_t) pulseVal2/58.0;
+      distanceBuff[DISTANCE_BUFF_SIZE-1] = (uint16_t) pulseVal2/58;
       
       distanceSum = 0;
       for(uint8_t i = 0; i < DISTANCE_BUFF_SIZE; i++) {
         distanceSum += distanceBuff[i];
       }
-      distance.data = distanceSum/DISTANCE_BUFF_SIZE;
+      distanceAvg = distanceSum/DISTANCE_BUFF_SIZE;
+      if(distanceAvg > 30) {distance.data = 30;}
+      else {distance.data = distanceAvg;}
       
-      
+   
       __HAL_TIM_SET_COUNTER(htim, 0);
       firstCaptured = false;
       __HAL_TIM_SET_CAPTUREPOLARITY(htim, TIM_CHANNEL_3, TIM_INPUTCHANNELPOLARITY_RISING);
@@ -720,15 +731,19 @@ void Task_Error_Calc(void *argument)
   for(;;)
   {
     //if(distance.data < 70.0) {
-      errorRawLast = errorRaw;
+      
       errorRaw = target.data - distance.data;
     
       proportional = Kp * errorRaw;
       integral += Ki * (taskInterval/1000.0) * ((errorRaw+errorRawLast)/2.0);
-      //derivative = Kd * (((errorRaw-errorRawLast)/ (taskInterval/1000.0)));
-      derivative = Kd * (((errorRaw-errorRawLast)/taskInterval));
+      if(integral > INTEGRAL_MAX) {integral = INTEGRAL_MAX;}
+      if(integral < INTEGRAL_MIN) {integral = INTEGRAL_MIN;}
+      derivative = Kd * (((errorRaw-errorRawLast)/ (taskInterval/1000.0)));
+      if(derivative > DERIVATIVE_MAX) {derivative = 5;}
+      if(derivative < DERIVATIVE_MIN) {derivative = 5;}
+      //derivative = Kd * (((errorRaw-errorRawLast)/taskInterval));
       
-      errorLast = errorFinal;
+      
       
       //errorFinal = errorRaw;
       //errorFinal = proportional;
@@ -752,8 +767,10 @@ void Task_Error_Calc(void *argument)
       }
       errorFinal = errorFinalSum/ERROR_BUFF_SIZE;
       */
+      //errorLast = errorFinal;
+      errorRawLast = errorRaw;
     //}
-    
+      
     vTaskDelayUntil(&lastWakeTime,taskInterval);
   }
   /* USER CODE END Task_Error_Calc */
@@ -802,39 +819,6 @@ void Task_Set_PWM(void *argument)
     }
     */
     
-    /*
-    if(errorFinal > 0 ) {       // Error right
-      if(errorFinal > SERVO_RIGHT_RANGE_VALUE) {Set_Servo_Position(SERVO_RIGHT_POSITION_VALUE);}
-      else {
-        servoRightValue = (uint32_t) (SERVO_ZERO_POSITION_VALUE- ((errorFinal/DISTANCE_RANGE_RIGHT) * SERVO_RIGHT_RANGE_VALUE));
-        Set_Servo_Position(servoRightValue);
-      }
-    }
-    else if(errorFinal < 0) {   // Error left
-      if(errorFinal < servoLeftValueNeg) {Set_Servo_Position(SERVO_LEFT_POSITION_VALUE);}
-      else {
-        servoLeftValue = (uint32_t) (SERVO_ZERO_POSITION_VALUE - ((errorFinal/DISTANCE_RANGE_LEFT) * SERVO_LEFT_RANGE_VALUE));
-        Set_Servo_Position(servoLeftValue);
-      }
-    }
-  */
-    /*
-      if(errorFinal > 0 ) {       // Error right
-        if(errorFinal > SERVO_RIGHT_RANGE_VALUE) {Set_Servo_Position(SERVO_RIGHT_POSITION_VALUE);}
-        else {
-          servoRightValue = (uint32_t) (SERVO_ZERO_POSITION_VALUE + ((errorFinal/DISTANCE_RANGE_RIGHT) * SERVO_RIGHT_RANGE_VALUE));
-          Set_Servo_Position(servoRightValue);
-        }
-      }
-      else if(errorFinal < 0) {   // Error left
-        if(errorFinal < servoLeftValueNeg) {Set_Servo_Position(SERVO_LEFT_POSITION_VALUE);}
-        else {
-          servoLeftValue = (uint32_t) (SERVO_ZERO_POSITION_VALUE + ((errorFinal/DISTANCE_RANGE_LEFT) * SERVO_LEFT_RANGE_VALUE));
-          Set_Servo_Position(servoLeftValue);
-        }
-      }
-    */
-    
     
     if(errorFinal > DISTANCE_RANGE_RIGHT) {errorFinal = DISTANCE_RANGE_RIGHT;}
     if(errorFinal < distanceLeftValueNeg) {errorFinal = distanceLeftValueNeg;}
@@ -881,7 +865,7 @@ void Task_Get_Distance(void *argument)
 {
   /* USER CODE BEGIN Task_Get_Distance */
   portTickType lastWakeTime;
-  const portTickType taskInterval = 75; //(every n ticks in ms)
+  const portTickType taskInterval = 50; //(every n ticks in ms)
   lastWakeTime = xTaskGetTickCount();
   /* Infinite loop */
   for(;;)
@@ -928,7 +912,7 @@ void Task_Read_ADC(void *argument)
     }
     adcValueFinal = adcValueSum/ADC_BUFF_SIZE;
 
-    target.data = (uint16_t) (((adcValueFinal/4096.0)*DISTANCE_RANGE) + DISTANCE_MIN);
+    target.data = (uint16_t) (DISTANCE_MAX - ((adcValueFinal/4096.0)*DISTANCE_RANGE));
     vTaskDelayUntil(&lastWakeTime,taskInterval);
   }
   /* USER CODE END Task_Read_ADC */
