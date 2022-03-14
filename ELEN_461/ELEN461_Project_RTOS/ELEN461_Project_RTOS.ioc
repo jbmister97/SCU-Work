@@ -1,6 +1,7 @@
 #MicroXplorer Configuration settings - do not modify
 ADC1.Channel-0\#ChannelRegularConversion=ADC_CHANNEL_1
-ADC1.IPParameters=Rank-0\#ChannelRegularConversion,master,Channel-0\#ChannelRegularConversion,SamplingTime-0\#ChannelRegularConversion,NbrOfConversionFlag,NbrOfConversion
+ADC1.ContinuousConvMode=DISABLE
+ADC1.IPParameters=Rank-0\#ChannelRegularConversion,master,Channel-0\#ChannelRegularConversion,SamplingTime-0\#ChannelRegularConversion,NbrOfConversionFlag,NbrOfConversion,ContinuousConvMode
 ADC1.NbrOfConversion=1
 ADC1.NbrOfConversionFlag=1
 ADC1.Rank-0\#ChannelRegularConversion=1
@@ -20,7 +21,7 @@ Dma.Request0=ADC1
 Dma.RequestsNb=1
 FREERTOS.FootprintOK=true
 FREERTOS.IPParameters=Tasks01,FootprintOK
-FREERTOS.Tasks01=defaultTask,17,128,StartDefaultTask,Default,NULL,Dynamic,NULL,NULL;errorCalc,17,128,Task_Error_Calc,Default,NULL,Dynamic,NULL,NULL;setPWM,18,128,Task_Set_PWM,Default,NULL,Dynamic,NULL,NULL;readButtons,17,128,Task_Read_Buttons,Default,NULL,Dynamic,NULL,NULL;displayUpdate,17,128,Task_Display_Update,Default,NULL,Dynamic,NULL,NULL;getDistance,17,128,Task_Get_Distance,Default,NULL,Dynamic,NULL,NULL;readADC,33,128,Task_Read_ADC,Default,NULL,Dynamic,NULL,NULL
+FREERTOS.Tasks01=defaultTask,17,128,StartDefaultTask,Default,NULL,Dynamic,NULL,NULL;errorCalc,17,128,Task_Error_Calc,Default,NULL,Dynamic,NULL,NULL;setPWM,18,128,Task_Set_PWM,Default,NULL,Dynamic,NULL,NULL;displayUpdate,17,128,Task_Display_Update,Default,NULL,Dynamic,NULL,NULL;getDistance,17,128,Task_Get_Distance,Default,NULL,Dynamic,NULL,NULL;readADC,33,128,Task_Read_ADC,Default,NULL,Dynamic,NULL,NULL
 File.Version=6
 GPIO.groupedBy=Group By Peripherals
 KeepUserPlacement=false
@@ -58,6 +59,7 @@ Mcu.UserConstants=
 Mcu.UserName=STM32F446RETx
 MxCube.Version=6.3.0
 MxDb.Version=DB.6.0.30
+NVIC.ADC_IRQn=true\:5\:0\:false\:false\:true\:true\:true\:true
 NVIC.BusFault_IRQn=true\:0\:0\:false\:false\:true\:false\:false\:false
 NVIC.DMA2_Stream0_IRQn=true\:5\:0\:false\:false\:true\:true\:false\:true
 NVIC.DebugMonitor_IRQn=true\:0\:0\:false\:false\:true\:false\:false\:false

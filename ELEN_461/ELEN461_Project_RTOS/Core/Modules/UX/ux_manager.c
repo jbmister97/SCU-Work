@@ -31,8 +31,10 @@ uint8_t degOffset = 0;
 //DWfloat tempInF = {"%4.1f", "----", 0, 0, true, 72.2};
 //DWfloat humidity = {"%4.1f", "----", 0, 0, true, 40.1};
 //DWint16_t tempCJ_F = {"%5d", "!!!!", 0, 0, true, 0};
-extern DWfloat target;
-extern DWfloat distance;
+//extern DWfloat target;
+//extern DWfloat distance;
+extern DWuint16_t target;
+extern DWuint16_t distance;
 //extern uint8_t processKeyCode;
 //extern uint8_t keyCodeProcessed;
 // format seq (string): {<format string>,  <error message>, <Xpos>, <Ypos>, <valid?>, "<init value>"

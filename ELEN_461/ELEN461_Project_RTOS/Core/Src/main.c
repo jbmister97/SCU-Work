@@ -43,6 +43,19 @@
     
 #define DUTY_INTERVAL           50
 
+#define DISTANCE_MAX            25.0      // in cm
+#define DISTANCE_MIN            3.0       // in cm
+#define DISTANCE_RANGE          (DISTANCE_MAX - DISTANCE_MIN)
+#define DISTANCE_MID            ((DISTANCE_RANGE/2.0) + DISTANCE_MIN)      // in cm
+#define DISTANCE_RANGE_LEFT    (DISTANCE_MAX - DISTANCE_MID)
+#define DISTANCE_RANGE_RIGHT     (DISTANCE_MID - DISTANCE_MIN)
+
+#define SERVO_RIGHT_RANGE_VALUE       (SERVO_ZERO_POSITION_VALUE - SERVO_RIGHT_POSITION_VALUE)
+#define SERVO_LEFT_RANGE_VALUE        (SERVO_LEFT_POSITION_VALUE - SERVO_ZERO_POSITION_VALUE)
+
+#define ERROR_BUFF_SIZE         5
+#define DISTANCE_BUFF_SIZE      2
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -81,13 +94,6 @@ const osThreadAttr_t setPWM_attributes = {
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityBelowNormal2,
 };
-/* Definitions for readButtons */
-osThreadId_t readButtonsHandle;
-const osThreadAttr_t readButtons_attributes = {
-  .name = "readButtons",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityBelowNormal1,
-};
 /* Definitions for displayUpdate */
 osThreadId_t displayUpdateHandle;
 const osThreadAttr_t displayUpdate_attributes = {
@@ -117,20 +123,39 @@ uint16_t count;
 uint8_t servoDir = MID;
 uint8_t servoDirLast = RIGHT;
 uint16_t servoDutyCurrent = SERVO_STATE_ZERO_POSITION;
+uint32_t servoRightValue, servoLeftValue;
+const int32_t servoRightValueNeg = (SERVO_RIGHT_RANGE_VALUE*(-1));
+const int32_t servoLeftValueNeg = (SERVO_LEFT_RANGE_VALUE*(-1));
+const int32_t distanceLeftValueNeg = (DISTANCE_RANGE_LEFT * (-1));
+uint32_t servoDuty;
 
 // Display Varaibles
-DWfloat target = {"%4.1f ", "----", 0, 0, true, 25.0};
-DWfloat distance = {"%4.1f ", "----", 0, 0, true, 25.0};
+//DWfloat target = {"%4.1f ", "----", 0, 0, true, 25.0};
+//DWfloat distance = {"%4.1f ", "----", 0, 0, true, 25.0};
+DWuint16_t target = {"%d ", "----", 0, 0, true, 25};
+DWuint16_t distance = {"%d ", "----", 0, 0, true, 25};
 
 // Ultrasonic Sensor
 uint8_t firstCaptured = false;
-uint16_t pulseVal1, pulseVal2;
+uint32_t pulseVal1, pulseVal2;
 uint16_t pulseWidthValue;
 float distanceInCM;
+uint16_t distanceBuff[DISTANCE_BUFF_SIZE];
+uint32_t distanceSum;
 
 // ADC
-uint16_t adcValue;
+volatile uint16_t adcValue;
 //float distanceTarget;
+
+// Controller
+float errorRaw, errorRawLast; 
+float errorFinal, errorLast;
+float errorFinalBuff[ERROR_BUFF_SIZE];
+float errorFinalSum;
+float proportional, integral, derivative;
+const float Kp = 2.125;
+const float Ki = 0.03;
+const float Kd = 500.0;
 
 /* USER CODE END PV */
 
@@ -146,7 +171,6 @@ static void MX_TIM4_Init(void);
 void StartDefaultTask(void *argument);
 void Task_Error_Calc(void *argument);
 void Task_Set_PWM(void *argument);
-void Task_Read_Buttons(void *argument);
 void Task_Display_Update(void *argument);
 void Task_Get_Distance(void *argument);
 void Task_Read_ADC(void *argument);
@@ -163,20 +187,36 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
       pulseVal1 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_3);
       firstCaptured = true;
       __HAL_TIM_SET_CAPTUREPOLARITY(htim, TIM_CHANNEL_3, TIM_INPUTCHANNELPOLARITY_FALLING);
+      __HAL_TIM_SET_COUNTER(htim, 0);
     }
     else {
       pulseVal2 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_3);
       
-      if(pulseVal1 < pulseVal2) {pulseWidthValue = pulseVal2 - pulseVal1;}
-      else if (pulseVal1 > pulseVal2) {pulseWidthValue = (0xFFFF - pulseVal1) + pulseVal2;}
+      //if(pulseVal1 < pulseVal2) {pulseWidthValue = pulseVal2 - pulseVal1;}
+      //else if (pulseVal1 > pulseVal2) {pulseWidthValue = (0xFFFF - pulseVal1) + pulseVal2;}
       
       // Calculate distance in centimeters
-      distance.data = pulseWidthValue/58.0;
+      //distance.data = pulseWidthValue/58.0;
+      distance.data = (uint16_t) pulseVal2/58;
+      
+      
+      for(uint8_t i = 0; i < DISTANCE_BUFF_SIZE-1; i++) {
+        distanceBuff[i] = distanceBuff[i+1];
+      }
+      distanceBuff[DISTANCE_BUFF_SIZE-1] = (uint16_t) pulseVal2/58;
+      
+      distanceSum = 0;
+      for(uint8_t i = 0; i < DISTANCE_BUFF_SIZE; i++) {
+        distanceSum += distanceBuff[i];
+      }
+      distance.data = distanceSum/DISTANCE_BUFF_SIZE;
+      
       
       __HAL_TIM_SET_COUNTER(htim, 0);
       firstCaptured = false;
       __HAL_TIM_SET_CAPTUREPOLARITY(htim, TIM_CHANNEL_3, TIM_INPUTCHANNELPOLARITY_RISING);
-    }
+    } 
+    
   }
 }
 /* USER CODE END 0 */
@@ -225,6 +265,8 @@ int main(void)
   // Initialize input capture interrupt for sensor
   HAL_TIM_IC_Start_IT(&htim4, TIM_CHANNEL_3);
   
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t *) &adcValue, 1);
+  
   // Initialize display
   SSD1306_Init();
   SwitchScreens(HOME);
@@ -258,9 +300,6 @@ int main(void)
 
   /* creation of setPWM */
   setPWMHandle = osThreadNew(Task_Set_PWM, NULL, &setPWM_attributes);
-
-  /* creation of readButtons */
-  readButtonsHandle = osThreadNew(Task_Read_Buttons, NULL, &readButtons_attributes);
 
   /* creation of displayUpdate */
   displayUpdateHandle = osThreadNew(Task_Display_Update, NULL, &displayUpdate_attributes);
@@ -671,11 +710,46 @@ void Task_Error_Calc(void *argument)
 {
   /* USER CODE BEGIN Task_Error_Calc */
   portTickType lastWakeTime;
-  const portTickType taskInterval = 1200; //(every n ticks in ms)
+  const portTickType taskInterval = 75; //(every n ticks in ms)
   lastWakeTime = xTaskGetTickCount();
   /* Infinite loop */
   for(;;)
   {
+    if(distance.data < 70.0) {
+      errorRawLast = errorRaw;
+      errorRaw = target.data - distance.data;
+    
+      proportional = Kp * errorRaw;
+      integral += Ki * (taskInterval/1000.0) * ((errorRaw+errorRawLast)/2.0);
+      //derivative = Kd * (((errorRaw-errorRawLast)/ (taskInterval/1000.0)));
+      derivative = Kd * (((errorRaw-errorRawLast)/taskInterval));
+      
+      errorLast = errorFinal;
+      
+      //errorFinal = errorRaw;
+      //errorFinal = proportional;
+      //errorFinal = proportional + derivative;
+      errorFinal = proportional + integral + derivative;
+      
+      /*
+      // Update error buffer
+      for(uint8_t i = 0; i < ERROR_BUFF_SIZE-1; i++) {
+        errorFinalBuff[i] = errorFinalBuff[i+1];
+      }
+      //errorFinalBuff[ERROR_BUFF_SIZE-1] = errorRaw;
+      //errorFinalBuff[ERROR_BUFF_SIZE-1] = proportional;
+      errorFinalBuff[ERROR_BUFF_SIZE-1] = proportional + derivative;
+      //errorFinalBuff[ERROR_BUFF_SIZE-1] = proportional + integral + derivative;
+      
+      // Calculate average error
+      errorFinalSum = 0;
+      for(uint8_t i = 0; i < ERROR_BUFF_SIZE; i++) {
+        errorFinalSum += errorFinalBuff[i];
+      }
+      errorFinal = errorFinalSum/ERROR_BUFF_SIZE;
+      */
+    }
+    
     vTaskDelayUntil(&lastWakeTime,taskInterval);
   }
   /* USER CODE END Task_Error_Calc */
@@ -692,111 +766,81 @@ void Task_Set_PWM(void *argument)
 {
   /* USER CODE BEGIN Task_Set_PWM */
   portTickType lastWakeTime;
-  const portTickType taskInterval = 50; //(every n ticks in ms)
+  const portTickType taskInterval = 1500; //(every n ticks in ms)
   lastWakeTime = xTaskGetTickCount();
   /* Infinite loop */
   for(;;)
   {
     
-    /*
+    
     switch(servoDir) {
         case LEFT:
-          if(servoDir != servoDirLast) {
-            if(servoDutyCurrent != SERVO_NEG_90_POSITION_VALUE) {
-              Set_Servo_Position(servoDutyCurrent);
-              if(servoDutyCurrent < SERVO_NEG_90_POSITION_VALUE) {servoDutyCurrent += DUTY_INTERVAL;}
-              if(servoDutyCurrent > SERVO_NEG_90_POSITION_VALUE) {servoDutyCurrent -= DUTY_INTERVAL;}
-            }
-            else {servoDirLast = servoDir;}
-          }
+          //if(servoDir != servoDirLast) {
+            Set_Servo_Position(SERVO_LEFT_POSITION_VALUE);
+            servoDirLast = servoDir;
+            servoDir = MID;
+          //}
           break;
         case MID:
-          if(servoDir != servoDirLast) {
-            if(servoDutyCurrent != SERVO_ZERO_POSITION_VALUE) {
-              Set_Servo_Position(servoDutyCurrent);
-              if(servoDutyCurrent < SERVO_ZERO_POSITION_VALUE) {servoDutyCurrent += DUTY_INTERVAL;}
-              if(servoDutyCurrent > SERVO_ZERO_POSITION_VALUE) {servoDutyCurrent -= DUTY_INTERVAL;}
-            }
-            else {servoDirLast = servoDir;}
-          }
+          //if(servoDir != servoDirLast) {
+            Set_Servo_Position(SERVO_ZERO_POSITION_VALUE);
+            servoDirLast = servoDir;
+            servoDir = RIGHT;
+          //}
           break;
         case RIGHT:
-          if(servoDir != servoDirLast) {
-            if(servoDutyCurrent != SERVO_POS_90_POSITION_VALUE) {
-              Set_Servo_Position(servoDutyCurrent);
-              if(servoDutyCurrent < SERVO_POS_90_POSITION_VALUE) {servoDutyCurrent += DUTY_INTERVAL;}
-              if(servoDutyCurrent > SERVO_POS_90_POSITION_VALUE) {servoDutyCurrent -= DUTY_INTERVAL;}
-            }
-            else {servoDirLast = servoDir;}
-          }
+          //if(servoDir != servoDirLast) {
+            Set_Servo_Position(SERVO_RIGHT_POSITION_VALUE);
+            servoDirLast = servoDir;
+            servoDir = LEFT;
+          //}
           break;
+    }
+    
+    
+    /*
+    if(errorFinal > 0 ) {       // Error right
+      if(errorFinal > SERVO_RIGHT_RANGE_VALUE) {Set_Servo_Position(SERVO_RIGHT_POSITION_VALUE);}
+      else {
+        servoRightValue = (uint32_t) (SERVO_ZERO_POSITION_VALUE- ((errorFinal/DISTANCE_RANGE_RIGHT) * SERVO_RIGHT_RANGE_VALUE));
+        Set_Servo_Position(servoRightValue);
+      }
+    }
+    else if(errorFinal < 0) {   // Error left
+      if(errorFinal < servoLeftValueNeg) {Set_Servo_Position(SERVO_LEFT_POSITION_VALUE);}
+      else {
+        servoLeftValue = (uint32_t) (SERVO_ZERO_POSITION_VALUE - ((errorFinal/DISTANCE_RANGE_LEFT) * SERVO_LEFT_RANGE_VALUE));
+        Set_Servo_Position(servoLeftValue);
+      }
     }
   */
     /*
-    switch(servoDir) {
-        case LEFT:
-          if(servoDir != servoDirLast) {
-            Set_Servo_Position(SERVO_NEG_90_POSITION_VALUE);
-            servoDirLast = servoDir;
-          }
-          break;
-        case MID:
-          if(servoDir != servoDirLast) {
-            Set_Servo_Position(SERVO_ZERO_POSITION_VALUE);
-            servoDirLast = servoDir;
-          }
-          break;
-        case RIGHT:
-          if(servoDir != servoDirLast) {
-            Set_Servo_Position(SERVO_POS_90_POSITION_VALUE);
-            servoDirLast = servoDir;
-          }
-          break;
-    }
+      if(errorFinal > 0 ) {       // Error right
+        if(errorFinal > SERVO_RIGHT_RANGE_VALUE) {Set_Servo_Position(SERVO_RIGHT_POSITION_VALUE);}
+        else {
+          servoRightValue = (uint32_t) (SERVO_ZERO_POSITION_VALUE + ((errorFinal/DISTANCE_RANGE_RIGHT) * SERVO_RIGHT_RANGE_VALUE));
+          Set_Servo_Position(servoRightValue);
+        }
+      }
+      else if(errorFinal < 0) {   // Error left
+        if(errorFinal < servoLeftValueNeg) {Set_Servo_Position(SERVO_LEFT_POSITION_VALUE);}
+        else {
+          servoLeftValue = (uint32_t) (SERVO_ZERO_POSITION_VALUE + ((errorFinal/DISTANCE_RANGE_LEFT) * SERVO_LEFT_RANGE_VALUE));
+          Set_Servo_Position(servoLeftValue);
+        }
+      }
+    */
+    
+    /*
+    if(errorFinal > DISTANCE_RANGE_RIGHT) {errorFinal = DISTANCE_RANGE_RIGHT;}
+    if(errorFinal < distanceLeftValueNeg) {errorFinal = distanceLeftValueNeg;}
+      
+    servoDuty =  (uint32_t) (SERVO_ZERO_POSITION_VALUE + ((errorFinal/DISTANCE_RANGE_LEFT) * SERVO_LEFT_RANGE_VALUE));
+    Set_Servo_Position(servoDuty);
     */
     vTaskDelayUntil(&lastWakeTime,taskInterval);
   }
   /* USER CODE END Task_Set_PWM */
-}
-
-/* USER CODE BEGIN Header_Task_Read_Buttons */
-/**
-* @brief Function implementing the readButtons thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_Task_Read_Buttons */
-void Task_Read_Buttons(void *argument)
-{
-  /* USER CODE BEGIN Task_Read_Buttons */
-  portTickType lastWakeTime;
-  const portTickType taskInterval = 15; //(every n ticks in ms)
-  lastWakeTime = xTaskGetTickCount();
-  /* Infinite loop */
-  for(;;)
-  {
-    buttons = (HAL_GPIO_ReadPin(SETPOINT_LEFT_PIN) << 2) | (HAL_GPIO_ReadPin(SETPOINT_MID_PIN) << 1) | (HAL_GPIO_ReadPin(SETPOINT_RIGHT_PIN) << 0);
-    switch(buttons){
-      case 0x7:      // if no buttons pressed, do nothing
-        break;
-      case 0x6:      // if right button pressed
-        servoDir = RIGHT;
-        break;
-      case 0x5:      // if mid button pressed
-      case 0x4:
-        servoDir = MID;
-        break;
-      case 0x3:      // if left button pressed
-      case 0x2:
-      case 0x1:
-      case 0x0:
-        servoDir = LEFT;
-        break;
-      
-    }
-    vTaskDelayUntil(&lastWakeTime,taskInterval);
-  }
-  /* USER CODE END Task_Read_Buttons */
 }
 
 /* USER CODE BEGIN Header_Task_Display_Update */
@@ -865,9 +909,9 @@ void Task_Read_ADC(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    HAL_ADC_Start_DMA(&hadc, (uint32_t *) adcValue, 1);
-    // range of sensor is 3cm to 44cm
-    target.data = ((adcValue/4096)*41) + 3;
+    HAL_ADC_Start_DMA(&hadc1, (uint32_t *) adcValue, 1);
+
+    target.data = (uint16_t) (((adcValue/4096.0)*DISTANCE_RANGE) + DISTANCE_MIN);
     vTaskDelayUntil(&lastWakeTime,taskInterval);
   }
   /* USER CODE END Task_Read_ADC */
