@@ -55,6 +55,7 @@
 
 #define ERROR_BUFF_SIZE         5
 #define DISTANCE_BUFF_SIZE      2
+#define ADC_BUFF_SIZE           3
 
 /* USER CODE END PD */
 
@@ -145,7 +146,10 @@ uint32_t distanceSum;
 
 // ADC
 volatile uint16_t adcValue;
+volatile uint16_t adcValueFinal;
 //float distanceTarget;
+uint16_t adcValueBuff[ADC_BUFF_SIZE];
+uint32_t adcValueSum;
 
 // Controller
 float errorRaw, errorRawLast; 
@@ -203,7 +207,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
       for(uint8_t i = 0; i < DISTANCE_BUFF_SIZE-1; i++) {
         distanceBuff[i] = distanceBuff[i+1];
       }
-      distanceBuff[DISTANCE_BUFF_SIZE-1] = (uint16_t) pulseVal2/58;
+      distanceBuff[DISTANCE_BUFF_SIZE-1] = (uint16_t) pulseVal2/58.0;
       
       distanceSum = 0;
       for(uint8_t i = 0; i < DISTANCE_BUFF_SIZE; i++) {
@@ -859,7 +863,7 @@ void Task_Display_Update(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    // Update display;
+    // Update display
     UpdateScreenValues();
     vTaskDelayUntil(&lastWakeTime,taskInterval);
   }
@@ -910,8 +914,21 @@ void Task_Read_ADC(void *argument)
   for(;;)
   {
     HAL_ADC_Start_DMA(&hadc1, (uint32_t *) adcValue, 1);
+    
+    // Update ADC buffer
+    for(uint8_t i = 0; i < ADC_BUFF_SIZE-1; i++) {
+      adcValueBuff[i] = adcValueBuff[i+1];
+    }
+    adcValueBuff[ADC_BUFF_SIZE-1] = adcValue;
+    
+    // Calculate the average from the buffer
+    adcValueSum = 0;
+    for(uint8_t i = 0; i < ADC_BUFF_SIZE; i++) {
+      adcValueSum += adcValueBuff[i];
+    }
+    adcValueFinal = adcValueSum/ADC_BUFF_SIZE;
 
-    target.data = (uint16_t) (((adcValue/4096.0)*DISTANCE_RANGE) + DISTANCE_MIN);
+    target.data = (uint16_t) (((adcValueFinal/4096.0)*DISTANCE_RANGE) + DISTANCE_MIN);
     vTaskDelayUntil(&lastWakeTime,taskInterval);
   }
   /* USER CODE END Task_Read_ADC */
