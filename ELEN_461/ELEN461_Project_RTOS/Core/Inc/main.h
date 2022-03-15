@@ -62,10 +62,6 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define Board_LED_Out_Pin GPIO_PIN_5
 #define Board_LED_Out_GPIO_Port GPIOA
-#define LEFT_SP_BTN_Pin GPIO_PIN_13
-#define LEFT_SP_BTN_GPIO_Port GPIOB
-#define RIGHT_SP_BTN_Pin GPIO_PIN_15
-#define RIGHT_SP_BTN_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 #define true    1
 #define false   0

@@ -36,24 +36,18 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define LED_BOARD_PIN           GPIOA, GPIO_PIN_5
-#define SETPOINT_LEFT_PIN       GPIOB, GPIO_PIN_13
-#define SETPOINT_MID_PIN        GPIOB, GPIO_PIN_14
-#define SETPOINT_RIGHT_PIN      GPIOB, GPIO_PIN_15
 #define SENSOR_TRIG_PIN         GPIOB, GPIO_PIN_1
-    
-#define DUTY_INTERVAL           50
 
 #define DISTANCE_MAX            25.0      // in cm
 #define DISTANCE_MIN            3.0       // in cm
 #define DISTANCE_RANGE          (DISTANCE_MAX - DISTANCE_MIN)
 #define DISTANCE_MID            ((DISTANCE_RANGE/2.0) + DISTANCE_MIN)      // in cm
-#define DISTANCE_RANGE_LEFT    (DISTANCE_MAX - DISTANCE_MID)
-#define DISTANCE_RANGE_RIGHT     (DISTANCE_MID - DISTANCE_MIN)
+#define DISTANCE_RANGE_LEFT     (DISTANCE_MAX - DISTANCE_MID)
+#define DISTANCE_RANGE_RIGHT    (DISTANCE_MID - DISTANCE_MIN)
 
 #define SERVO_RIGHT_RANGE_VALUE       (SERVO_ZERO_POSITION_VALUE - SERVO_RIGHT_POSITION_VALUE)
 #define SERVO_LEFT_RANGE_VALUE        (SERVO_LEFT_POSITION_VALUE - SERVO_ZERO_POSITION_VALUE)
 
-#define ERROR_BUFF_SIZE         5
 #define DISTANCE_BUFF_SIZE      3
 #define ADC_BUFF_SIZE           3
 
@@ -86,42 +80,42 @@ osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
   .name = "defaultTask",
   .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityBelowNormal1,
+  .priority = (osPriority_t) osPriorityBelowNormal2,
 };
 /* Definitions for errorCalc */
 osThreadId_t errorCalcHandle;
 const osThreadAttr_t errorCalc_attributes = {
   .name = "errorCalc",
   .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityBelowNormal1,
+  .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for setPWM */
 osThreadId_t setPWMHandle;
 const osThreadAttr_t setPWM_attributes = {
   .name = "setPWM",
   .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityBelowNormal2,
+  .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for displayUpdate */
 osThreadId_t displayUpdateHandle;
 const osThreadAttr_t displayUpdate_attributes = {
   .name = "displayUpdate",
   .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityBelowNormal1,
+  .priority = (osPriority_t) osPriorityBelowNormal2,
 };
 /* Definitions for getDistance */
 osThreadId_t getDistanceHandle;
 const osThreadAttr_t getDistance_attributes = {
   .name = "getDistance",
   .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityBelowNormal1,
+  .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for readADC */
 osThreadId_t readADCHandle;
 const osThreadAttr_t readADC_attributes = {
   .name = "readADC",
   .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityAboveNormal1,
+  .priority = (osPriority_t) osPriorityBelowNormal2,
 };
 /* USER CODE BEGIN PV */
 uint8_t buttons;
@@ -161,8 +155,7 @@ uint32_t adcValueSum;
 
 // Controller
 float errorRaw, errorRawLast; 
-float errorFinal, errorLast;
-float errorFinalBuff[ERROR_BUFF_SIZE];
+float errorFinal;
 float errorFinalSum;
 float proportional, integral, derivative;
 const float Kp = 1.2;
@@ -176,10 +169,10 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_TIM3_Init(void);
-static void MX_TIM8_Init(void);
 static void MX_DMA_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_TIM4_Init(void);
+static void MX_TIM8_Init(void);
 void StartDefaultTask(void *argument);
 void Task_Error_Calc(void *argument);
 void Task_Set_PWM(void *argument);
@@ -204,14 +197,8 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
     else {
       pulseVal2 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_3);
       
-      //if(pulseVal1 < pulseVal2) {pulseWidthValue = pulseVal2 - pulseVal1;}
-      //else if (pulseVal1 > pulseVal2) {pulseWidthValue = (0xFFFF - pulseVal1) + pulseVal2;}
-      
       // Calculate distance in centimeters
-      //distance.data = pulseWidthValue/58.0;
-      //distance.data = (uint16_t) pulseVal2/58;
-      
-      
+      //distance.data = pulseVal2/58;
       
       for(uint8_t i = 0; i < DISTANCE_BUFF_SIZE-1; i++) {
         distanceBuff[i] = distanceBuff[i+1];
@@ -266,10 +253,10 @@ int main(void)
   MX_GPIO_Init();
   MX_I2C1_Init();
   MX_TIM3_Init();
-  MX_TIM8_Init();
   MX_DMA_Init();
   MX_ADC1_Init();
   MX_TIM4_Init();
+  MX_TIM8_Init();
   /* USER CODE BEGIN 2 */
   // Initialize PWM timer
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
@@ -673,12 +660,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LEFT_SP_BTN_Pin PB14 RIGHT_SP_BTN_Pin */
-  GPIO_InitStruct.Pin = LEFT_SP_BTN_Pin|GPIO_PIN_14|RIGHT_SP_BTN_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
 }
 
 /* USER CODE BEGIN 4 */
@@ -730,46 +711,20 @@ void Task_Error_Calc(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    //if(distance.data < 70.0) {
       
-      errorRaw = target.data - distance.data;
+    errorRaw = target.data - distance.data;
     
-      proportional = Kp * errorRaw;
-      integral += Ki * (taskInterval/1000.0) * ((errorRaw+errorRawLast)/2.0);
-      if(integral > INTEGRAL_MAX) {integral = INTEGRAL_MAX;}
-      if(integral < INTEGRAL_MIN) {integral = INTEGRAL_MIN;}
-      derivative = Kd * (((errorRaw-errorRawLast)/ (taskInterval/1000.0)));
-      if(derivative > DERIVATIVE_MAX) {derivative = 5;}
-      if(derivative < DERIVATIVE_MIN) {derivative = 5;}
-      //derivative = Kd * (((errorRaw-errorRawLast)/taskInterval));
+    proportional = Kp * errorRaw;
+    integral += Ki * (taskInterval/1000.0) * ((errorRaw+errorRawLast)/2.0);
+    if(integral > INTEGRAL_MAX) {integral = INTEGRAL_MAX;}
+    if(integral < INTEGRAL_MIN) {integral = INTEGRAL_MIN;}
+    derivative = Kd * (((errorRaw-errorRawLast)/ (taskInterval/1000.0)));
+    // For spikes due to bad sensor data
+    if(derivative > DERIVATIVE_MAX) {derivative = 5;}
+    if(derivative < DERIVATIVE_MIN) {derivative = 5;}
       
-      
-      
-      //errorFinal = errorRaw;
-      //errorFinal = proportional;
-      //errorFinal = proportional + derivative;
-      errorFinal = proportional + integral + derivative;
-      
-      /*
-      // Update error buffer
-      for(uint8_t i = 0; i < ERROR_BUFF_SIZE-1; i++) {
-        errorFinalBuff[i] = errorFinalBuff[i+1];
-      }
-      //errorFinalBuff[ERROR_BUFF_SIZE-1] = errorRaw;
-      //errorFinalBuff[ERROR_BUFF_SIZE-1] = proportional;
-      errorFinalBuff[ERROR_BUFF_SIZE-1] = proportional + derivative;
-      //errorFinalBuff[ERROR_BUFF_SIZE-1] = proportional + integral + derivative;
-      
-      // Calculate average error
-      errorFinalSum = 0;
-      for(uint8_t i = 0; i < ERROR_BUFF_SIZE; i++) {
-        errorFinalSum += errorFinalBuff[i];
-      }
-      errorFinal = errorFinalSum/ERROR_BUFF_SIZE;
-      */
-      //errorLast = errorFinal;
-      errorRawLast = errorRaw;
-    //}
+    errorFinal = proportional + integral + derivative;
+    errorRawLast = errorRaw;
       
     vTaskDelayUntil(&lastWakeTime,taskInterval);
   }
@@ -819,7 +774,6 @@ void Task_Set_PWM(void *argument)
     }
     */
     
-    
     if(errorFinal > DISTANCE_RANGE_RIGHT) {errorFinal = DISTANCE_RANGE_RIGHT;}
     if(errorFinal < distanceLeftValueNeg) {errorFinal = distanceLeftValueNeg;}
       
@@ -842,7 +796,7 @@ void Task_Display_Update(void *argument)
 {
   /* USER CODE BEGIN Task_Display_Update */
   portTickType lastWakeTime;
-  const portTickType taskInterval = 33; //(every n ticks in ms)
+  const portTickType taskInterval = 75; //(every n ticks in ms)
   lastWakeTime = xTaskGetTickCount();
   /* Infinite loop */
   for(;;)
