@@ -152,7 +152,7 @@
                     <item>motorEnable</item>
                     <item>adcValue</item>
                     <item>htim16</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>

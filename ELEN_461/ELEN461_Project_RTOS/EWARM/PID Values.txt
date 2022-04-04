@@ -1,0 +1,24 @@
+
+Somewhat ok:
+P = 2.125
+I = 0.03
+D = 1500
+
+A bit better:
+const float Kp = 4.25;
+const float Ki = 0.03;
+const float Kd = 8500.0;
+
+ok:
+const float Kp = 2.0;
+const float Ki = 0.3;
+const float Kd = 1.0;
+
+pretty good:
+const float Kp = 1.5;
+const float Ki = 0.15;
+const float Kd = 0.3;
+
+const float Kp = 1.2;
+const float Ki = 0.05;
+const float Kd = 0.6;

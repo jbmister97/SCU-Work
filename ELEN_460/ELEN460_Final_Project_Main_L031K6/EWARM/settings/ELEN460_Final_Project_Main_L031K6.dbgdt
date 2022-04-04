@@ -227,7 +227,7 @@
                     <item>processKeyCode</item>
                     <item>displayString</item>
                     <item>fireBusy</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>
