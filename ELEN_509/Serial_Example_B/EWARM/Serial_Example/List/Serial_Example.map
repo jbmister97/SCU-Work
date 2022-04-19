@@ -1,48 +1,48 @@
 ###############################################################################
 #
-# IAR ELF Linker V9.10.2.313/W64 for ARM                  14/Apr/2022  00:55:22
+# IAR ELF Linker V9.10.2.313/W64 for ARM                  18/Apr/2022  22:05:02
 # Copyright 2007-2021 IAR Systems AB.
 #
 #    Output file  =
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Exe\Serial_Example.out
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Exe\Serial_Example.out
 #    Map file     =
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\List\Serial_Example.map
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\List\Serial_Example.map
 #    Command line =
 #        -f
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Exe\Serial_Example.out.rsp
-#        (C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Application\User\Core\ASCII_numbers.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Application\User\Core\main.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Application\User\Core\Serial.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Application\User\Core\serial_user.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Application\EWARM\startup_stm32g070xx.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_cortex.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_dma.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_dma_ex.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_exti.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_flash.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_flash_ex.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_gpio.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Application\User\Core\stm32g0xx_hal_msp.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_pwr.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_pwr_ex.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_rcc.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_rcc_ex.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_tim.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_tim_ex.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_uart.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_uart_ex.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Application\User\Core\stm32g0xx_it.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_ll_dma.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_ll_rcc.o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\CMSIS\system_stm32g0xx.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Exe\Serial_Example.out.rsp
+#        (C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Application\User\Core\ASCII_numbers.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Application\User\Core\main.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Application\User\Core\Serial.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Application\User\Core\serial_user.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Application\EWARM\startup_stm32g070xx.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_cortex.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_dma.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_dma_ex.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_exti.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_flash.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_flash_ex.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_gpio.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Application\User\Core\stm32g0xx_hal_msp.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_pwr.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_pwr_ex.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_rcc.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_rcc_ex.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_tim.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_tim_ex.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_uart.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_uart_ex.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Application\User\Core\stm32g0xx_it.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_ll_dma.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_ll_rcc.o
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\CMSIS\system_stm32g0xx.o
 #        --no_out_extension -o
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Exe\Serial_Example.out
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Exe\Serial_Example.out
 #        --redirect _Printf=_PrintfFullNoMb --redirect _Scanf=_ScanfFullNoMb
 #        --map
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\List\Serial_Example.map
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\List\Serial_Example.map
 #        --config
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM/stm32g070xx_flash.icf
+#        C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM/stm32g070xx_flash.icf
 #        --semihosting --entry __iar_program_start --vfe --text_out locale)
 #
 ###############################################################################
@@ -60,10 +60,9 @@ __dlib_version  = 6
 *** HEAP SELECTION
 ***
 
-The basic heap was selected because no calls to memory allocation
-functions were found in the application outside of system library
-functions, and there are calls to deallocation functions in the
-application.
+The basic heap was selected because some modules are built with
+size limitations (and not runtime checking), and --advanced_heap
+was not specified.
 
 
 *******************************************************************************
@@ -220,12 +219,12 @@ command line/config:
     --------------------------------------------------
     Total:
 
-C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Application\EWARM: [1]
+C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Application\EWARM: [1]
     startup_stm32g070xx.o        252
     --------------------------------------------------
     Total:                       252
 
-C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Application\User\Core: [2]
+C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Application\User\Core: [2]
     ASCII_numbers.o               88
     Serial.o                     380               108
     main.o                       612       36      162
@@ -235,12 +234,12 @@ C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial
     --------------------------------------------------
     Total:                     1'916       45      306
 
-C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\CMSIS: [3]
+C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\CMSIS: [3]
     system_stm32g0xx.o            16       97        4
     --------------------------------------------------
     Total:                        16       97        4
 
-C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver: [4]
+C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver: [4]
     stm32g0xx_hal.o              208        2       12
     stm32g0xx_hal_cortex.o       144
     stm32g0xx_hal_dma.o          252
@@ -296,7 +295,7 @@ AHBPrescTable            0x800'1de8   0x40  Data  Gb  system_stm32g0xx.o [3]
 APBPrescTable            0x800'1eac   0x20  Data  Gb  system_stm32g0xx.o [3]
 CSTACK$$Base            0x2000'0148          --   Gb  - Linker created -
 CSTACK$$Limit           0x2000'0548          --   Gb  - Linker created -
-CheckBuffer              0x800'1857   0x1a  Code  Gb  Serial.o [2]
+CheckBuffer              0x800'1851   0x1a  Code  Gb  Serial.o [2]
 ConvertASCII2UINT16      0x800'1c59   0x58  Code  Gb  ASCII_numbers.o [2]
 Error_Handler            0x800'1669    0x4  Code  Gb  main.o [2]
 HAL_DMA_Abort            0x800'0949   0x78  Code  Gb  stm32g0xx_hal_dma.o [4]
@@ -357,8 +356,8 @@ ProcessReceiveByteWithLength
 Region$$Table$$Base      0x800'1e8c          --   Gb  - Linker created -
 Region$$Table$$Limit     0x800'1eac          --   Gb  - Linker created -
 SVC_Handler              0x800'1cdd    0x2  Code  Gb  stm32g0xx_it.o [2]
-SendBinary               0x800'1871   0x94  Code  Gb  Serial.o [2]
-SendString               0x800'17ad   0xaa  Code  Gb  Serial.o [2]
+SendBinary               0x800'186b   0x8e  Code  Gb  Serial.o [2]
+SendString               0x800'17ad   0xa4  Code  Gb  Serial.o [2]
 SysTick_Handler          0x800'1ce1   0x48  Code  Gb  stm32g0xx_it.o [2]
 SystemClock_Config       0x800'15ed   0x7c  Code  Gb  main.o [2]
 SystemCoreClock         0x2000'00c4    0x4  Data  Gb  system_stm32g0xx.o [3]
@@ -439,10 +438,10 @@ uwTickFreq              0x2000'00b8    0x1  Data  Gb  stm32g0xx_hal.o [4]
 uwTickPrio              0x2000'00c0    0x4  Data  Gb  stm32g0xx_hal.o [4]
 
 
-[1] = C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Application\EWARM
-[2] = C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Application\User\Core
-[3] = C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\CMSIS
-[4] = C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver
+[1] = C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Application\EWARM
+[2] = C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Application\User\Core
+[3] = C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\CMSIS
+[4] = C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\Obj\Drivers\STM32G0xx_HAL_Driver
 [5] = dl6M_tln.a
 [6] = rt6M_tl.a
 [7] = shb_l.a

@@ -5,7 +5,7 @@
 #include "ASCII_numbers.h"
 
 
-uint8_t packetBuffer[16];
+uint8_t packetBuffer[PACKET_BUFFER_SIZE];
 uint8_t inPacket = false;
 uint8_t nextPacketChar = 0;
 uint8_t processPacket = false;
@@ -152,15 +152,15 @@ uint8_t ProcessReceiveByte(void)
 // function to process the input buffer with a binary packet that includes packet length
 uint8_t ProcessReceiveByteWithLength(void)
 {
-  if (escapeDetected == true) {
-    if (rxBuffer[nextSerialRx2Proc] == ESCAPE_CHAR) {
+  if (escapeDetected == true) { // Start of a packet detected
+    if (rxBuffer[nextSerialRx2Proc] == ESCAPE_CHAR) { // If two escape characters in a row, escape character in data
       packetBuffer[nextPacketChar++] = rxBuffer[nextSerialRx2Proc];
       packetLength--;
     }
     else { 
       nextPacketChar = 0;
       packetBuffer[nextPacketChar++] = ESCAPE_CHAR;
-      packetLength = rxBuffer[nextSerialRx2Proc];
+      packetLength = rxBuffer[nextSerialRx2Proc]; // Get packet length from second byte in packet
       packetBuffer[nextPacketChar++] = rxBuffer[nextSerialRx2Proc];
     }
     escapeDetected = false; // either way we turn off the switch
@@ -195,4 +195,13 @@ void ProcessBinaryPacket(void)
 HAL_Delay(2000);
 }
 
+// Function to generate checksum value for a message
+// Value
+uint8_t Get_Checksum(const uint8_t * msg, uint16_t len){
+  
+  
+}
 
+void Verify_Checksum(void) {
+  
+}

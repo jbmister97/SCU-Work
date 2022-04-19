@@ -42,5 +42,6 @@ C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\BrowseInfo\App
   C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\..\Core\Inc\stm32g0xx_it.h \
   C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\..\Core\Inc\project.h \
   C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\Core\Src\scheduler.h \
+  C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\..\Core\Modules\Serial\serial_user.h \
   C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\..\Core\Modules\Serial\serial.h \
   C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_ll_usart.h

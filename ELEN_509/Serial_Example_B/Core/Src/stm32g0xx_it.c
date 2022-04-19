@@ -25,7 +25,7 @@
 /* USER CODE BEGIN Includes */
 #include "project.h"
 #include "scheduler.h"
-#include "serial.h"
+#include "serial_user.h"
 #include "stm32g0xx_hal.h"
 #include <stm32g0xx_ll_usart.h>
 
