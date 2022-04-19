@@ -1,0 +1,9 @@
+# This is for use with CubeMX Generated projects
+# for CubeMX ver
+# Replace the project folder name below with the current project folder name - everything else should be OK
+
+Drivers/CMSIS/*
+Drivers/STM32G0xx_HAL_Driver/*
+EWARM/Serial_Example/List/*
+!EWARM/Serial_Example/List/*.map
+EWARM/Serial_Example/Obj/*
