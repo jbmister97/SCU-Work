@@ -38,6 +38,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define DATA_SIZE       6
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -74,7 +75,8 @@ extern uint8_t processBinaryPacket;
 volatile uint16_t serialValue = 23;
 
 
-uint8_t data2Send[8] = {0xAA, 0x01, 0x02, 0x03, 0x04, 0xAA, 0x05, 0x06};
+//uint8_t data2Send[8] = {0xAA, 0x01, 0x02, 0x03, 0x04, 0xAA, 0x05, 0x06};
+uint8_t data2Send[DATA_SIZE] = {0x01, 0x01, 0x02, 0x02, 0x03, 0x03};
 
 /* USER CODE END PV */
 
@@ -124,7 +126,7 @@ int main(void)
 
   LL_USART_EnableIT_RXNE_RXFNE(USART1);
   
-  SendString("\r\nBongiorno!\r\n", 14, StripZeros, AddCRLF);
+  //SendString("\r\nBongiorno!\r\n", 14, StripZeros, AddCRLF);
   
 
 // **** Code testing  
@@ -132,7 +134,8 @@ int main(void)
 //  
 //  errcode = ConvertASCII2UINT16(&numstring[1], 4, '\0', &number);
   
-  SendBinary( data2Send, 8); 
+  //SendBinary( data2Send, 8); 
+  SendBinaryWithLength(data2Send,DATA_SIZE);
   
 // **** end code testing  
   

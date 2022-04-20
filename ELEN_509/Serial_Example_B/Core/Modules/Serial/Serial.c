@@ -8,6 +8,7 @@
 // modular variables
 uint8_t rxBuffer[RX_BUFFER_SIZE];
 uint8_t txBuffer[TX_BUFFER_SIZE];
+uint8_t checksumBuffer[TX_BUFFER_SIZE];
 uint8_t nextSerialTxOut = 0;
 uint8_t nextSerialTxIn = 0;
 uint8_t nextSerialRxIn = 0;
@@ -115,7 +116,9 @@ uint8_t SendBinary(const uint8_t * _msg, uint16_t _len)
   uint8_t status = 0;
   uint16_t freeBufferSpace;
   uint8_t i;
-  uint16_t totalLength = _len + 2;      //Add two for the length byte and first escape char
+  uint8_t j = 0;
+  //uint16_t totalLength = _len + 2;      //Add two for the length byte and first escape char
+  uint16_t totalLength = _len + 3;      //Add three for the length byte, first escape char, and checksum byte
   
   freeBufferSpace = CheckBuffer();
   uartIdle = (nextSerialTxOut == nextSerialTxIn) ? true : false;
@@ -123,27 +126,37 @@ uint8_t SendBinary(const uint8_t * _msg, uint16_t _len)
   if (totalLength < freeBufferSpace) {
     // Add the initial escape character to the tx buffer
     txBuffer[nextSerialTxIn] = ESCAPE_CHAR;
+    checksumBuffer[j++] = ESCAPE_CHAR;
     if (++nextSerialTxIn >= TX_BUFFER_SIZE) nextSerialTxIn = 0;
     
     // Add a byte for the length to the tx buffer
     txBuffer[nextSerialTxIn] = (uint8_t) _len;
+    checksumBuffer[j++] = _len;
     if (++nextSerialTxIn >= TX_BUFFER_SIZE) nextSerialTxIn = 0;
     
     // Add the message to the tx buffer
-    for (i = 2; i < totalLength; i++) {
+    for (i = 0; i < _len; i++) {
       if (_msg[i] != ESCAPE_CHAR) {
         txBuffer[nextSerialTxIn] = _msg[i];
+        checksumBuffer[j++] = _msg[i];
         if (++nextSerialTxIn >= TX_BUFFER_SIZE) nextSerialTxIn = 0;
       }
       else {
         txBuffer[nextSerialTxIn] = ESCAPE_CHAR;
+        checksumBuffer[j++] = ESCAPE_CHAR;
         if (++nextSerialTxIn >= TX_BUFFER_SIZE) nextSerialTxIn = 0;
 
         txBuffer[nextSerialTxIn] = ESCAPE_CHAR;
+        checksumBuffer[j++] = ESCAPE_CHAR;
         if (++nextSerialTxIn >= TX_BUFFER_SIZE) nextSerialTxIn = 0;
       }
       
     }
+    
+    // Add checksum byte to the tx buffer
+    txBuffer[nextSerialTxIn] = Get_Checksum(checksumBuffer, j);
+    if (++nextSerialTxIn >= TX_BUFFER_SIZE) nextSerialTxIn = 0;
+    
     
     if (uartIdle) {
       LL_USART_EnableIT_TXE(USART_INSTANCE);

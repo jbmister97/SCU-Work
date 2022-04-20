@@ -1,4 +1,6 @@
 C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\BrowseInfo\Application\User\Core\serial_user.pbi: \
+  C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.0\arm\inc\c\ycheck.h \
+  C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.0\arm\inc\c\stdio.h \
   C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\..\Core\Modules\Conversions\ASCII_numbers.h \
   C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\Core\Modules\Serial\serial_user.h \
   C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\..\Core\Inc\project.h \
@@ -18,7 +20,6 @@ C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\Serial_Example\BrowseInfo\App
   C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_gpio.h \
   C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_rcc_ex.h \
   C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_ll_rcc.h \
-  C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.0\arm\inc\c\ycheck.h \
   C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.0\arm\inc\c\ysizet.h \
   C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.0\arm\inc\c\stddef.h \
   C:\GitHub\SCU-Work\ELEN_509\Serial_Example_B\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h \

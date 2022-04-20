@@ -23,7 +23,7 @@ uint8_t ProcessReceiveByteWithLength(void);
 uint8_t ProcessPacket(void);
 void ProcessBinaryPacket(void);
 uint8_t Get_Checksum(const uint8_t * msg, uint16_t len);
-void Verify_Checksum(void);
+uint8_t Verify_Checksum(const uint8_t * msg, uint16_t len);
 
 // MACROS for Serial Buffer handling
 #define HANDLE_INPUT_BUFFER                                                     \
