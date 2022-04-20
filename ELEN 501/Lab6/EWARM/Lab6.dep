@@ -380,7 +380,7 @@
             <outputs>
                 <tool>
                     <name>ILINK</name>
-                    <file> 105 76</file>
+                    <file> 76 105</file>
                 </tool>
             </outputs>
         </file>
