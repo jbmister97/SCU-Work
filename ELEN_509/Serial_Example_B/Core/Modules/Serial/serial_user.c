@@ -21,6 +21,8 @@ char textString[25] = {0};
 uint8_t temp;
 uint8_t checksum;
 uint8_t checkDataLength;
+uint8_t checksumLength;
+uint8_t rxTempBuffIndex = 0;
 
 extern uint8_t flashLED;
 extern uint8_t buttonPushed;
@@ -170,22 +172,27 @@ uint8_t ProcessReceiveByteWithLength(void)
   if (escapeDetected == true) { // Start of a packet detected
     if (rxBuffer[nextSerialRx2Proc] == ESCAPE_CHAR) { // If two escape characters in a row, escape character in data
       packetBuffer[nextPacketChar++] = rxBuffer[nextSerialRx2Proc];
+      rxTempBuffer[rxTempBuffIndex++] = rxBuffer[nextSerialRx2Proc];
       packetLength--;
     }
     else { 
       nextPacketChar = 0;
+      rxTempBuffIndex = 1;
       packetBuffer[nextPacketChar++] = ESCAPE_CHAR;
       packetLength = rxBuffer[nextSerialRx2Proc] + 1; // Get packet length from second byte in packet
       packetBuffer[nextPacketChar++] = rxBuffer[nextSerialRx2Proc];
+      rxTempBuffer[rxTempBuffIndex++] = rxBuffer[nextSerialRx2Proc];
     }
     escapeDetected = false; // either way we turn off the switch
   }
   else {
     if (rxBuffer[nextSerialRx2Proc] == ESCAPE_CHAR) {
+      rxTempBuffer[rxTempBuffIndex++] = ESCAPE_CHAR;
       escapeDetected = true;
     }
     else {
       packetBuffer[nextPacketChar++] = rxBuffer[nextSerialRx2Proc];
+      rxTempBuffer[rxTempBuffIndex++] = rxBuffer[nextSerialRx2Proc];
       if (packetLength > 0) 
         packetLength--;
     }
@@ -202,8 +209,10 @@ uint8_t ProcessReceiveByteWithLength(void)
   
   // Reached end of packet
   if (packetLength == 0) {
+    checksumLength = packetBuffer[1];
     processBinaryPacket = true;
     packetLength = -1;
+    
   }
   return 0;
 
@@ -215,7 +224,8 @@ void ProcessBinaryPacket(void)
 {
   //HAL_Delay(2000);
   // Verify checksum is valid
-  if(Verify_Checksum(packetBuffer, packetBuffer[1])) {
+  //if(Verify_Checksum(packetBuffer, packetBuffer[1])) {
+  if(Verify_Checksum(rxTempBuffer, checksumLength)) {
     SendString("Checksum PASSED", 15, StripZeros, AddCRLF);
   }
   else {
