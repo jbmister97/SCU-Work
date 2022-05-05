@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO.Ports;
+using System.Management;
 
 namespace ELEN509_Serial_Example_WF
 {

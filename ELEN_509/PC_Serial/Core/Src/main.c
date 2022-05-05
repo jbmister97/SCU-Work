@@ -136,10 +136,10 @@ int main(void)
     if (hundred_mS_Flag) {
       hundred_mS_Flag = false;
       
-      if (HAL_GPIO_ReadPin(BOARD_MOUNTED_LED) == 0) {
+      if (HAL_GPIO_ReadPin(BOARD_MOUNTED_BUTTON) == 0) {
         SendString("Button Pressed", 14, StripZeros, AddCRLF);
         
-        while (HAL_GPIO_ReadPin(BOARD_MOUNTED_LED) == 0);
+        while (HAL_GPIO_ReadPin(BOARD_MOUNTED_BUTTON) == 0);
       }
 
     }  // end of 100mS Tasks

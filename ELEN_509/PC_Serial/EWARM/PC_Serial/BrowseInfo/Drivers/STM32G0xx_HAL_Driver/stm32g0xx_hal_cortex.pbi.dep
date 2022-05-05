@@ -1,44 +1,44 @@
-C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\PC_Serial\BrowseInfo\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_cortex.pbi: \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\Drivers\STM32G0xx_HAL_Driver\Src\stm32g0xx_hal_cortex.c \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Core\Inc\stm32g0xx_hal_conf.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_rcc.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_def.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\CMSIS\Device\ST\STM32G0xx\Include\stm32g0xx.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\CMSIS\Device\ST\STM32G0xx\Include\stm32g070xx.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\CMSIS\Include\core_cm0plus.h \
+C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\PC_Serial\BrowseInfo\Drivers\STM32G0xx_HAL_Driver\stm32g0xx_hal_cortex.pbi: \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\Drivers\STM32G0xx_HAL_Driver\Src\stm32g0xx_hal_cortex.c \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Core\Inc\stm32g0xx_hal_conf.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_rcc.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_def.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\CMSIS\Device\ST\STM32G0xx\Include\stm32g0xx.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\CMSIS\Device\ST\STM32G0xx\Include\stm32g070xx.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\CMSIS\Include\core_cm0plus.h \
   C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.0\arm\inc\c\stdint.h \
   C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.0\arm\inc\c\ycheck.h \
   C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.0\arm\inc\c\yvals.h \
   C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.0\arm\inc\c\DLib_Defaults.h \
   C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.0\arm\inc\c\DLib_Config_Full.h \
   C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.0\arm\inc\c\DLib_Product.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\CMSIS\Include\cmsis_version.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\CMSIS\Include\cmsis_compiler.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\CMSIS\Include\cmsis_iccarm.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\CMSIS\Include\cmsis_version.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\CMSIS\Include\cmsis_compiler.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\CMSIS\Include\cmsis_iccarm.h \
   C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.0\arm\inc\c\aarch32\iccarm_builtin.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\CMSIS\Include\mpu_armv7.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\CMSIS\Device\ST\STM32G0xx\Include\system_stm32g0xx.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\CMSIS\Include\mpu_armv7.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\CMSIS\Device\ST\STM32G0xx\Include\system_stm32g0xx.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h \
   C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.0\arm\inc\c\stddef.h \
   C:\Program\ Files\IAR\ Systems\Embedded\ Workbench\ 9.0\arm\inc\c\ysizet.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_ll_rcc.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_rcc_ex.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_gpio.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_gpio_ex.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_dma.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_ll_dma.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_ll_dmamux.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_dma_ex.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_cortex.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_adc.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_ll_adc.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_adc_ex.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_adc_ex.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_exti.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_flash.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_flash_ex.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_pwr.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_pwr_ex.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_uart.h \
-  C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_uart_ex.h
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_ll_rcc.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_rcc_ex.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_gpio.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_gpio_ex.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_dma.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_ll_dma.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_ll_dmamux.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_dma_ex.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_cortex.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_adc.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_ll_adc.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_adc_ex.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_adc_ex.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_exti.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_flash.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_flash_ex.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_pwr.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_pwr_ex.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_uart.h \
+  C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_uart_ex.h

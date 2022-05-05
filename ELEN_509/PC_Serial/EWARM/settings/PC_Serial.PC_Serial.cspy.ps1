@@ -23,9 +23,9 @@
 
 if ($debugfile -eq "")
 {
-& "C:\Program Files\IAR Systems\Embedded Workbench 9.0\common\bin\cspybat" -f "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\settings\PC_Serial.PC_Serial.general.xcl" --backend -f "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\settings\PC_Serial.PC_Serial.driver.xcl" 
+& "C:\Program Files\IAR Systems\Embedded Workbench 9.0\common\bin\cspybat" -f "C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\settings\PC_Serial.PC_Serial.general.xcl" --backend -f "C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\settings\PC_Serial.PC_Serial.driver.xcl" 
 }
 else
 {
-& "C:\Program Files\IAR Systems\Embedded Workbench 9.0\common\bin\cspybat" -f "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\settings\PC_Serial.PC_Serial.general.xcl" --debug_file=$debugfile --backend -f "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\PC_Serial\EWARM\settings\PC_Serial.PC_Serial.driver.xcl" 
+& "C:\Program Files\IAR Systems\Embedded Workbench 9.0\common\bin\cspybat" -f "C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\settings\PC_Serial.PC_Serial.general.xcl" --debug_file=$debugfile --backend -f "C:\GitHub\SCU-Work\ELEN_509\PC_Serial\EWARM\settings\PC_Serial.PC_Serial.driver.xcl" 
 }

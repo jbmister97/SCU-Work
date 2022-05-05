@@ -59,7 +59,8 @@ void Error_Handler(void);
 
 /* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN Private defines */
-#define BOARD_MOUNTED_LED GPIOC, GPIO_PIN_13
+#define BOARD_MOUNTED_BUTTON GPIOC, GPIO_PIN_13
+#define BOARD_MOUNTED_LED GPIOA, GPIO_PIN_5
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
