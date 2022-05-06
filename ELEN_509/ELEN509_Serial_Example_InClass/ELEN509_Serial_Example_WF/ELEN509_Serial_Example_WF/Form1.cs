@@ -5,6 +5,7 @@ namespace ELEN509_Serial_Example_WF
     public partial class Form1 : Form
     {
         ES_UART myES = new ES_UART();
+        Boolean packetComplete = false;
 
         public Form1()
         {
@@ -20,11 +21,11 @@ namespace ELEN509_Serial_Example_WF
             cboBaudRate.SelectedIndex = 0;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnOpenClose_Click(object sender, EventArgs e)
         {
             if ((cboCommPort.SelectedIndex == 0) || (cboBaudRate.SelectedIndex == 0))
             {
-                MessageBox.Show("Please ensure you've slelected a BAUD rate and a valid comm port");
+                MessageBox.Show("Please ensure you've selected a BAUD rate and a valid comm port");
             }
             else
             {
@@ -36,24 +37,31 @@ namespace ELEN509_Serial_Example_WF
                     myES.DataBits = 8;
                     myES.ReceivedBytesThreshold = 1;
 
-                    btnOpenClose.Text = "Close Port";
-                    tslPortStatus.Text = "Open";
-                    tslPortStatus.BackColor = Color.Green;
+                    myES.ByteRecieved += ES_ComLoggingUI_Callback;
+                    myES.GrabAByteFromRx += ProcessReceivedByte_Callback;
 
                     myES.OpenPort();
-                    //tmrCommBuffer.Enabled = true;
+                    if (myES.PortIsOpen == true)
+                    {
+                        btnOpenClose.Text = "Close Port";
+                        tslPortStatus.Text = "Open";
+                        tslPortStatus.BackColor = Color.Green;
+                    }
+                        
                 }
                 else
                 {
-                    myES.ClosePort();
-                    btnOpenClose.Text = "Open Port";
-                    tslPortStatus.Text = "Closed";
-                    tslPortStatus.BackColor = Color.Red;
-                    //tmrCommBuffer.Enabled = false;
+                    if (myES.PortIsOpen == true)
+                    {
+                        myES.ClosePort();
+                        btnOpenClose.Text = "Open Port";
+                        tslPortStatus.Text = "Closed";
+                        tslPortStatus.BackColor = Color.Red;
+                    }
                 }
             }
 
-            myES.TurnOnLogging(txtRxData, tslInPtr, tslOutPtr);
+            myES.TurnOnLogging();
         }
 
         void ProcessReceivedByte_Callback(object sender, byte rcvdByte)
@@ -65,25 +73,62 @@ namespace ELEN509_Serial_Example_WF
         {
             byte[] daByte = new byte[1];
             daByte[0] = e;
+            if (daByte[0] != 0)
+            {
+                
+                // Makes sure the data is an ASCII character
+                if (((daByte[0] >= 'a') && daByte[0] <= 'z') || (daByte[0] == ' ') ||
+                ((daByte[0] >= 'A') && (daByte[0] <= 'Z')) || (daByte[0] == '\r'))
+                {
+
+                    if (packetComplete)  // If starting new packet clear the text box
+                    {
+                        txtValue.Text = "";
+                        packetComplete = false;
+                    }
+
+                    if (daByte[0] == '\r') // If end of letters reached
+                    {
+                        packetComplete = true;
+                        // Check if text says Pressed
+                        if (txtValue.Text == "Pressed")
+                        {
+                            lblButtonStatus.BackColor = Color.Green;
+                        }
+                        // Check if text says Not Pressed
+                        else if (txtValue.Text == "Not Pressed")
+                        {
+                            lblButtonStatus.BackColor = Color.Red;
+                        }
+                    }
+                    
+                    else // still inside packet
+                    {
+                        txtValue.AppendText(((char)daByte[0]).ToString());
+                    }
+                }
+
+            }
+
             //myES.SendData(daByte);
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        void ES_ComLoggingUI_Callback(object sender, ES_UART.RecievedByteEventArgs e)
         {
-            
+            this.BeginInvoke(new ES_UART.ByteRecievedEventHandler(ES_LogComData), sender, e);
         }
 
-        private void tslInPtr_Click(object sender, EventArgs e)
+        void ES_LogComData(object sender, ES_UART.RecievedByteEventArgs e)
         {
-
+            if(e.receivedByte != 0)
+            {
+                txtRxData.AppendText(((char)e.receivedByte).ToString());
+            }
+            tslInPtr.Text = e.nextBufferInputPoint.ToString();
+            tslOutPtr.Text = e.nextByteToProcess.ToString();
         }
 
-        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void btnClear_Click(object sender, EventArgs e)
+        private void btnClearTx_Click(object sender, EventArgs e)
         {
             txtTxData.Text = "";
         }
@@ -136,12 +181,27 @@ namespace ELEN509_Serial_Example_WF
 
         private void btnCommand1_Click(object sender, EventArgs e)
         {
-            myES.SendData("command 1");
+            myES.SendData("$r\n"); // turn on LED
         }
 
-        private void txtRxData_TextChanged(object sender, EventArgs e)
+        private void btnSend_Click(object sender, EventArgs e)
         {
+            myES.SendData(txtTxData.Text);
+        }
 
+        private void btnClearRx_Click(object sender, EventArgs e)
+        {
+            txtTxData.Text = "";
+        }
+
+        private void btnCommand2_Click(object sender, EventArgs e)
+        {
+            myES.SendData("$s\n"); // turn off LED
+        }
+
+        private void btnCommand3_Click(object sender, EventArgs e)
+        {
+            myES.SendData("$v\n"); // get button status
         }
     }
 }

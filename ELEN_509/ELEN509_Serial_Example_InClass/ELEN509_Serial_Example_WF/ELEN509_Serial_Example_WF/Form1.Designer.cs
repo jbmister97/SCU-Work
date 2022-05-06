@@ -37,6 +37,9 @@
             this.btnClearRx = new System.Windows.Forms.Button();
             this.txtRxData = new System.Windows.Forms.TextBox();
             this.grpTransmitData = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnCommand3 = new System.Windows.Forms.Button();
             this.btnCommand2 = new System.Windows.Forms.Button();
             this.btnCommand1 = new System.Windows.Forms.Button();
@@ -67,7 +70,7 @@
             this.btnOpenClose.TabIndex = 0;
             this.btnOpenClose.Text = "Open Port";
             this.btnOpenClose.UseVisualStyleBackColor = true;
-            this.btnOpenClose.Click += new System.EventHandler(this.button1_Click);
+            this.btnOpenClose.Click += new System.EventHandler(this.btnOpenClose_Click);
             // 
             // btnGPI
             // 
@@ -90,7 +93,7 @@
             this.groupBox1.Size = new System.Drawing.Size(401, 115);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
+            this.groupBox1.Text = "Port Settings";
             // 
             // cboBaudRate
             // 
@@ -112,7 +115,6 @@
             this.cboCommPort.Name = "cboCommPort";
             this.cboCommPort.Size = new System.Drawing.Size(236, 23);
             this.cboCommPort.TabIndex = 2;
-            this.cboCommPort.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // grpReceiveData
             // 
@@ -133,6 +135,7 @@
             this.btnClearRx.TabIndex = 7;
             this.btnClearRx.Text = "Clear";
             this.btnClearRx.UseVisualStyleBackColor = true;
+            this.btnClearRx.Click += new System.EventHandler(this.btnClearRx_Click);
             // 
             // txtRxData
             // 
@@ -141,10 +144,12 @@
             this.txtRxData.Name = "txtRxData";
             this.txtRxData.Size = new System.Drawing.Size(361, 131);
             this.txtRxData.TabIndex = 7;
-            this.txtRxData.TextChanged += new System.EventHandler(this.txtRxData_TextChanged);
             // 
             // grpTransmitData
             // 
+            this.grpTransmitData.Controls.Add(this.label3);
+            this.grpTransmitData.Controls.Add(this.label2);
+            this.grpTransmitData.Controls.Add(this.label1);
             this.grpTransmitData.Controls.Add(this.btnCommand3);
             this.grpTransmitData.Controls.Add(this.btnCommand2);
             this.grpTransmitData.Controls.Add(this.btnCommand1);
@@ -158,23 +163,51 @@
             this.grpTransmitData.TabStop = false;
             this.grpTransmitData.Text = "Transmit Data";
             // 
+            // label3
+            // 
+            this.label3.Location = new System.Drawing.Point(205, 86);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(91, 36);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Check if button was pressed";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(118, 96);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(72, 15);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Turn LED off";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(20, 96);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(71, 15);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Turn LED on";
+            // 
             // btnCommand3
             // 
-            this.btnCommand3.Location = new System.Drawing.Point(204, 60);
+            this.btnCommand3.Location = new System.Drawing.Point(205, 60);
             this.btnCommand3.Name = "btnCommand3";
             this.btnCommand3.Size = new System.Drawing.Size(80, 23);
             this.btnCommand3.TabIndex = 5;
             this.btnCommand3.Text = "Cmd 3";
             this.btnCommand3.UseVisualStyleBackColor = true;
+            this.btnCommand3.Click += new System.EventHandler(this.btnCommand3_Click);
             // 
             // btnCommand2
             // 
-            this.btnCommand2.Location = new System.Drawing.Point(118, 60);
+            this.btnCommand2.Location = new System.Drawing.Point(110, 60);
             this.btnCommand2.Name = "btnCommand2";
             this.btnCommand2.Size = new System.Drawing.Size(80, 23);
             this.btnCommand2.TabIndex = 4;
             this.btnCommand2.Text = "Cmd 2";
             this.btnCommand2.UseVisualStyleBackColor = true;
+            this.btnCommand2.Click += new System.EventHandler(this.btnCommand2_Click);
             // 
             // btnCommand1
             // 
@@ -194,6 +227,7 @@
             this.btnSend.TabIndex = 2;
             this.btnSend.Text = "Send";
             this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
             // btnClearTx
             // 
@@ -203,7 +237,7 @@
             this.btnClearTx.TabIndex = 1;
             this.btnClearTx.Text = "Clear";
             this.btnClearTx.UseVisualStyleBackColor = true;
-            this.btnClearTx.Click += new System.EventHandler(this.btnClear_Click);
+            this.btnClearTx.Click += new System.EventHandler(this.btnClearTx_Click);
             // 
             // txtTxData
             // 
@@ -234,7 +268,6 @@
             this.statusStrip1.Size = new System.Drawing.Size(425, 24);
             this.statusStrip1.TabIndex = 6;
             this.statusStrip1.Text = "statusStrip1";
-            this.statusStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.statusStrip1_ItemClicked);
             // 
             // tslPortStatus
             // 
@@ -252,7 +285,6 @@
             this.tslInPtr.Name = "tslInPtr";
             this.tslInPtr.Size = new System.Drawing.Size(150, 19);
             this.tslInPtr.Text = "toolStripStatusLabel2";
-            this.tslInPtr.Click += new System.EventHandler(this.tslInPtr_Click);
             // 
             // tslOutPtr
             // 
@@ -276,16 +308,16 @@
             this.groupBox2.Size = new System.Drawing.Size(219, 67);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "groupBox2";
+            this.groupBox2.Text = "Button";
             // 
             // lblButtonStatus
             // 
             this.lblButtonStatus.AutoSize = true;
-            this.lblButtonStatus.Location = new System.Drawing.Point(160, 30);
+            this.lblButtonStatus.Location = new System.Drawing.Point(126, 31);
             this.lblButtonStatus.Name = "lblButtonStatus";
-            this.lblButtonStatus.Size = new System.Drawing.Size(38, 15);
+            this.lblButtonStatus.Size = new System.Drawing.Size(78, 15);
             this.lblButtonStatus.TabIndex = 1;
-            this.lblButtonStatus.Text = "label1";
+            this.lblButtonStatus.Text = "Button Status";
             // 
             // txtValue
             // 
@@ -348,5 +380,8 @@
         private GroupBox groupBox2;
         private Label lblButtonStatus;
         private TextBox txtValue;
+        private Label label2;
+        private Label label1;
+        private Label label3;
     }
 }

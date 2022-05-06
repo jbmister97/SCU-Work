@@ -95,11 +95,11 @@ uint8_t ProcessPacket(void)
   case 'v':     // v = check switch press
   case 'V':
     if (buttonPushed == true) {
-      SendString("Pushed", 6, StripZeros, AddCRLF);
+      SendString("Pressed", 7, StripZeros, AddCRLF);
       buttonPushed = false;      
     }
     else {
-      SendString("Not Pushed", 10, StripZeros, AddCRLF);
+      SendString("Not Pressed", 11, StripZeros, AddCRLF);
     }
     break;
   case 'w':     // w = write a value to the variable "serialValue"

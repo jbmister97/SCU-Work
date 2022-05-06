@@ -14,12 +14,10 @@ namespace ELEN509_Serial_Example_WF
         byte[] rxBuffer = new byte[RX_BUFFER_SIZE];
         Int32 nextBufferInputPoint = 0;
         Int32 nextByteToProcess = 0;
+        Int32 noOfCommErrors = 0;
+
 
         bool comLogging = false;
-        System.Windows.Forms.TextBox logBox;
-        System.Windows.Forms.ToolStripStatusLabel inPtrLbl;
-        System.Windows.Forms.ToolStripStatusLabel outPtrLbl;
-
         static SerialPort esLink = new SerialPort();
         static System.Windows.Forms.Timer tmrCommBuffer = new System.Windows.Forms.Timer();
 
@@ -31,6 +29,7 @@ namespace ELEN509_Serial_Example_WF
 
         }
 
+
         public string[] ListComPorts()
         {
             List<String> tList = new List<String>();
@@ -41,7 +40,6 @@ namespace ELEN509_Serial_Example_WF
                     tList.Add(s);
             }
 
-            //tList.Sort();
             tList.Sort((a, b) => (Convert.ToInt32(a.Replace("COM", string.Empty))).CompareTo(Convert.ToInt32(b.Replace("COM", string.Empty))));
 
             return tList.ToArray();
@@ -220,6 +218,7 @@ namespace ELEN509_Serial_Example_WF
 
         #endregion WMI_Port_Discovery
 
+
         public bool PortIsOpen
         {
             get { return esLink.IsOpen; }
@@ -230,9 +229,22 @@ namespace ELEN509_Serial_Example_WF
             if (!esLink.IsOpen)
             {
                 esLink.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(Recieve);
-                esLink.Open();
+                esLink.ErrorReceived += new System.IO.Ports.SerialErrorReceivedEventHandler(CommErrorHandler);
+                try
+                {
+                    esLink.Open();
+                }
+                catch (System.Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
                 tmrCommBuffer.Enabled = true;
             }
+        }
+
+        void CommErrorHandler(object sender, System.IO.Ports.SerialErrorReceivedEventArgs e)
+        {
+            noOfCommErrors++;
         }
 
         public void ClosePort()
@@ -275,6 +287,12 @@ namespace ELEN509_Serial_Example_WF
             set { esLink.ReceivedBytesThreshold = value; }
         }
 
+        public int NoOfReceivedCharInBuffer
+        {
+            get { return esLink.BytesToWrite; }
+            set { }
+        }
+
         private delegate void UpdateUiTextDelegate(byte text, Int32 ptr);
         private void Recieve(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
@@ -287,36 +305,39 @@ namespace ELEN509_Serial_Example_WF
 
                 // add it to the circular buffer
                 rxBuffer[nextBufferInputPoint] = recieved_data;
+
+                // Then move the pointer
                 if (++nextBufferInputPoint >= RX_BUFFER_SIZE)
                     nextBufferInputPoint = 0;
 
                 // then put it in the text box for logging
-                logBox.Invoke(new UpdateUiTextDelegate(WriteData), recieved_data, nextBufferInputPoint);
-            }
-        }
-        private void WriteData(byte text, Int32 ptr)
-        {
-            // Assign the value of the recieved_data to the RichTextBox.
-            if (comLogging)
-            {
-                logBox.Text += (char)text;
-                inPtrLbl.Text = ptr.ToString();
-            }
-        }
+                if (comLogging == true)
+                {
+                    RecievedByteEventArgs args = new RecievedByteEventArgs();
+                    args.nextByteToProcess = nextByteToProcess;
+                    args.nextBufferInputPoint = nextBufferInputPoint;
+                    args.receivedByte = recieved_data;
 
-        public void TurnOnLogging(System.Windows.Forms.TextBox location, System.Windows.Forms.ToolStripStatusLabel inLbl, System.Windows.Forms.ToolStripStatusLabel outLbl)
+                    OnReceivedByte(args);
+                }
+            }
+        }
+        public void TurnOnLogging()
         {
             comLogging = true;
-            logBox = location;
-            inPtrLbl = new System.Windows.Forms.ToolStripStatusLabel();
-            inPtrLbl = inLbl;
-            outPtrLbl = outLbl;
         }
 
         public void SendData(string data2send)
         {
             esLink.Write(data2send);
         }
+
+        public void SendData(byte[] data2send)
+        {
+            esLink.Write(data2send, 0, 1);
+        }
+
+
         private void tmrCommBuffer_Tick(object sender, EventArgs e)
         {
             byte[] dataByte = new byte[1];
@@ -329,11 +350,60 @@ namespace ELEN509_Serial_Example_WF
 
                 if (comLogging)
                 {
-                    outPtrLbl.Text = nextByteToProcess.ToString();
+                    RecievedByteEventArgs args = new RecievedByteEventArgs();
+                    args.nextByteToProcess = nextByteToProcess;
+                    args.nextBufferInputPoint = nextBufferInputPoint;
+                    args.receivedByte = 0;
+
+                    OnReceivedByte(args);
                 }
-                esLink.Write(dataByte, 0, 1);
+                //                esLink.Write(dataByte, 0, 1);
+
+                OnRxBufferContents(dataByte[0]);
             }
         }
+
+
+        #region RECEIVE_BYTE_LOG_HANDLER
+        protected virtual void OnReceivedByte(RecievedByteEventArgs e)
+        {
+            ByteRecievedEventHandler handler = ByteRecieved;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+
+        public event ByteRecievedEventHandler ByteRecieved;
+
+        public delegate void ByteRecievedEventHandler(Object sender, RecievedByteEventArgs e);
+
+        public class RecievedByteEventArgs : EventArgs
+        {
+            public byte receivedByte { get; set; }
+            public Int32 nextBufferInputPoint { get; set; }
+            public Int32 nextByteToProcess { get; set; }
+
+        }
+        #endregion RECEIVE_BYTE_LOG_HANDLER
+
+        #region RX_BUFFER_UNLOAD_HANDLER
+        protected virtual void OnRxBufferContents(byte comByte)
+        {
+            RxBufferRemoveByteEventHandler handler = GrabAByteFromRx;
+            if (handler != null)
+            {
+                handler(this, comByte);
+            }
+        }
+
+        public event RxBufferRemoveByteEventHandler GrabAByteFromRx;
+
+        public delegate void RxBufferRemoveByteEventHandler(object sender, byte comByte);
+
+        #endregion RX_BUFFER_UNLOAD_HANDLER
+
     }
 
 

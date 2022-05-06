@@ -137,8 +137,8 @@ int main(void)
       hundred_mS_Flag = false;
       
       if (HAL_GPIO_ReadPin(BOARD_MOUNTED_BUTTON) == 0) {
-        SendString("Button Pressed", 14, StripZeros, AddCRLF);
-        
+        //SendString("Button Pressed", 14, StripZeros, AddCRLF);
+        buttonPushed = true;
         while (HAL_GPIO_ReadPin(BOARD_MOUNTED_BUTTON) == 0);
       }
 
@@ -159,7 +159,8 @@ int main(void)
     // Every time through the loop
     if (nextSerialRxIn != nextSerialRx2Proc) {
       //ProcessReceiveByte();
-      ProcessReceiveByteWithLength();
+      //ProcessReceiveByteWithLength();
+      ProcessReceiveBuffer();
     }
     
     if (processPacket == true) {
