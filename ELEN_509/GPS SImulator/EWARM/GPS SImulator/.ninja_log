@@ -1,0 +1,88 @@
+# ninja log v5
+52	398	6739599355604993	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Application/EWARM/startup_stm32l412xx.o	1d38fd4003ba4ef5
+448	4333	6739599394728240	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal.o	860e1c44dbfae8b9
+80	4530	6739599396683017	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_dma.o	8977a0ea4dc61794
+4070	4685	6739599398009444	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Application/User/Core/stm32l4xx_hal_msp.o	7422da65a3b5eef0
+3988	4845	6739599399355859	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_cortex.o	668afa8545f0f655
+4349	5025	6739599401470184	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/CMSIS/system_stm32l4xx.o	189337decb4412e1
+4548	5235	6739599403006082	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_dma_ex.o	f2e01153c026b80a
+4705	5367	6739599405050604	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_flash_ramfunc.o	ad8378ad5cd91271
+4858	6597	6739599415990551	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_flash.o	e8d68942e3514e0c
+5249	6768	6739599418980569	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_exti.o	e09e33e2de5f89c2
+5037	7124	6739599422618600	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_flash_ex.o	9cce4974ad66bd51
+5379	7176	6739599422977645	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_gpio.o	fa1cb7e656e7e93f
+6785	7516	6739599426727605	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_i2c_ex.o	204da34dc5e9ee9
+7191	7794	6739599429500187	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_pwr.o	43c9deb263071d3b
+7139	8022	6739599431774116	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_pwr_ex.o	e5de2898d5a805a6
+8039	8447	6739599436012769	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_tim_ex.o	906ae7bf65829c0e
+7532	8602	6739599437528705	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_rcc_ex.o	dfee91a319dfc176
+8463	8907	6739599440620434	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_tim.o	6a1ec66abf8342d4
+7809	9204	6739599443542616	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_rcc.o	a561523fb97c2b39
+8922	9689	6739599448419563	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_uart_ex.o	97cf43302d4e8c27
+6621	10952	6739599460906146	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_i2c.o	ff93e571ec4524d8
+8618	11022	6739599461654153	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_uart.o	49a4fa0e9ab7a941
+30	1148	6739600103145937	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Application/User/Core/stm32l4xx_hal_msp.o	7422da65a3b5eef0
+13	2018	6739602217193159	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Application/User/Core/main.o	1f42a4f4769ea8c1
+8	2448	6739602565490757	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Application/User/Core/main.o	1f42a4f4769ea8c1
+7	614	6739602717709304	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Application/User/Core/main.o	1f42a4f4769ea8c1
+6	689	6739604531104586	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Application/User/Core/stm32l4xx_it.o	2eacf8700e01e6aa
+699	1210	6739604536988841	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.out	75630791afa226b0
+1251	1301	6739604538195618	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.hex	56c32597249a8009
+19	2163	6739605582932677	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Application/User/Core/main.o	1f42a4f4769ea8c1
+2179	2376	6739605585236485	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.out	75630791afa226b0
+2429	2445	6739605586114139	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.hex	56c32597249a8009
+5	569	6740082138404779	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Application/User/Core/main.o	1f42a4f4769ea8c1
+581	1071	6740082143423780	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.out	75630791afa226b0
+1118	1155	6740082144521285	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.hex	56c32597249a8009
+5	1872	6740082477934301	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Application/User/Core/main.o	1f42a4f4769ea8c1
+1889	2105	6740082480305317	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.out	75630791afa226b0
+2158	2176	6740082481306651	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.hex	56c32597249a8009
+11	2434	6740085652249418	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Application/User/Core/main.o	1f42a4f4769ea8c1
+2451	2702	6740085655179089	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.out	75630791afa226b0
+2755	2778	6740085656149051	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.hex	56c32597249a8009
+6	2079	6740088716788390	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Application/User/Core/main.o	1f42a4f4769ea8c1
+2094	2295	6740088719139703	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.out	75630791afa226b0
+2350	2367	6740088719924808	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.hex	56c32597249a8009
+16	3624	6740092416430119	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/CMSIS/system_stm32l4xx.o	189337decb4412e1
+5	3720	6740092417829827	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Application/User/Core/main.o	1f42a4f4769ea8c1
+28	3868	6740092418941700	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_cortex.o	668afa8545f0f655
+42	4128	6740092421760728	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_dma.o	8977a0ea4dc61794
+3738	4544	6740092426307471	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Application/User/Core/stm32l4xx_it.o	2eacf8700e01e6aa
+3638	4779	6740092428390687	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal.o	860e1c44dbfae8b9
+3892	4815	6740092428707212	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Application/User/Core/stm32l4xx_hal_msp.o	7422da65a3b5eef0
+4145	4877	6740092429019628	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_flash_ramfunc.o	ad8378ad5cd91271
+4834	5596	6740092436548851	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_dma_ex.o	f2e01153c026b80a
+4564	5691	6740092437536282	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_exti.o	e09e33e2de5f89c2
+4898	5945	6740092440154073	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_flash.o	e8d68942e3514e0c
+4798	6392	6740092444797080	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_flash_ex.o	9cce4974ad66bd51
+5965	6769	6740092448553732	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_i2c_ex.o	204da34dc5e9ee9
+5711	6848	6740092449077659	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_gpio.o	fa1cb7e656e7e93f
+6869	7626	6740092457072045	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_pwr.o	43c9deb263071d3b
+6407	7739	6740092457700871	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_pwr_ex.o	e5de2898d5a805a6
+7646	8524	6740092465787179	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_tim.o	6a1ec66abf8342d4
+7779	8635	6740092466689560	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_tim_ex.o	906ae7bf65829c0e
+6789	9063	6740092471395065	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_rcc.o	a561523fb97c2b39
+8678	10026	6740092480652598	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_uart_ex.o	97cf43302d4e8c27
+9080	10670	6740092487574207	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_rcc_ex.o	dfee91a319dfc176
+5616	11913	6740092499962619	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_i2c.o	ff93e571ec4524d8
+8542	12036	6740092501372579	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_uart.o	49a4fa0e9ab7a941
+12051	12237	6740092503411577	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.out	75630791afa226b0
+12291	12311	6740092504352871	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.hex	56c32597249a8009
+13	888	6740093587525590	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Application/User/Core/main.o	1f42a4f4769ea8c1
+902	1235	6740093591159280	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.out	75630791afa226b0
+1292	1332	6740093592413127	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.hex	56c32597249a8009
+5	2081	6740147550860731	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Application/User/Core/main.o	1f42a4f4769ea8c1
+2097	2283	6740147552959629	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.out	75630791afa226b0
+2334	2351	6740147553865842	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.hex	56c32597249a8009
+7	2075	6740151225474880	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Application/User/Core/main.o	1f42a4f4769ea8c1
+2090	2268	6740151227573138	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.out	75630791afa226b0
+2331	2349	6740151228514431	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.hex	56c32597249a8009
+5	2049	6740154373164853	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Application/User/Core/main.o	1f42a4f4769ea8c1
+2071	2236	6740154375169313	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.out	75630791afa226b0
+2279	2295	6740154375899298	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.hex	56c32597249a8009
+6	2009	6740160949085140	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Application/User/Core/main.o	1f42a4f4769ea8c1
+2026	2191	6740160950970193	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.out	75630791afa226b0
+2243	2261	6740160951911628	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.hex	56c32597249a8009
+10	2383	6740353799665470	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Application/User/Core/main.o	1f42a4f4769ea8c1
+2404	2640	6740353802334516	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.out	75630791afa226b0
+2716	2748	6740353803647471	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.hex	56c32597249a8009
