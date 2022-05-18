@@ -86,3 +86,29 @@
 10	2383	6740353799665470	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Obj/Application/User/Core/main.o	1f42a4f4769ea8c1
 2404	2640	6740353802334516	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.out	75630791afa226b0
 2716	2748	6740353803647471	C:/Users/VinDa/OneDrive/Documents/IAR/ELEN509_SQ22/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.hex	56c32597249a8009
+1	46	6745585521943424	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Obj/Application/EWARM/startup_stm32l412xx.o	540cb45b6a89edb4
+6	299	6745585524636145	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Obj/Application/User/Core/stm32l4xx_hal_msp.o	8f06b28aeca0db93
+16	324	6745585524826338	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Obj/Application/User/Core/stm32l4xx_it.o	d3ee0a9624d8af57
+11	351	6745585525016528	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Obj/Application/User/Core/main.o	4cc66d73e559c4b6
+32	392	6745585525587101	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_dma_ex.o	2202ee9ab3618b3c
+21	405	6745585525607129	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_cortex.o	fd519d40850a85bd
+26	427	6745585525657173	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal.o	86acf080fe6102d4
+49	453	6745585526097622	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/CMSIS/system_stm32l4xx.o	52f6ebd985d1b813
+331	521	6745585526868396	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_flash_ramfunc.o	f4d3bef8b26625d6
+37	607	6745585527709244	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_dma.o	9922d233e1aa51c2
+357	633	6745585527989526	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_exti.o	a803ddfb1604d3af
+398	710	6745585528750290	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_gpio.o	aba2403d506f9030
+305	723	6745585528800343	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_flash_ex.o	df65ebde133940f0
+412	747	6745585529010555	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_flash.o	86cfade686645a0d
+641	868	6745585530331896	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_i2c_ex.o	d431ede27bac9086
+614	888	6745585530401962	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_pwr.o	606d8a1a22c93271
+526	902	6745585530401962	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_pwr_ex.o	563c1b0419d1e1f1
+754	954	6745585531222788	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_tim_ex.o	834a1d92e97446df
+729	1047	6745585532143716	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_uart_ex.o	88bc5476bd3ea23c
+873	1062	6745585532223799	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_tim.o	e7028c71f6fe6a5e
+459	1069	6745585532213788	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_rcc.o	da4e40e77acb026d
+717	1157	6745585533234814	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_rcc_ex.o	41c346fe3d455b36
+895	1925	6745585540892626	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_uart.o	47a7a762eba4d746
+435	2103	6745585542644311	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Obj/Drivers/STM32L4xx_HAL_Driver/stm32l4xx_hal_i2c.o	81a78819c2e5f513
+2109	2208	6745585543772887	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.out	a9d6bd1c7a83c936
+2222	2234	6745585544103222	C:/GitHub/SCU-Work/ELEN_509/GPS SImulator/EWARM/GPS SImulator/Exe/GPS SImulator.hex	df29d0a4f7975c13

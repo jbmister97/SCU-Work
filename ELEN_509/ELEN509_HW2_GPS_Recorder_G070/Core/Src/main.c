@@ -25,6 +25,7 @@
 #include "Scheduler.h"
 #include "serial.h"
 #include "serial_user.h"
+#include <stm32g0xx_ll_usart.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -102,7 +103,7 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  LL_USART_EnableIT_RXNE_RXFNE(USART1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -141,7 +142,6 @@ int main(void)
     if (one_S_Flag) {
       one_S_Flag = false;
       
-
       
     } // end of 1Sec Tasks
     //---------------------------------
@@ -231,7 +231,7 @@ static void MX_USART1_UART_Init(void)
 
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
-  huart1.Init.BaudRate = 115200;
+  huart1.Init.BaudRate = 9600;
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;
@@ -279,7 +279,7 @@ static void MX_USART2_UART_Init(void)
 
   /* USER CODE END USART2_Init 1 */
   huart2.Instance = USART2;
-  huart2.Init.BaudRate = 115200;
+  huart2.Init.BaudRate = 9600;
   huart2.Init.WordLength = UART_WORDLENGTH_8B;
   huart2.Init.StopBits = UART_STOPBITS_1;
   huart2.Init.Parity = UART_PARITY_NONE;

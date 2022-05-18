@@ -136,7 +136,7 @@
                     <item>nextSerialTxOut</item>
                     <item>nextSerialTxIn</item>
                     <item>rxBuffer</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>

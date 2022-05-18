@@ -1,5 +1,6 @@
 C:\GitHub\SCU-Work\ELEN_509\ELEN509_HW2_GPS_Recorder_G070\EWARM\ELEN509_HW2_GPS_Recorder_G070\BrowseInfo\Application\User\Core\stm32g0xx_it.pbi: \
   C:\GitHub\SCU-Work\ELEN_509\ELEN509_HW2_GPS_Recorder_G070\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_ll_usart.h \
+  C:\GitHub\SCU-Work\ELEN_509\ELEN509_HW2_GPS_Recorder_G070\Core\Modules\Serial\serial.h \
   C:\GitHub\SCU-Work\ELEN_509\ELEN509_HW2_GPS_Recorder_G070\EWARM\..\Core\Inc\Scheduler.h \
   C:\GitHub\SCU-Work\ELEN_509\ELEN509_HW2_GPS_Recorder_G070\EWARM\..\Core\Inc\stm32g0xx_it.h \
   C:\GitHub\SCU-Work\ELEN_509\ELEN509_HW2_GPS_Recorder_G070\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_uart_ex.h \

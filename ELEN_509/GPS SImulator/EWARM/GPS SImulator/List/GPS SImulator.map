@@ -1,94 +1,69 @@
 ###############################################################################
 #
-# IAR ELF Linker V9.10.2.313/W64 for ARM                  11/May/2022  22:09:40
+# IAR ELF Linker V9.10.2.313/W64 for ARM                  17/May/2022  23:29:14
 # Copyright 2007-2021 IAR Systems AB.
 #
 #    Output file  =
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS SImulator\Exe\GPS SImulator.out
+#        C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS SImulator\Exe\GPS
+#        SImulator.out
 #    Map file     =
-#        C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS SImulator\List\GPS SImulator.map
+#        C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS SImulator\List\GPS
+#        SImulator.map
 #    Command line =
-#        -f "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS SImulator\Exe\GPS SImulator.out.rsp"
-#        ("C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
+#        -f "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS
+#        SImulator\Exe\GPS SImulator.out.rsp" ("C:\GitHub\SCU-Work\ELEN_509\GPS
 #        SImulator\EWARM\GPS SImulator\Obj\Application\User\Core\main.o"
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS
 #        SImulator\Obj\Application\EWARM\startup_stm32l412xx.o"
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS
 #        SImulator\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal.o"
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS
 #        SImulator\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_cortex.o"
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS
 #        SImulator\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_dma.o"
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS
 #        SImulator\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_dma_ex.o"
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS
 #        SImulator\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_exti.o"
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS
 #        SImulator\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_flash.o"
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS
 #        SImulator\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_flash_ex.o"
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS
 #        SImulator\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_flash_ramfunc.o"
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS
 #        SImulator\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_gpio.o"
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS
 #        SImulator\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_i2c.o"
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS
 #        SImulator\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_i2c_ex.o"
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS
 #        SImulator\Obj\Application\User\Core\stm32l4xx_hal_msp.o"
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS
 #        SImulator\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_pwr.o"
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS
 #        SImulator\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_pwr_ex.o"
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS
 #        SImulator\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_rcc.o"
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS
 #        SImulator\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_rcc_ex.o"
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS
 #        SImulator\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_tim.o"
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS
 #        SImulator\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_tim_ex.o"
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS
 #        SImulator\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_uart.o"
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS
 #        SImulator\Obj\Drivers\STM32L4xx_HAL_Driver\stm32l4xx_hal_uart_ex.o"
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS
 #        SImulator\Obj\Application\User\Core\stm32l4xx_it.o"
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS SImulator\Obj\Drivers\CMSIS\system_stm32l4xx.o"
-#        --no_out_extension -o
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
-#        SImulator\EWARM\GPS SImulator\Exe\GPS SImulator.out" --redirect
-#        _Printf=_PrintfFullNoMb --redirect _Scanf=_ScanfFullNoMb --map
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS
+#        SImulator\Obj\Drivers\CMSIS\system_stm32l4xx.o" --no_out_extension -o
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS SImulator\Exe\GPS
+#        SImulator.out" --redirect _Printf=_PrintfFullNoMb --redirect
+#        _Scanf=_ScanfFullNoMb --map "C:\GitHub\SCU-Work\ELEN_509\GPS
 #        SImulator\EWARM\GPS SImulator\List\GPS SImulator.map" --config
-#        "C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS
+#        "C:\GitHub\SCU-Work\ELEN_509\GPS
 #        SImulator\EWARM/stm32l412xx_flash.icf" --semihosting --entry
 #        __iar_program_start --vfe --text_out locale)
 #
@@ -107,10 +82,9 @@ __dlib_version  = 6
 *** HEAP SELECTION
 ***
 
-The basic heap was selected because no calls to memory allocation
-functions were found in the application outside of system library
-functions, and there are calls to deallocation functions in the
-application.
+The basic heap was selected because some modules are built with
+size limitations (and not runtime checking), and --advanced_heap
+was not specified.
 
 
 *******************************************************************************
@@ -283,24 +257,24 @@ command line/config:
     -------------------------------------------------
     Total:
 
-C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS SImulator\EWARM\GPS SImulator\Obj\Application\EWARM: [1]
+C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS SImulator\Obj\Application\EWARM: [1]
     startup_stm32l412xx.o       636
     -------------------------------------------------
     Total:                      636
 
-C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS SImulator\EWARM\GPS SImulator\Obj\Application\User\Core: [2]
+C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS SImulator\Obj\Application\User\Core: [2]
     main.o                      480    1'326      270
     stm32l4xx_hal_msp.o         244
     stm32l4xx_it.o               96        3       12
     -------------------------------------------------
     Total:                      820    1'329      282
 
-C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS SImulator\EWARM\GPS SImulator\Obj\Drivers\CMSIS: [3]
+C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS SImulator\Obj\Drivers\CMSIS: [3]
     system_stm32l4xx.o           32       57        4
     -------------------------------------------------
     Total:                       32       57        4
 
-C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS SImulator\EWARM\GPS SImulator\Obj\Drivers\STM32L4xx_HAL_Driver: [4]
+C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS SImulator\Obj\Drivers\STM32L4xx_HAL_Driver: [4]
     stm32l4xx_hal.o             126        2       12
     stm32l4xx_hal_cortex.o      172
     stm32l4xx_hal_gpio.o        440
@@ -458,10 +432,10 @@ uwTickFreq              0x2000'008c    0x1  Data  Gb  stm32l4xx_hal.o [4]
 uwTickPrio              0x2000'0094    0x4  Data  Gb  stm32l4xx_hal.o [4]
 
 
-[1] = C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS SImulator\EWARM\GPS SImulator\Obj\Application\EWARM
-[2] = C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS SImulator\EWARM\GPS SImulator\Obj\Application\User\Core
-[3] = C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS SImulator\EWARM\GPS SImulator\Obj\Drivers\CMSIS
-[4] = C:\Users\VinDa\OneDrive\Documents\IAR\ELEN509_SQ22\GPS SImulator\EWARM\GPS SImulator\Obj\Drivers\STM32L4xx_HAL_Driver
+[1] = C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS SImulator\Obj\Application\EWARM
+[2] = C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS SImulator\Obj\Application\User\Core
+[3] = C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS SImulator\Obj\Drivers\CMSIS
+[4] = C:\GitHub\SCU-Work\ELEN_509\GPS SImulator\EWARM\GPS SImulator\Obj\Drivers\STM32L4xx_HAL_Driver
 [5] = dl7M_tln.a
 [6] = m7M_tls.a
 [7] = rt7M_tl.a
