@@ -29,5 +29,7 @@ uint8_t ProcessPacket(void);
 void ProcessGpsPacket(uint8_t byte);
 void Init_GPS_Message(GPGGA_Record_t *msg);
 void Get_Checksum(uint8_t byte);
+void Send_Bad_Record(void);
+void Send_Wrong_Record(void);
 
 #endif

@@ -47,10 +47,10 @@ uint8_t tempBuff[TEMP_BUFF_SIZE];
 uint8_t tempBuffIndex = 0;
 uint8_t checksum = 0;
 uint8_t testChecksum = 0;
-char latitudePosMsgFormat[30] = "Latitude: %f";
-char latitudeNegMsgFormat[30] = "Latitude: -%f";
-char longitudePosMsgFormat[30] = "Longitude: %f";
-char longitudeNegMsgFormat[30] = "Longitude: -%f";
+char latitudePosMsgFormat[30] = "%f,";
+char latitudeNegMsgFormat[30] = "-%f,";
+char longitudePosMsgFormat[30] = "%f";
+char longitudeNegMsgFormat[30] = "-%f";
 
 extern uint8_t flashLED;
 extern uint8_t buttonPushed;
@@ -84,9 +84,9 @@ uint8_t ProcessReceiveBuffer(void)
         msgIDBuff[msgIDBuffIndex++] = (char) rxBuffer[nextSerialRx2Proc];
         Get_Checksum(rxBuffer[nextSerialRx2Proc]);
         // If ID data goes outside of capital letter ASCII range, ID is not valid
-        if(rxBuffer[nextSerialRx2Proc] < 'A' && rxBuffer[nextSerialRx2Proc] > 'Z'){
+        if((rxBuffer[nextSerialRx2Proc] < 'A') || (rxBuffer[nextSerialRx2Proc] > 'Z')){
           inPacket = false;
-          SendString("BAD RECORD",10,StripZeros,AddCRLF);
+          Send_Bad_Record();
         }
       }
       // Finished getting ID so process packet based on message ID
@@ -99,47 +99,44 @@ uint8_t ProcessReceiveBuffer(void)
         else{
           // Wrong message ID
           inPacket = false;
-          SendString("WRONG RECORD",12,StripZeros,AddCRLF);
+          Send_Wrong_Record();
         }
         
         // Check if end of GPS packet as been reached
         if(rxBuffer[nextSerialRx2Proc] == '\n') {
           inPacket = false;
-          char msgDisplayBuff[23];
+          char msgDisplayBuff[25];
+          char longitudeDisplayBuff[15];
           
-          // Check if packet is GPGGA
-          //if(isGPGGA == true) {
             // Verify checksum matches
             if(checksum == gpsMsg.checkSum) {
               validMsg = gpsMsg;
-              // Display latitude
+              
+              // Get latitude
               if(validMsg.NSIndicator == 'S') { // If indicator is south make latitude negative
                 sprintf(msgDisplayBuff, latitudeNegMsgFormat, validMsg.latitude);
-                SendString(msgDisplayBuff, 23, StripZeros, AddCRLF);
               }
               else { // Make latitude positive
                 sprintf(msgDisplayBuff, latitudePosMsgFormat, validMsg.latitude);
-                SendString(msgDisplayBuff, 23, StripZeros, AddCRLF);
               }
               
-              // Display longitude
+              // Get longitude
               if(validMsg.EWIndicator == 'W') { // If indicator is west make longitude negative
-                sprintf(msgDisplayBuff, longitudeNegMsgFormat, validMsg.longitude);
-                SendString(msgDisplayBuff, 23, StripZeros, AddCRLF);
+                sprintf(longitudeDisplayBuff, longitudeNegMsgFormat, validMsg.longitude);
               }
               else { // Make longitude positive
-                sprintf(msgDisplayBuff, longitudePosMsgFormat, validMsg.longitude);
-                SendString(msgDisplayBuff, 23, StripZeros, AddCRLF);
+                sprintf(longitudeDisplayBuff, longitudePosMsgFormat, validMsg.longitude);
               }
+              
+              // Combine latitude and longitude into a single character array
+              strcat(msgDisplayBuff, longitudeDisplayBuff);
+              SendString(msgDisplayBuff, 25, StripZeros, AddCRLF);
+              
             }
             else { // GPGGA packet is bad since checksum did not match
-              SendString("BAD RECORD",10,StripZeros,AddCRLF);
+              Send_Bad_Record();
             }
-          //}
-          //else { // Packet is not GPGGA
-            //SendString("WRONG RECORD",12,StripZeros,AddCRLF);
-            
-          //}
+
           // Clear message ID buffer
           for(uint8_t i = 0; i < MSG_ID_BUFF_SIZE; i++) {msgIDBuff[i] = 0;}
         }
@@ -463,6 +460,14 @@ void Init_GPS_Message(GPGGA_Record_t *msg) {
   msg->unitsGeo = '\0';
   msg->ageDiff = 0;
   msg->checkSum = 0;
+}
+
+void Send_Bad_Record(void) {
+  SendString("-- BAD RECORD --",16,StripZeros,AddCRLF);
+}
+
+void Send_Wrong_Record(void){
+  SendString("-- WRONG RECORD --",18,StripZeros,AddCRLF);
 }
 
 uint8_t ProcessPacket(void)
