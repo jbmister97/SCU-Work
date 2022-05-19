@@ -29,7 +29,8 @@
 
 #define TEMP_BUFF_SIZE          15
 
-uint8_t packetBuffer[100];
+uint8_t packetBuffer[25];
+uint8_t gpsPacketBuffer[100];
 uint8_t inPacket = false;
 uint8_t nextPacketChar = 0;
 uint8_t processPacket = false;
@@ -46,11 +47,11 @@ uint8_t isGPGGA = false;
 uint8_t tempBuff[TEMP_BUFF_SIZE];
 uint8_t tempBuffIndex = 0;
 uint8_t checksum = 0;
-uint8_t testChecksum = 0;
-char latitudePosMsgFormat[30] = "%f,";
-char latitudeNegMsgFormat[30] = "-%f,";
-char longitudePosMsgFormat[30] = "%f";
-char longitudeNegMsgFormat[30] = "-%f";
+char latitudePosMsgFormat[] = "%f,";
+char latitudeNegMsgFormat[] = "-%f,";
+char longitudePosMsgFormat[] = "%f";
+char longitudeNegMsgFormat[] = "-%f";
+char numOfSatFormat[]= "# of sat: %d";
 
 extern uint8_t flashLED;
 extern uint8_t buttonPushed;
@@ -67,18 +68,18 @@ uint8_t ProcessReceiveBuffer(void)
   if (rxBuffer[nextSerialRx2Proc] == '$') {
     inPacket = true;
     
+    // Initialize all indexes and variables used
     msgIDBuffIndex = 0;
     checksum = 0;
-    testChecksum = 0;
-    isGPGGA = false;
     stateGPGGA = STATE_GPGGA_START;
-    packetBuffer[0] = rxBuffer[nextSerialRx2Proc];
+    
+    gpsPacketBuffer[0] = rxBuffer[nextSerialRx2Proc]; // Leave for debugging
     msgIDBuff[msgIDBuffIndex++] = (char) rxBuffer[nextSerialRx2Proc];
     nextPacketChar = 1;
   }
   else {
     if (inPacket == true) {
-      packetBuffer[nextPacketChar++] = rxBuffer[nextSerialRx2Proc];
+      gpsPacketBuffer[nextPacketChar++] = rxBuffer[nextSerialRx2Proc]; //Leave for debugging
       // Get message ID
       if(msgIDBuffIndex < MSG_ID_BUFF_SIZE) {
         msgIDBuff[msgIDBuffIndex++] = (char) rxBuffer[nextSerialRx2Proc];
@@ -91,13 +92,11 @@ uint8_t ProcessReceiveBuffer(void)
       }
       // Finished getting ID so process packet based on message ID
       else{
-        //if(msgIDBuff == "$GPGGA") {
+        // If message ID is $GPGGA then process the incoming byte
         if(!strcmp(msgIDBuff, "$GPGGA")) {
-          isGPGGA = true;
           ProcessGpsPacket(rxBuffer[nextSerialRx2Proc]);
         }
-        else{
-          // Wrong message ID
+        else{ // Wrong message ID
           inPacket = false;
           Send_Wrong_Record();
         }
@@ -107,6 +106,7 @@ uint8_t ProcessReceiveBuffer(void)
           inPacket = false;
           char msgDisplayBuff[25];
           char longitudeDisplayBuff[15];
+          char satDisplayBuff[12];
           
             // Verify checksum matches
             if(checksum == gpsMsg.checkSum) {
@@ -132,6 +132,10 @@ uint8_t ProcessReceiveBuffer(void)
               strcat(msgDisplayBuff, longitudeDisplayBuff);
               SendString(msgDisplayBuff, 25, StripZeros, AddCRLF);
               
+              // Send out the # of satellites used
+              sprintf(satDisplayBuff, numOfSatFormat, validMsg.satUsed);
+              SendString(satDisplayBuff, 12, StripZeros, AddCRLF);
+              
             }
             else { // GPGGA packet is bad since checksum did not match
               Send_Bad_Record();
@@ -141,8 +145,6 @@ uint8_t ProcessReceiveBuffer(void)
           for(uint8_t i = 0; i < MSG_ID_BUFF_SIZE; i++) {msgIDBuff[i] = 0;}
         }
       }
-      
-      
     }
   }
   
@@ -156,12 +158,11 @@ uint8_t ProcessReceiveBuffer(void)
 
 void ProcessGpsPacket(uint8_t byte) {
   
-  // calculate the checksum
+  // calculate the checksum with incoming byte
   if(stateGPGGA != STATE_GPGGA_CHECKSUM) {
     if((byte != '\r') && (byte != '\n')){
       Get_Checksum(byte);
     }
-    
   }
   
   switch(stateGPGGA) {
@@ -196,7 +197,6 @@ void ProcessGpsPacket(uint8_t byte) {
     // If end of item data reached
     if(byte == ',') {
       // Convert latitude from string to double
-      //gpsMsg.latitude = atof((char const*) tempBuff);
       gpsMsg.latitude = strtod((char const*) tempBuff,NULL);
       
       // Clear temp buffer
@@ -235,7 +235,6 @@ void ProcessGpsPacket(uint8_t byte) {
     // If end of item data reached
     if(byte == ',') {
       // Convert latitude from string to double
-      //gpsMsg.longitude = atof((char const*) tempBuff);
       gpsMsg.longitude = strtod((char const*) tempBuff,NULL);
       
       // Clear temp buffer
@@ -418,8 +417,7 @@ void ProcessGpsPacket(uint8_t byte) {
   case STATE_GPGGA_CHECKSUM:
     // If end of item data reached
     if(byte == '\r') {
-      // Convert checksum from string to hex in int form
-      //gpsMsg.checkSum = (uint8_t) atoi((char const*) tempBuff);
+      // Convert checksum from string to hex value
       gpsMsg.checkSum = (uint8_t) strtol((char const*) tempBuff, NULL, 16);
       
       // Clear temp buffer
@@ -428,7 +426,6 @@ void ProcessGpsPacket(uint8_t byte) {
       
       // Last item in packet reached so reset to first item
       stateGPGGA = STATE_GPGGA_START;
-      packetValid = true;
     }
     // Still inside item data
     else{
@@ -442,6 +439,7 @@ void ProcessGpsPacket(uint8_t byte) {
 }
 
 void Get_Checksum(uint8_t byte) {
+  // XOR the incoming byte with the existing checksum value;
   checksum ^= byte;
 }
 
