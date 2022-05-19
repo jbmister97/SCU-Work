@@ -56,6 +56,13 @@ extern uint8_t one_S_Flag;
 // Comm interface
 extern uint8_t processPacket;
 
+uint8_t testArr[] = "$GPGGA,064951.000,2307.1256,N,12016.4438,E,1,8,0.95,39.9,M,17.8,M,,*65\r\n";
+uint8_t testArr2[] = "$GPGGA,092357.00,3731.07311,N,12155.24846,W,1,06,1.29,106.3,M,-29.6,M,,*60\r\n";
+uint8_t testVal = 0;
+uint8_t testVal1 = 0;
+uint8_t testVal2 = 0;
+uint8_t testVal3 = 0;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -142,7 +149,40 @@ int main(void)
     if (one_S_Flag) {
       one_S_Flag = false;
       
+      testVal = 0;
+      testVal1 = 0;
+      testVal2 = 0;
+      testVal3 = 0;
       
+
+      //for(uint8_t i = 1; i < 67; i++) {
+      for(uint8_t i = 1; i < 66; i++) {
+        testVal ^= testArr[i];
+      }
+      for(uint8_t i = 1; i < 67; i++) {
+        testVal1 ^= testArr[i];
+      }
+      for(uint8_t i = 1; i < 65; i++) {
+        testVal2 ^= testArr[i];
+      }
+      for(uint8_t i = 1; i < 6; i++) {
+        testVal3 ^= testArr[i];
+      }
+
+      /*
+      for(uint8_t i = 1; i < 70; i++) {
+        testVal ^= testArr2[i];
+      }
+      for(uint8_t i = 1; i < 71; i++) {
+        testVal1 ^= testArr2[i];
+      }
+      for(uint8_t i = 1; i < 72; i++) {
+        testVal2 ^= testArr2[i];
+      }
+      for(uint8_t i = 1; i < 73; i++) {
+        testVal3 ^= testArr2[i];
+      }
+      */
     } // end of 1Sec Tasks
     //---------------------------------
 

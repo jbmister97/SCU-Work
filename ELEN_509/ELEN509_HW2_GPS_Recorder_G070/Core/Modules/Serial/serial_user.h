@@ -5,9 +5,9 @@
 
 typedef struct
 {
+  double latitude;
+  double longitude;
   float utcTime;
-  float latitude;
-  float longitude;
   float hdop;
   float mslAltitude;
   float geoidalSep;
@@ -28,5 +28,6 @@ uint8_t ProcessReceiveBuffer(void);
 uint8_t ProcessPacket(void);
 void ProcessGpsPacket(uint8_t byte);
 void Init_GPS_Message(GPGGA_Record_t *msg);
+void Get_Checksum(uint8_t byte);
 
 #endif
