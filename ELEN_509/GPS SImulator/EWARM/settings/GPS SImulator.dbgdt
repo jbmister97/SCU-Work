@@ -232,7 +232,7 @@
             <IarPane-34101>
                 <expressions>
                     <item>gpsMsg2Send</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>

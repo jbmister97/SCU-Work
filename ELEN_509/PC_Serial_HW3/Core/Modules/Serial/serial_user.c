@@ -25,6 +25,9 @@ uint16_t serialValue;
 
 char msg2Send[25];
 uint8_t msgLength = 0;
+char numCharArr[5] = "";
+
+extern uint8_t counterValue;
 
 
 // function to process the input buffer with an ASCII-based protocol
@@ -38,8 +41,8 @@ uint8_t ProcessReceiveBuffer(void)
   else {
     if (inPacket == true) {
       if (((rxBuffer[nextSerialRx2Proc] >= '0') && (rxBuffer[nextSerialRx2Proc] <= '9')) || 
-          ((rxBuffer[nextSerialRx2Proc] >= 'r') && (rxBuffer[nextSerialRx2Proc] <= 'v')) ||
-          ((rxBuffer[nextSerialRx2Proc] >= 'R') && (rxBuffer[nextSerialRx2Proc] <= 'V')) ||
+          ((rxBuffer[nextSerialRx2Proc] >= 'r') && (rxBuffer[nextSerialRx2Proc] <= 'y')) ||
+          ((rxBuffer[nextSerialRx2Proc] >= 'R') && (rxBuffer[nextSerialRx2Proc] <= 'Y')) ||
           (rxBuffer[nextSerialRx2Proc] >= '\n') || (rxBuffer[nextSerialRx2Proc] <= '\r')) {
         
             packetBuffer[nextPacketChar++] = rxBuffer[nextSerialRx2Proc];
@@ -108,6 +111,15 @@ uint8_t ProcessPacket(void)
   case 'X':
     flashLED = true;
     flashAtSpeed = false;
+    break;
+  case 'y':
+  case 'Y':
+    sprintf(numCharArr,"$T%d",counterValue);
+    SendString(numCharArr,5,StripZeros,AddCRLF);
+    // Clear num character array
+    for(uint8_t i = 0; i < 5; i++) {
+      numCharArr[i] = 0;
+    }
     break;
   }
 

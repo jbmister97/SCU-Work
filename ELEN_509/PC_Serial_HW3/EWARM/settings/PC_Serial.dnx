@@ -19,7 +19,7 @@
         <EnableCache>0</EnableCache>
     </ArmDriver>
     <StLinkDriver>
-        <stlinkserialNo>066EFF525649898367225846</stlinkserialNo>
+        <stlinkserialNo>066CFF525649898367231120</stlinkserialNo>
         <stlinkfoundProbes />
         <stlinkResetStyle>4</stlinkResetStyle>
         <stlinkResetStrategy>0</stlinkResetStrategy>
@@ -27,7 +27,7 @@
         <CStepIntDis>_ 0</CStepIntDis>
     </StLinkDriver>
     <DebugChecksum>
-        <Checksum>2864560113</Checksum>
+        <Checksum>358091330</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
