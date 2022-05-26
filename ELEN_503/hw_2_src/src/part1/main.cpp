@@ -10,6 +10,10 @@ SC_MODULE (generator) {
     sig.write(5); buf.write(5); wait(10, SC_NS);
 	// put your codes here
 	//... 
+    sig.write(10); buf.write(10); wait(10, SC_NS);
+    sig.write(1); buf.write(1); wait(10, SC_NS);
+    sig.write(3); buf.write(6); wait(10, SC_NS);
+    sig.write(6); buf.write(3); wait(10, SC_NS);
   }
  
   SC_CTOR(generator) {
