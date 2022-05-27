@@ -10,10 +10,32 @@ SC_MODULE (generator) {
     sig.write(5); buf.write(5); wait(10, SC_NS);
 	// put your codes here
 	//... 
+    /*
+    for(sc_int<8> i=0; i < 100; i++){
+      sig.write(i); buf.write(i); wait(1, SC_NS);
+      
+    }
+    
     sig.write(10); buf.write(10); wait(10, SC_NS);
     sig.write(1); buf.write(1); wait(10, SC_NS);
     sig.write(3); buf.write(6); wait(10, SC_NS);
     sig.write(6); buf.write(3); wait(10, SC_NS);
+    sig.write(2); buf.write(2); wait(1, SC_NS);
+    sig.write(4); buf.write(4); wait(1, SC_NS);
+    sig.write(6); buf.write(6); wait(1, SC_NS);
+    */
+    /*
+    sig.write(2); buf.write(2); wait(1, SC_NS);
+    sig.write(2); buf.write(2); wait(1, SC_NS);
+    sig.write(2); buf.write(2); wait(1, SC_NS);
+    sig.write(2); buf.write(2); wait(1, SC_NS);
+    sig.write(2); buf.write(2); wait(1, SC_NS);
+    sig.write(6); buf.write(6); wait(1, SC_NS);
+    sig.write(6); buf.write(6); wait(1, SC_NS);
+    sig.write(6); buf.write(6); wait(1, SC_NS);
+    sig.write(6); buf.write(6); wait(1, SC_NS);
+    sig.write(6); buf.write(6); wait(1, SC_NS);
+    */
   }
  
   SC_CTOR(generator) {
