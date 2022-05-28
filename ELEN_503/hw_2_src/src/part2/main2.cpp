@@ -23,6 +23,8 @@ int sc_main(int argc, char *argv[]) {
   AD_T3(A, B, R_T3, clock);
   adder_cthread AD_CT("adder_cthread");
   AD_CT(A, B, R_C, clock);
+  
+  
   // put your code here ...
 
 

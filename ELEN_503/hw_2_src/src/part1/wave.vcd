@@ -1,9 +1,9 @@
 $date
-     May 26, 2022       23:13:55
+     May 27, 2022       16:10:50
 $end
 
 $version
- SystemC 2.3.3-Accellera --- May 25 2022 21:22:55
+ SystemC 2.3.3-Accellera --- May 26 2022 16:32:38
 $end
 
 $timescale
@@ -30,11 +30,11 @@ b101 aaaaa
 b101 aaaab
 
 #15000
-b0 aaaaa
-b0 aaaab
+b10 aaaaa
+b10 aaaab
 
 #20000
-b1010 aaaaa
-b1010 aaaab
+b110 aaaaa
+b110 aaaab
 
 #25000

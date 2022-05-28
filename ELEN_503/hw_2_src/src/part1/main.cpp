@@ -24,7 +24,7 @@ SC_MODULE (generator) {
     sig.write(4); buf.write(4); wait(1, SC_NS);
     sig.write(6); buf.write(6); wait(1, SC_NS);
     */
-    /*
+    
     sig.write(2); buf.write(2); wait(1, SC_NS);
     sig.write(2); buf.write(2); wait(1, SC_NS);
     sig.write(2); buf.write(2); wait(1, SC_NS);
@@ -35,7 +35,7 @@ SC_MODULE (generator) {
     sig.write(6); buf.write(6); wait(1, SC_NS);
     sig.write(6); buf.write(6); wait(1, SC_NS);
     sig.write(6); buf.write(6); wait(1, SC_NS);
-    */
+    
   }
  
   SC_CTOR(generator) {

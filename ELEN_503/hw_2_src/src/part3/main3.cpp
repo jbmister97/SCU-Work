@@ -16,6 +16,9 @@ SC_MODULE(fibonacci) {
     // Go through the sequence based on the number of iterations
     for(sc_int<8> i=0; i < num; i++) {
 
+
+
+
       // Consume the FIFOs and find the sum of the loops
       sum = f1.read() + f2.read();
       // Send sum to console
