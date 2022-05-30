@@ -7,3 +7,4 @@ e.g. source ./envsetup.sh
 To use GTKwave use the following command
 
 gtkwave -o <VCD file name>
+

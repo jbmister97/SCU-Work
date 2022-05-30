@@ -15,10 +15,6 @@ SC_MODULE(fibonacci) {
 
     // Go through the sequence based on the number of iterations
     for(sc_int<8> i=0; i < num; i++) {
-
-
-
-
       // Consume the FIFOs and find the sum of the loops
       sum = f1.read() + f2.read();
       // Send sum to console
@@ -26,7 +22,6 @@ SC_MODULE(fibonacci) {
       // Write the sum to the loop buffers
       f1.write(sum); f2.write(sum);
     }
-
   }
 
   SC_CTOR(fibonacci) : f1(2), f2(3) {
@@ -64,16 +59,6 @@ int sc_main(int argc, char *argv[]) {
 
   // trace file creation
   sc_trace_file *tf = sc_create_vcd_trace_file("wave");
-  /*
-  sc_trace(tf, clock, "clock");
-  sc_trace(tf, A,     "A");
-  sc_trace(tf, B,     "B");
-  sc_trace(tf, R_M,   "R_M");
-  sc_trace(tf, R_T1,  "R_T1");
-  sc_trace(tf, R_T2,  "R_T2");
-  sc_trace(tf, R_T3,  "R_T3");
-  sc_trace(tf, R_C,   "R_C");
-  */
   sc_start(80, SC_NS);
   return(0);
 }

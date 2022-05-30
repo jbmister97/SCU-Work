@@ -15,6 +15,7 @@ int sc_main(int argc, char *argv[]) {
   adder_method AD_M("adder_method"); // instantiation
   AD_M(A, B, R_M);                   // port connection
   // instantiate other adders too
+  // put your code here ...
   adder_thread AD_T1("adder_thread1");
   AD_T1(A, B, R_T1, clock);
   adder_thread2 AD_T2("adder_thread2");
@@ -23,10 +24,6 @@ int sc_main(int argc, char *argv[]) {
   AD_T3(A, B, R_T3, clock);
   adder_cthread AD_CT("adder_cthread");
   AD_CT(A, B, R_C, clock);
-  
-  
-  // put your code here ...
-
 
   stimulus STIM("stimulus");  // instantiation
   STIM(A, B, clock); // port connection
