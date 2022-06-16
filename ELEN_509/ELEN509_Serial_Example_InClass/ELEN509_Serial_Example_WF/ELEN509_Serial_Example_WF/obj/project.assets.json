@@ -305,7 +305,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Justin\\.nuget\\packages\\": {}
+    "C:\\Users\\jbmis\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -313,11 +313,11 @@
       "projectUniqueName": "C:\\GitHub\\SCU-Work\\ELEN_509\\ELEN509_Serial_Example_InClass\\ELEN509_Serial_Example_WF\\ELEN509_Serial_Example_WF\\ELEN509_Serial_Example_WF.csproj",
       "projectName": "ELEN509_Serial_Example_WF",
       "projectPath": "C:\\GitHub\\SCU-Work\\ELEN_509\\ELEN509_Serial_Example_InClass\\ELEN509_Serial_Example_WF\\ELEN509_Serial_Example_WF\\ELEN509_Serial_Example_WF.csproj",
-      "packagesPath": "C:\\Users\\Justin\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\jbmis\\.nuget\\packages\\",
       "outputPath": "C:\\GitHub\\SCU-Work\\ELEN_509\\ELEN509_Serial_Example_InClass\\ELEN509_Serial_Example_WF\\ELEN509_Serial_Example_WF\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Justin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\jbmis\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -370,7 +370,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
       }
     }
   }

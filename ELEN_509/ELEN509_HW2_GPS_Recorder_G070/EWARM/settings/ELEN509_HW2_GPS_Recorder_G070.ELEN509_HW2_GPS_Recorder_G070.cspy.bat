@@ -25,7 +25,7 @@ if not "%~1" == "" goto debugFile
 
 @echo on 
 
-"C:\Program Files\IAR Systems\Embedded Workbench 9.0\common\bin\cspybat" -f "C:\GitHub\SCU-Work\ELEN_509\ELEN509_HW2_GPS_Recorder_G070\EWARM\settings\ELEN509_HW2_GPS_Recorder_G070.ELEN509_HW2_GPS_Recorder_G070.general.xcl" --backend -f "C:\GitHub\SCU-Work\ELEN_509\ELEN509_HW2_GPS_Recorder_G070\EWARM\settings\ELEN509_HW2_GPS_Recorder_G070.ELEN509_HW2_GPS_Recorder_G070.driver.xcl" 
+"C:\Program Files\IAR Systems\Embedded Workbench 9.1\common\bin\cspybat" -f "C:\GitHub\SCU-Work\ELEN_509\ELEN509_HW2_GPS_Recorder_G070\EWARM\settings\ELEN509_HW2_GPS_Recorder_G070.ELEN509_HW2_GPS_Recorder_G070.general.xcl" --backend -f "C:\GitHub\SCU-Work\ELEN_509\ELEN509_HW2_GPS_Recorder_G070\EWARM\settings\ELEN509_HW2_GPS_Recorder_G070.ELEN509_HW2_GPS_Recorder_G070.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"C:\Program Files\IAR Systems\Embedded Workbench 9.0\common\bin\cspybat" -f "C:\GitHub\SCU-Work\ELEN_509\ELEN509_HW2_GPS_Recorder_G070\EWARM\settings\ELEN509_HW2_GPS_Recorder_G070.ELEN509_HW2_GPS_Recorder_G070.general.xcl" "--debug_file=%~1" --backend -f "C:\GitHub\SCU-Work\ELEN_509\ELEN509_HW2_GPS_Recorder_G070\EWARM\settings\ELEN509_HW2_GPS_Recorder_G070.ELEN509_HW2_GPS_Recorder_G070.driver.xcl" 
+"C:\Program Files\IAR Systems\Embedded Workbench 9.1\common\bin\cspybat" -f "C:\GitHub\SCU-Work\ELEN_509\ELEN509_HW2_GPS_Recorder_G070\EWARM\settings\ELEN509_HW2_GPS_Recorder_G070.ELEN509_HW2_GPS_Recorder_G070.general.xcl" "--debug_file=%~1" --backend -f "C:\GitHub\SCU-Work\ELEN_509\ELEN509_HW2_GPS_Recorder_G070\EWARM\settings\ELEN509_HW2_GPS_Recorder_G070.ELEN509_HW2_GPS_Recorder_G070.driver.xcl" 
 
 @echo off 
 :end
