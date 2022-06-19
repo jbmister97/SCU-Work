@@ -1,0 +1,32 @@
+
+In order to reorganize the serial and serial_user header/source files, 
+I moved over any variables and definitions, such as the RX and TX bugger size definitions, from the serial
+files and moved them to the serial_user files. I also made the UART handle and USART instance call definitions
+in the serial files that can be modified from the serial_user files.
+
+As for the transmit with length functionality, I created the function "SendBinaryWithLength" where
+I put the length of the message to be sent as the second byte in the packet. I also put the checksum byte
+as the last byte in the packet. For the checksum, I have a function "Get_Checksum" that adds all the message
+bytes as well as the length byte together and extract only the first 8 bits to send within the checksum byte.
+The receive end of the code uses the "Verify_Checksum" function where it also adds up the received message bytes
+as well as the length byte to extract the first 8 bits, but it also returns a true/false value if it matches the checksum byte.
+
+For testing the code, I have a SendBinaryWithLength function call before the infinite loop in the main function. This is
+to transmit a message and make sure the formatting of the packet is correct. This message will transmit only once upon startup.
+To test the receiving portion, I define various messages with the applicable formatting on the YAT terminal including the same
+message that is transmitted upon startup. There will be a "Checksum PASSED" message if the sent packet was received successfully
+and a "Checksum FAILED" message if the packet was not valid.
+
+Formatting used:
+
+<0xAA> <message length> <data> <checksum>
+checksum = last 8 bits of the sum of all the data bytes and the length byte
+
+Example:
+
+AA 04 AC 3F 67 31 87
+
+AA is the starting byte
+04 is the message length
+AC 3F 67 31 is the message data
+87 is the checksum value
